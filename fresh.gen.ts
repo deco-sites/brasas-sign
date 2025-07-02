@@ -3,14 +3,27 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_app from "./routes/_app.tsx";
-
+import * as $UserView_FormController from "./islands/UserView/FormController.tsx";
+import * as $UserView_PFF_Step1 from "./islands/UserView/PFF/Step1.tsx";
+import * as $UserView_PFF_Step2 from "./islands/UserView/PFF/Step2.tsx";
+import * as $UserView_RegularCourse_Step1 from "./islands/UserView/RegularCourse/Step1.tsx";
+import * as $UserView_RegularCourse_Step2 from "./islands/UserView/RegularCourse/Step2.tsx";
+import * as $UserView_SelectCourseTypeIsland from "./islands/UserView/SelectCourseTypeIsland.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $_app,
   },
-  islands: {},
+  islands: {
+    "./islands/UserView/FormController.tsx": $UserView_FormController,
+    "./islands/UserView/PFF/Step1.tsx": $UserView_PFF_Step1,
+    "./islands/UserView/PFF/Step2.tsx": $UserView_PFF_Step2,
+    "./islands/UserView/RegularCourse/Step1.tsx": $UserView_RegularCourse_Step1,
+    "./islands/UserView/RegularCourse/Step2.tsx": $UserView_RegularCourse_Step2,
+    "./islands/UserView/SelectCourseTypeIsland.tsx":
+      $UserView_SelectCourseTypeIsland,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 
