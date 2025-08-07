@@ -1,9 +1,12 @@
-interface ButtonRootProps {
+import { ComponentType } from "preact";
+
+interface ButtonProps {
   children: preact.ComponentChildren;
   type?: "button" | "submit" | "reset";
   uppercaseText?: boolean;
   color: "red" | "blue" | "white" | "green";
   onClickAction: () => void;
+  icon?: ComponentType<{ class?: string }>;
 }
 
 const BG_COLORS = {
@@ -13,9 +16,15 @@ const BG_COLORS = {
   green: "bg-green-300",
 };
 
-export function ButtonRoot(
-  { children, type = "submit", uppercaseText = false, color, onClickAction }:
-    ButtonRootProps,
+export default function Button(
+  {
+    children,
+    type = "button",
+    uppercaseText = false,
+    color,
+    onClickAction,
+    icon: Icon,
+  }: ButtonProps,
 ) {
   return (
     <button
@@ -30,6 +39,9 @@ export function ButtonRoot(
       onClick={onClickAction}
     >
       {children}
+      {Icon && (
+        <Icon class="absolute right-3 top-1/2  w-5 h-5 text-gray-500 pointer-events-none" />
+      )}
     </button>
   );
 }

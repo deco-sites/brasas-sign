@@ -1,58 +1,68 @@
 import { useState } from "preact/hooks";
-import RegularStep1 from "../../islands/UserView/RegularCourse/Step1.tsx";
-import RegularStep2 from "../../islands/UserView/RegularCourse/Step2.tsx";
-import PFFStep1 from "./PFF/Step1.tsx";
-import PFFStep2 from "./PFF/Step2.tsx";
-import SelectCourseTypeIsland from "./SelectCourseTypeIsland.tsx";
-import InternationalizationController from "../../components/ui/InternationalizationController.tsx";
+import InitialStep from "./InitialStep.tsx";
+import { useForm } from "react-hook-form";
+import Step1 from "./Step1.tsx";
+import Step2 from "./Step2.tsx";
+import Step3 from "./Step3.tsx";
+import Step4 from "./Step4.tsx";
+import Step5 from "./Step5.tsx";
+import Step6 from "./Step6.tsx";
 
-type Flow = "regular" | "pff";
-type Step = 1 | 2 | 3;
+type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export default function FormController() {
-  const [flow, setFlow] = useState<Flow | null>(null);
-  const [step, setStep] = useState<Step>(1);
+  const [step, setStep] = useState<Step>(0);
+  const form = useForm();
+  const { handleSubmit } = form;
 
   const steps = {
-    regular: {
-      1: RegularStep1,
-      2: RegularStep2,
-    },
-    pff: {
-      1: PFFStep1,
-      2: PFFStep2,
-    },
+    0: InitialStep,
+    1: Step1,
+    2: Step2,
+    3: Step3,
+    4: Step4,
+    5: Step5,
+    6: Step6,
   };
 
-  if (!flow) {
-    return (
-      <div className="relative px-4 h-screen overflow-hidden w-screen bg-blue-900 flex justify-center items-center">
-        <InternationalizationController />
-        <SelectCourseTypeIsland
-          onSelect={(selected: Flow) => setFlow(selected)}
-        />
-      </div>
-    );
-  }
+  const stepList = [
+    { step: 1, title: "Step 1", subtitle: "Informações pessoais" },
+    { step: 2, title: "Step 2", subtitle: "Endereço" },
+    { step: 3, title: "Step 3", subtitle: "Financeiro" },
+    { step: 4, title: "Step 4", subtitle: "Pedagógico" },
+    { step: 5, title: "Step 5", subtitle: "Interesses" },
+    { step: 6, title: "Step 6", subtitle: "Autorizações" },
+  ];
 
-  const CurrentStepComponent = steps[flow][step];
+  const CurrentStepComponent = steps[step];
+
+  const nextStep = (data) => {
+    console.log("Foi pro próximo passo", data);
+
+    setStep((prev) => (prev + 1) as Step);
+  };
 
   return (
-    <div className="relative px-4 h-screen overflow-hidden w-screen bg-blue-900 flex justify-center items-center">
+    <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
       <CurrentStepComponent
-        goToNextStep={() => setStep((prev) => (prev + 1) as Step)}
+        step={step}
+        goToNextStep={() => handleSubmit(nextStep)()}
         goToPreviousStep={() => {
-          if (step === 1) {
-            setFlow(null);
-            setStep(1);
+          if (step === 0) {
+            setStep(0);
           } else {
             setStep((prev) => (prev - 1) as Step);
           }
         }}
         resetForm={() => {
-          setFlow(null);
-          setStep(1);
+          setStep(0);
         }}
+        stepList={stepList}
+        goToStep={(step: number) => {
+          console.log("Setando step para", step);
+          setStep(step as Step);
+        }}
+        form={form}
       />
     </div>
   );
