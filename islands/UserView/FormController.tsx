@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import InitialStep from "./InitialStep.tsx";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import Step1 from "./Step1.tsx";
 import Step2 from "./Step2.tsx";
 import Step3 from "./Step3.tsx";
@@ -12,8 +12,62 @@ type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export default function FormController() {
   const [step, setStep] = useState<Step>(0);
-  const form = useForm();
-  const { handleSubmit } = form;
+
+  const requiredFieldsByStep: Record<number, string[]> = {
+    1: ["fullName", "email", "phone", "birthDate", "country"],
+    2: ["cep", "neighborhood", "city", "uf", "branches", "module"],
+    3: [
+      "isStudentFinancialResponsible",
+      "financialResponsibleAddressEqualsStudent",
+    ],
+    4: [
+      "isStudentPedagogicalResponsible",
+      "pedagogicalResponsibleAddressEqualsStudent",
+    ],
+    5: ["preference", "howFind", "interest"],
+  };
+
+  const form = useForm({
+    defaultValues: {
+      ...Object.fromEntries(
+        Object.values(requiredFieldsByStep)
+          .flat()
+          .map((field) => [field, ""]),
+      ),
+      courseType: "",
+      preference: [],
+      howFind: [],
+      interest: [],
+      imageAuth: "yes",
+    },
+    mode: "onTouched",
+  });
+
+  // Função para ir para um step específico
+  const goToStepWithValidation = async (targetStep: number) => {
+    const fieldsToValidate = requiredFieldsByStep[step] || [];
+
+    if (fieldsToValidate.length > 0) {
+      const isValid = await trigger(fieldsToValidate);
+      if (!isValid) return; // bloqueia avanço
+    }
+
+    setStep(targetStep as Step);
+  };
+
+  // Função para próximo passo
+  const goToNextStepWithValidation = async () => {
+    const fieldsToValidate = requiredFieldsByStep[step] || [];
+
+    if (fieldsToValidate.length > 0) {
+      const isValid = await trigger(fieldsToValidate);
+      if (!isValid) return; // bloqueia avanço
+    }
+
+    setStep((prev) => (prev + 1) as Step);
+  };
+
+  const { handleSubmit, trigger } = form;
 
   const steps = {
     0: InitialStep,
@@ -44,26 +98,25 @@ export default function FormController() {
 
   return (
     <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
-      <CurrentStepComponent
-        step={step}
-        goToNextStep={() => handleSubmit(nextStep)()}
-        goToPreviousStep={() => {
-          if (step === 0) {
+      <FormProvider {...form}>
+        <CurrentStepComponent
+          step={step}
+          goToNextStep={goToNextStepWithValidation}
+          goToPreviousStep={() => {
+            if (step === 0) {
+              setStep(0);
+            } else {
+              setStep((prev) => (prev - 1) as Step);
+            }
+          }}
+          resetForm={() => {
             setStep(0);
-          } else {
-            setStep((prev) => (prev - 1) as Step);
-          }
-        }}
-        resetForm={() => {
-          setStep(0);
-        }}
-        stepList={stepList}
-        goToStep={(step: number) => {
-          console.log("Setando step para", step);
-          setStep(step as Step);
-        }}
-        form={form}
-      />
+          }}
+          stepList={stepList}
+          goToStep={goToStepWithValidation}
+          form={form}
+        />
+      </FormProvider>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { useWatch } from "react-hook-form";
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue } = form;
+  const { register, watch, setValue, formState: { errors } } = form;
   const options = [
     { id: 1, value: "Option 1" },
     { id: 2, value: "Option 2" },
@@ -117,12 +117,18 @@ export default function Step2(
     >
       <TextInput
         htmlFor="cep"
-        label="Cep"
+        label="*Cep"
         placeholder="XX.XXX-XX"
         maxLength={10}
+        error={errors.cep}
         mask={cepMask}
-        {...register("cep")}
+        {...register("cep", { required: "Informe o cep" })}
       />
+      {errors.cep && (
+        <span className="text-red-300 text-xs">
+          {errors.cep.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="address"
@@ -148,48 +154,77 @@ export default function Step2(
 
       <TextInput
         htmlFor="neighborhood"
-        label="Bairro"
+        label="*Bairro"
         placeholder="Bairro"
+        error={errors.neighborhood}
         disabled={disabledFields.neighborhood}
-        {...register("neighborhood")}
+        {...register("neighborhood", { required: "Informe o bairro" })}
       />
+      {errors.neighborhood && (
+        <span className="text-red-300 text-xs">
+          {errors.neighborhood.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="city"
-        label="Cidade"
+        label="*Cidade"
         disabled={disabledFields.city}
+        error={errors.city}
         placeholder="Cidade"
-        {...register("city")}
+        {...register("city", { required: "Informe a cidade" })}
       />
+      {errors.city && (
+        <span className="text-red-300 text-xs">
+          {errors.city.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="uf"
-        label="Uf"
+        label="*Uf"
         disabled={disabledFields.uf}
+        error={errors.uf}
         placeholder="Estado"
-        {...register("uf")}
+        {...register("uf", { required: "Informe a UF" })}
       />
+      {errors.uf && (
+        <span className="text-red-300 text-xs">
+          {errors.uf.message}
+        </span>
+      )}
 
       <SelectInput
         name="branches"
-        label="Unidades"
+        label="*Unidades"
         options={options}
         value={watch("branches")}
+        error={errors.branches}
         placeholder="Selecione uma opção"
-        register={register("branches")}
+        register={register("branches", { required: "Selecione uma opção" })}
         setValue={setValue}
       />
+      {errors.branches && (
+        <span className="text-red-300 text-xs">
+          {errors.branches.message}
+        </span>
+      )}
 
       <RadioInput
-        label="Qual o módulo desejado?"
+        label="*Qual o módulo desejado?"
         name="module"
         value={watch("module")}
         options={[
           { id: "presencial", value: "presencial", label: "Presencial" },
           { id: "online", value: "online", label: "Online" },
         ]}
-        register={register("module")}
+        register={register("module", { required: "Selecione um módulo" })}
       />
+      {errors.module && (
+        <span className="text-red-300 text-xs">
+          {errors.module.message}
+        </span>
+      )}
     </FormStepLayout>
   );
 }

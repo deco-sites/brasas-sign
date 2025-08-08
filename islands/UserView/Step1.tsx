@@ -12,7 +12,7 @@ import { phoneMask } from "../../helpers/phoneMask.ts";
 export default function Step1(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue, getValues } = form;
+  const { register, watch, setValue, getValues, formState: { errors } } = form;
 
   const options = [
     { id: 1, value: "Option 1" },
@@ -48,33 +48,61 @@ export default function Step1(
 
       <TextInput
         htmlFor="fullName"
-        label="Nome completo do aluno"
+        label="*Nome completo do aluno"
+        error={errors.fullName}
         placeholder="Insira o nome completo do aluno"
-        {...register("fullName")}
+        {...register("fullName", {
+          required: "Informe o nome completo do aluno",
+        })}
       />
+      {errors.fullName && (
+        <span className="text-red-300 text-xs">
+          {errors.fullName.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="email"
-        label="E-mail"
+        label="*E-mail"
+        error={errors.email}
         placeholder="Insira seu e-mail"
-        {...register("email")}
+        {...register("email", {
+          required: "Informe seu e-mail",
+        })}
       />
+      {errors.email && (
+        <span className="text-red-300 text-xs">
+          {errors.email.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="phone"
-        label="Telefone"
+        label="*Telefone"
         placeholder="(XX) XXXXX-XXXX"
+        error={errors.phone}
         mask={phoneMask}
-        {...register("phone")}
+        {...register("phone", { required: "Informe o telefone" })}
       />
+      {errors.phone && (
+        <span className="text-red-300 text-xs">
+          {errors.phone.message}
+        </span>
+      )}
 
       <TextInput
         type="date"
         htmlFor="birthDate"
-        label="Data de nascimento"
+        label="*Data de nascimento"
+        error={errors.birthDate}
         placeholder="DD/MM/YYYY"
-        {...register("birthDate")}
+        {...register("birthDate", { required: "Informe a data de nascimento" })}
       />
+      {errors.birthDate && (
+        <span className="text-red-300 text-xs">
+          {errors.birthDate.message}
+        </span>
+      )}
 
       <TextInput
         htmlFor="cpf"
@@ -86,13 +114,19 @@ export default function Step1(
 
       <SelectInput
         name="country"
-        label="País de origem"
+        label="*País de origem"
         options={options}
         value={watch("country")}
+        error={errors.country}
         placeholder="Selecione uma opção"
-        register={register("country")}
+        register={register("country", { required: "Selecione uma opção" })}
         setValue={setValue}
       />
+      {errors.country && (
+        <span className="text-red-300 text-xs">
+          {errors.country.message}
+        </span>
+      )}
 
       <MultiInput
         htmlFor="languages"

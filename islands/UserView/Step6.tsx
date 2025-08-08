@@ -2,12 +2,14 @@ import { useEffect, useRef } from "preact/hooks";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
 import SignatureCanvas from "react-signature-canvas";
+import { regulations } from "../../data/regulations.ts";
 
 export default function Step6(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
   const { register, watch, setValue } = form;
   const sigCanvas = useRef(null);
+  const moduleType = watch("module");
 
   return (
     <FormStepLayout
@@ -19,13 +21,13 @@ export default function Step6(
     >
       <RadioInput
         label="Autorizo o BRASAS English Course a utilizar-se, sem quaisquer ônus, da minha imagem para fins exclusivos de sua divulgação e de suas atividades, podendo, para tanto, reproduzi-la ou divulgá-la junto à internet, jornais e todos os meios de comunicação pública ou privada ficando desde já acordado que em nenhuma hipótese poderá a imagem ser utilizada de maneira contrária à moral ou aos bons costumes ou à ordem pública."
-        name="residencia"
-        value={watch("residencia")}
+        name="imageAuth"
+        value={watch("imageAuth")}
         options={[
           { id: "yes", value: "yes", label: "Sim" },
           { id: "no", value: "no", label: "Não" },
         ]}
-        register={register("residencia")}
+        register={register("imageAuth")}
       />
 
       <hr className="h-[1px] bg-black-500 border-0" />
@@ -42,7 +44,11 @@ export default function Step6(
 
       {/*O regulamento só aparece quando o módulo é escolhido (ou presencial ou online) e muda de acordo com a opção escolhida*/}
       <label>Regulamento</label>
-      <textarea className="rounded-sm" value="teste"></textarea>
+      <textarea
+        className="rounded-sm h-80"
+        value={moduleType ? regulations[moduleType] : ""}
+        readOnly
+      />
 
       <label
         htmlFor="agree"
@@ -65,7 +71,7 @@ export default function Step6(
         penColor="blue"
         canvasProps={{
           className:
-            "h-[500px] border border-black-500 border-dashed rounded-sm",
+            "h-[400px] border border-black-500 border-dashed rounded-sm",
           style: { willChange: "transform" },
         }}
       />
