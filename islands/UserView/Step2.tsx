@@ -63,7 +63,6 @@ export default function Step2(
       const response = await getCep(cep);
 
       if (!response) {
-        console.log("entrou aqui ó", response);
         // CEP inválido: limpa campos e habilita
         setViaCepReturn({});
         setViaCepLoaded(false);
