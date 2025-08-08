@@ -10,7 +10,7 @@ import { cepMask } from "../../helpers/cepMask.ts";
 export default function Step3(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue } = form;
+  const { register, watch, setValue, formState: { errors } } = form;
   const isStudentFinancialResponsible = watch("isStudentFinancialResponsible");
   const financialResponsibleAddressEqualsStudent = watch(
     "financialResponsibleAddressEqualsStudent",
@@ -32,8 +32,15 @@ export default function Step3(
           { id: "yes", value: "yes", label: "Sim" },
           { id: "no", value: "no", label: "Não" },
         ]}
-        register={register("isStudentFinancialResponsible")}
+        register={register("isStudentFinancialResponsible", {
+          required: "Selecione uma opção",
+        })}
       />
+      {errors.isStudentFinancialResponsible && (
+        <span className="text-red-300 text-xs">
+          {errors.isStudentFinancialResponsible.message}
+        </span>
+      )}
 
       {isStudentFinancialResponsible === "no" && (
         <>
@@ -96,8 +103,15 @@ export default function Step3(
           { id: "yes", value: "yes", label: "Sim" },
           { id: "no", value: "no", label: "Não" },
         ]}
-        register={register("financialResponsibleAddressEqualsStudent")}
+        register={register("financialResponsibleAddressEqualsStudent", {
+          required: "Selecione uma opção",
+        })}
       />
+      {errors.financialResponsibleAddressEqualsStudent && (
+        <span className="text-red-300 text-xs">
+          {errors.financialResponsibleAddressEqualsStudent.message}
+        </span>
+      )}
 
       {financialResponsibleAddressEqualsStudent === "no" && (
         <>
@@ -134,7 +148,7 @@ export default function Step3(
             placeholder="Informe o número da residência"
             {...register("financialResponsibleResidenceNumber")}
           />
-          
+
           <TextInput
             htmlFor="financialResponsibleResidenceComplement"
             label="Complemento"

@@ -1,7 +1,9 @@
 import Image from "apps/website/components/Image.tsx";
 import { Button } from "../../components/ui/Button/index.tsx";
 
-export default function InitialStep({ goToNextStep }) {
+export default function InitialStep({ form, goToNextStep }) {
+  const { setValue } = form;
+
   return (
     <div className="relative z-50 px-8 h-screen flex items-center">
       <div className="p-4 lg:py-0 lg:px-52 bg-blue-500 min-h-96 rounded-lg flex flex-col gap-8 justify-center items-center">
@@ -19,14 +21,22 @@ export default function InitialStep({ goToNextStep }) {
           <Button.Root
             color="red"
             uppercaseText
-            onClickAction={goToNextStep}
+            type="button"
+            onClickAction={() => {
+              setValue("courseType", "curso regular");
+              goToNextStep();
+            }}
           >
             <span>curso regular</span>
           </Button.Root>
           <Button.Root
             color="white"
             uppercaseText
-            onClickAction={goToNextStep}
+            type="button"
+            onClickAction={() => {
+              setValue("courseType", "portuguese for foreigners");
+              goToNextStep();
+            }}
           >
             <span>portuguese for foreigners</span>
           </Button.Root>

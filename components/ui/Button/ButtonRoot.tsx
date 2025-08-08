@@ -3,7 +3,7 @@ interface ButtonRootProps {
   type?: "button" | "submit" | "reset";
   uppercaseText?: boolean;
   color: "red" | "blue" | "white" | "green";
-  onClickAction: () => void;
+  onClickAction?: () => void;
 }
 
 const BG_COLORS = {

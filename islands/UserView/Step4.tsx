@@ -7,7 +7,7 @@ import { phoneMask } from "../../helpers/phoneMask.ts";
 export default function Step4(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue } = form;
+  const { register, watch, setValue, formState: { errors } } = form;
   const isStudentPedagogicalResponsible = watch(
     "isStudentPedagogicalResponsible",
   );
@@ -31,8 +31,15 @@ export default function Step4(
           { id: "yes", value: "yes", label: "Sim" },
           { id: "no", value: "no", label: "Não" },
         ]}
-        register={register("isStudentPedagogicalResponsible")}
+        register={register("isStudentPedagogicalResponsible", {
+          required: "Selecione uma opção",
+        })}
       />
+      {errors.isStudentPedagogicalResponsible && (
+        <span className="text-red-300 text-xs">
+          {errors.isStudentPedagogicalResponsible.message}
+        </span>
+      )}
 
       {isStudentPedagogicalResponsible === "no" && (
         <>
@@ -95,8 +102,15 @@ export default function Step4(
           { id: "yes", value: "yes", label: "Sim" },
           { id: "no", value: "no", label: "Não" },
         ]}
-        register={register("pedagogicalResponsibleAddressEqualsStudent")}
+        register={register("pedagogicalResponsibleAddressEqualsStudent", {
+          required: "Selecione uma opção",
+        })}
       />
+      {errors.pedagogicalResponsibleAddressEqualsStudent && (
+        <span className="text-red-300 text-xs">
+          {errors.pedagogicalResponsibleAddressEqualsStudent.message}
+        </span>
+      )}
 
       {pedagogicalResponsibleAddressEqualsStudent === "no" && (
         <>
