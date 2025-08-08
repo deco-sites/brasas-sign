@@ -1,8 +1,11 @@
+import { useEffect, useState } from "preact/hooks";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
 import TextInput from "../../components/ui/TextInput.tsx";
 import { cepMask } from "../../helpers/cepMask.ts";
 import { phoneMask } from "../../helpers/phoneMask.ts";
+import { useWatch } from "react-hook-form";
+import { getCep } from "../../services/cep.ts";
 
 export default function Step4(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -14,6 +17,101 @@ export default function Step4(
   const pedagogicalResponsibleAddressEqualsStudent = watch(
     "pedagogicalResponsibleAddressEqualsStudent",
   );
+
+  const cep = useWatch({
+    control: form.control,
+    name: "pedagogicalResponsibleCep",
+  });
+  const [viaCepReturn, setViaCepReturn] = useState({});
+  const [viaCepLoaded, setViaCepLoaded] = useState(false);
+
+  const [disabledFields, setDisabledFields] = useState<Record<string, boolean>>(
+    {
+      address: false,
+      neighborhood: false,
+      city: false,
+      uf: false,
+    },
+  );
+
+  useEffect(() => {
+    if (cep?.length < 10) {
+      // CEP incompleto: limpa tudo e habilita os campos
+      setViaCepReturn({});
+      setViaCepLoaded(false);
+      setDisabledFields({
+        address: false,
+        neighborhood: false,
+        city: false,
+        uf: false,
+      });
+
+      setValue("pedagogicalResponsibleAddress", "");
+      setValue("pedagogicalResponsibleResidenceNeighborhood", "");
+      setValue("pedagogicalResponsibleCity", "");
+      setValue("pedagogicalResponsibleUf", "");
+    }
+  }, [cep, setValue]);
+
+  useEffect(() => {
+    if (!cep) return;
+    const cleanCep = cep?.replace(/\D/g, "");
+
+    if (cep?.length === 10) {
+      callViaCep(cleanCep);
+    }
+  }, [cep]);
+
+  const callViaCep = async (cep: string) => {
+    try {
+      const response = await getCep(cep);
+
+      if (!response) {
+        // CEP inválido: limpa campos e habilita
+        setViaCepReturn({});
+        setViaCepLoaded(false);
+        setDisabledFields({
+          address: false,
+          neighborhood: false,
+          city: false,
+          uf: false,
+        });
+
+        setValue("pedagogicalResponsibleAddress", "");
+        setValue("pedagogicalResponsibleResidenceNeighborhood", "");
+        setValue("pedagogicalResponsibleCity", "");
+        setValue("pedagogicalResponsibleUf", "");
+        return;
+      }
+
+      // CEP válido: segue normalmente
+      setViaCepReturn(response);
+      setViaCepLoaded(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!viaCepLoaded) return;
+
+    const newDisabledFields = {
+      address: viaCepReturn?.logradouro?.trim() !== "",
+      neighborhood: viaCepReturn?.bairro?.trim() !== "",
+      city: viaCepReturn?.localidade?.trim() !== "",
+      uf: viaCepReturn?.uf?.trim() !== "",
+    };
+
+    setDisabledFields(newDisabledFields);
+
+    setValue("pedagogicalResponsibleAddress", viaCepReturn.logradouro || "");
+    setValue(
+      "pedagogicalResponsibleResidenceNeighborhood",
+      viaCepReturn.bairro || "",
+    );
+    setValue("pedagogicalResponsibleCity", viaCepReturn.localidade || "");
+    setValue("pedagogicalResponsibleUf", viaCepReturn.uf || "");
+  }, [viaCepReturn, viaCepLoaded, setValue]);
 
   return (
     <FormStepLayout
@@ -138,6 +236,7 @@ export default function Step4(
             htmlFor="pedagogicalResponsibleAddress"
             label="Endereço completo do responsável pedagógico"
             placeholder="Informe o nome da rua"
+            disabled={disabledFields.address}
             {...register("pedagogicalResponsibleAddress")}
           />
 
@@ -159,12 +258,14 @@ export default function Step4(
             htmlFor="pedagogicalResponsibleResidenceNeighborhood"
             label="Bairro"
             placeholder="Bairro"
+            disabled={disabledFields.neighborhood}
             {...register("pedagogicalResponsibleResidenceNeighborhood")}
           />
 
           <TextInput
             htmlFor="pedagogicalResponsibleCity"
             label="Cidade"
+            disabled={disabledFields.city}
             placeholder="Cidade"
             {...register("pedagogicalResponsibleCity")}
           />
@@ -172,6 +273,7 @@ export default function Step4(
           <TextInput
             htmlFor="pedagogicalResponsibleUf"
             label="Uf"
+            disabled={disabledFields.uf}
             placeholder="Estado"
             {...register("pedagogicalResponsibleUf")}
           />
