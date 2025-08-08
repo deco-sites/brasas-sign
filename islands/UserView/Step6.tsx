@@ -11,6 +11,21 @@ export default function Step6(
   const sigCanvas = useRef(null);
   const moduleType = watch("module");
 
+  // Salva a assinatura no form
+  const handleEndSign = () => {
+    const base64 = sigCanvas.current
+      .getTrimmedCanvas()
+      .toDataURL("image/png");
+    setValue("signature", base64, { shouldValidate: true });
+  };
+
+  // Limpa a assinatura
+  const handleCleanSign = (e) => {
+    e.preventDefault();
+    sigCanvas.current.clear();
+    setValue("signature", "", { shouldValidate: true });
+  };
+
   return (
     <FormStepLayout
       steps={stepList}
@@ -69,6 +84,7 @@ export default function Step6(
       <SignatureCanvas
         ref={sigCanvas}
         penColor="blue"
+        onEnd={handleEndSign}
         canvasProps={{
           className:
             "h-[400px] border border-black-500 border-dashed rounded-sm",
@@ -79,9 +95,12 @@ export default function Step6(
         <span className="text-gray-500 text-xs font-light">
           Assinatura acima
         </span>
-        <span className="text-gray-500 text-xs font-light cursor-pointer">
+        <button
+          onClick={handleCleanSign}
+          className="text-gray-500 text-xs font-light cursor-pointer"
+        >
           Limpar assinatura
-        </span>
+        </button>
       </div>
     </FormStepLayout>
   );
