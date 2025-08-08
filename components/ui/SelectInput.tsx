@@ -14,6 +14,7 @@ export interface InputProps {
   setValue?: (name: string, value: string) => void;
   register?: UseFormRegisterReturn;
   name?: string;
+  error?: boolean;
 }
 
 export default function Select(
@@ -25,6 +26,7 @@ export default function Select(
     register,
     setValue,
     name,
+    error,
   }: InputProps,
 ) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +65,9 @@ export default function Select(
       <div className="relative w-full">
         {/* Select box */}
         <div
-          className={`flex items-center bg-white border border-gray-500 outline-none text-sm placeholder:text-sm placeholder:text-gray-500 text-gray-500 rounded-lg p-2 w-full`}
+          className={`flex items-center bg-white border outline-none text-sm placeholder:text-sm placeholder:text-gray-500 text-gray-500 rounded-lg p-2 w-full ${
+            error ? "border-red-300" : "border-gray-500"
+          }`}
           ref={avatarRef}
           onClick={toggleDropdown}
         >

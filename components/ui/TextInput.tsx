@@ -10,6 +10,7 @@ interface TextInputProps {
   icon?: ComponentType<{ class?: string }>;
   note?: string;
   mask?: (value: string) => string;
+  error?: boolean;
 }
 
 type Props = TextInputProps & InputFieldProps;
@@ -22,6 +23,7 @@ const TextInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
     note,
     className,
     mask,
+    error,
     onChange,
     ...rest
   } = props;
@@ -53,9 +55,9 @@ const TextInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         {...rest}
         onChange={handleChange}
-        className={`border border-gray-500 outline-none text-sm placeholder:text-sm placeholder:text-gray-500 text-gray-500 rounded-lg p-2 w-full ${
-          className ?? ""
-        }`}
+        className={`border outline-none text-sm placeholder:text-sm placeholder:text-gray-500 text-gray-500 rounded-lg p-2 w-full ${
+          error ? "border-red-300" : "border-gray-500"
+        } ${className ?? ""}`}
       />
       {Icon && (
         <Icon class="absolute right-3 top-1/2  w-5 h-5 text-gray-500 pointer-events-none" />

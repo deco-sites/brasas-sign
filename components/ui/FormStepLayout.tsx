@@ -3,6 +3,7 @@ import StepDisplay from "../../components/ui/StepDisplay.tsx";
 import { Button } from "../../components/ui/Button/index.tsx";
 import IconArrowLeft from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-left.tsx";
 import IconArrowRight from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-right.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepItem {
   step: number;
@@ -27,6 +28,12 @@ export default function FormStepLayout({
   goToPreviousStep,
   goToStep,
 }: Props) {
+  const { handleSubmit, getValues } = useFormContext();
+
+  const onSubmit = () => {
+    console.log(getValues()); // pega todos os campos atuais
+  };
+
   return (
     <div className="flex flex-col w-full lg:flex-row lg:h-4/5 lg:w-4/5 rounded-lg">
       {/* Lado esquerdo */}
@@ -51,7 +58,10 @@ export default function FormStepLayout({
 
       {/* Lado direito */}
       <div className="p-4 lg:p-0 w-full">
-        <form className="bg-gray-400 rounded-lg lg:rounded-l-none lg:rounded-r-lg w-full h-full p-4 lg:p-8 flex flex-col justify-between">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-gray-400 rounded-lg lg:rounded-l-none lg:rounded-r-lg w-full h-full p-4 lg:p-8 flex flex-col justify-between"
+        >
           <div>
             <h1 className="py-4 text-center text-xl">
               Formulário de Matrícula
@@ -69,14 +79,18 @@ export default function FormStepLayout({
               ? (
                 <Button.Root
                   color="green"
-                  onClickAction={() => console.log("send form")}
+                  type="submit"
                 >
                   <span>Enviar</span>
                   <Button.Icon icon={IconArrowRight} />
                 </Button.Root>
               )
               : (
-                <Button.Root color="red" onClickAction={goToNextStep}>
+                <Button.Root
+                  type="button"
+                  color="red"
+                  onClickAction={goToNextStep}
+                >
                   <span>Próximo passo</span>
                   <Button.Icon icon={IconArrowRight} />
                 </Button.Root>
