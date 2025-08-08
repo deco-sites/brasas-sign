@@ -2,10 +2,12 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/ui/Input/index.tsx";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import TextInput from "../../components/ui/TextInput.tsx";
 import { phoneMask } from "../../helpers/phoneMask.ts";
 import { cepMask } from "../../helpers/cepMask.ts";
+import { useWatch } from "react-hook-form";
+import { getCep } from "../../services/cep.ts";
 
 export default function Step3(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -15,6 +17,100 @@ export default function Step3(
   const financialResponsibleAddressEqualsStudent = watch(
     "financialResponsibleAddressEqualsStudent",
   );
+  const cep = useWatch({
+    control: form.control,
+    name: "financialResponsibleCep",
+  });
+  const [viaCepReturn, setViaCepReturn] = useState({});
+  const [viaCepLoaded, setViaCepLoaded] = useState(false);
+
+  const [disabledFields, setDisabledFields] = useState<Record<string, boolean>>(
+    {
+      address: false,
+      neighborhood: false,
+      city: false,
+      uf: false,
+    },
+  );
+
+  useEffect(() => {
+    if (cep?.length < 10) {
+      // CEP incompleto: limpa tudo e habilita os campos
+      setViaCepReturn({});
+      setViaCepLoaded(false);
+      setDisabledFields({
+        address: false,
+        neighborhood: false,
+        city: false,
+        uf: false,
+      });
+
+      setValue("financialResponsibleAddress", "");
+      setValue("financialResponsibleResidenceNeighborhood", "");
+      setValue("financialResponsibleCity", "");
+      setValue("financialResponsibleUf", "");
+    }
+  }, [cep, setValue]);
+
+  useEffect(() => {
+    if (!cep) return;
+    const cleanCep = cep?.replace(/\D/g, "");
+
+    if (cep?.length === 10) {
+      callViaCep(cleanCep);
+    }
+  }, [cep]);
+
+  const callViaCep = async (cep: string) => {
+    try {
+      const response = await getCep(cep);
+
+      if (!response) {
+        // CEP inválido: limpa campos e habilita
+        setViaCepReturn({});
+        setViaCepLoaded(false);
+        setDisabledFields({
+          address: false,
+          neighborhood: false,
+          city: false,
+          uf: false,
+        });
+
+        setValue("financialResponsibleAddress", "");
+        setValue("financialResponsibleResidenceNeighborhood", "");
+        setValue("financialResponsibleCity", "");
+        setValue("financialResponsibleUf", "");
+        return;
+      }
+
+      // CEP válido: segue normalmente
+      setViaCepReturn(response);
+      setViaCepLoaded(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!viaCepLoaded) return;
+
+    const newDisabledFields = {
+      address: viaCepReturn?.logradouro?.trim() !== "",
+      neighborhood: viaCepReturn?.bairro?.trim() !== "",
+      city: viaCepReturn?.localidade?.trim() !== "",
+      uf: viaCepReturn?.uf?.trim() !== "",
+    };
+
+    setDisabledFields(newDisabledFields);
+
+    setValue("financialResponsibleAddress", viaCepReturn.logradouro || "");
+    setValue(
+      "financialResponsibleResidenceNeighborhood",
+      viaCepReturn.bairro || "",
+    );
+    setValue("financialResponsibleCity", viaCepReturn.localidade || "");
+    setValue("financialResponsibleUf", viaCepReturn.uf || "");
+  }, [viaCepReturn, viaCepLoaded, setValue]);
 
   return (
     <FormStepLayout
@@ -139,6 +235,7 @@ export default function Step3(
             htmlFor="financialResponsibleAddress"
             label="Endereço completo do responsável financeiro"
             placeholder="Informe o nome da rua"
+            disabled={disabledFields.address}
             {...register("financialResponsibleAddress")}
           />
 
@@ -159,6 +256,7 @@ export default function Step3(
           <TextInput
             htmlFor="financialResponsibleResidenceNeighborhood"
             label="Bairro"
+            disabled={disabledFields.neighborhood}
             placeholder="Bairro"
             {...register("financialResponsibleResidenceNeighborhood")}
           />
@@ -166,6 +264,7 @@ export default function Step3(
           <TextInput
             htmlFor="financialResponsibleCity"
             label="Cidade"
+            disabled={disabledFields.city}
             placeholder="Cidade"
             {...register("financialResponsibleCity")}
           />
@@ -173,6 +272,7 @@ export default function Step3(
           <TextInput
             htmlFor="financialResponsibleUf"
             label="Uf"
+            disabled={disabledFields.uf}
             placeholder="Estado"
             {...register("financialResponsibleUf")}
           />
