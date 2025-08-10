@@ -7,10 +7,11 @@ import Step3 from "./Step3.tsx";
 import Step4 from "./Step4.tsx";
 import Step5 from "./Step5.tsx";
 import Step6 from "./Step6.tsx";
+import { UnitsProvider } from "../../contexts/UnitsContext.tsx";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export default function FormController() {
+export default function FormController({ units }) {
   const [step, setStep] = useState<Step>(0);
 
   const requiredFieldsByStep: Record<number, string[]> = {
@@ -39,6 +40,7 @@ export default function FormController() {
       howFind: [],
       interest: [],
       imageAuth: "yes",
+      agree: true,
     },
     mode: "onTouched",
   });
@@ -98,25 +100,27 @@ export default function FormController() {
 
   return (
     <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
-      <FormProvider {...form}>
-        <CurrentStepComponent
-          step={step}
-          goToNextStep={goToNextStepWithValidation}
-          goToPreviousStep={() => {
-            if (step === 0) {
+      <UnitsProvider units={units}>
+        <FormProvider {...form}>
+          <CurrentStepComponent
+            step={step}
+            goToNextStep={goToNextStepWithValidation}
+            goToPreviousStep={() => {
+              if (step === 0) {
+                setStep(0);
+              } else {
+                setStep((prev) => (prev - 1) as Step);
+              }
+            }}
+            resetForm={() => {
               setStep(0);
-            } else {
-              setStep((prev) => (prev - 1) as Step);
-            }
-          }}
-          resetForm={() => {
-            setStep(0);
-          }}
-          stepList={stepList}
-          goToStep={goToStepWithValidation}
-          form={form}
-        />
-      </FormProvider>
+            }}
+            stepList={stepList}
+            goToStep={goToStepWithValidation}
+            form={form}
+          />
+        </FormProvider>
+      </UnitsProvider>
     </div>
   );
 }
