@@ -4,6 +4,7 @@ interface ButtonRootProps {
   uppercaseText?: boolean;
   color: "red" | "blue" | "white" | "green";
   onClickAction?: () => void;
+  disabled?: boolean;
 }
 
 const BG_COLORS = {
@@ -14,8 +15,14 @@ const BG_COLORS = {
 };
 
 export function ButtonRoot(
-  { children, type = "submit", uppercaseText = false, color, onClickAction }:
-    ButtonRootProps,
+  {
+    children,
+    type = "submit",
+    uppercaseText = false,
+    color,
+    onClickAction,
+    disabled = false,
+  }: ButtonRootProps,
 ) {
   return (
     <button
@@ -26,8 +33,9 @@ export function ButtonRoot(
         BG_COLORS[color]
       } rounded-lg py-2 px-4 text-sm font-semibold cursor-pointer whitespace-nowrap ${
         uppercaseText ? "uppercase" : ""
-      }`}
+      } disabled:cursor-not-allowed disabled:bg-gray-100`}
       onClick={onClickAction}
+      disabled={disabled}
     >
       {children}
     </button>

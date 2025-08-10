@@ -8,16 +8,35 @@ import RadioInput from "../../components/ui/RadioInput.tsx";
 import CheckboxInput from "../../components/ui/CheckboxInput.tsx";
 import MultiInput from "../../components/ui/MultiInput.tsx";
 import { phoneMask } from "../../helpers/phoneMask.ts";
+import { useEffect, useState } from "preact/hooks";
 
 export default function Step1(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
   const { register, watch, setValue, getValues, formState: { errors } } = form;
 
+  const [countries, setCountries] = useState([]);
+
   const options = [
     { id: 1, value: "Option 1" },
     { id: 2, value: "Option 2" },
   ];
+
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all?fields=name,flags")
+      .then((res) => res.json())
+      .then((data) => {
+        const formattedOptions = data
+          .sort((a, b) => a.name.common.localeCompare(b.name.common))
+          .map((country, index) => ({
+            id: index + 1,
+            value: country.name.common,
+            image: country.flags.png, // ou country.flags.svg para vetor
+          }));
+        setCountries(formattedOptions);
+      })
+      .catch((error) => console.error("Erro ao carregar países:", error));
+  }, []);
 
   return (
     <FormStepLayout
@@ -115,7 +134,7 @@ export default function Step1(
       <SelectInput
         name="country"
         label="*País de origem"
-        options={options}
+        options={countries}
         value={watch("country")}
         error={errors.country}
         placeholder="Selecione uma opção"

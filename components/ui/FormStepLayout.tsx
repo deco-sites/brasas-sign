@@ -18,6 +18,7 @@ interface Props {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
   goToStep: (step: number) => void;
+  isSubmitDisabled?: boolean;
 }
 
 export default function FormStepLayout({
@@ -27,11 +28,12 @@ export default function FormStepLayout({
   goToNextStep,
   goToPreviousStep,
   goToStep,
+  isSubmitDisabled = false,
 }: Props) {
   const { handleSubmit, getValues } = useFormContext();
 
   const onSubmit = () => {
-    console.log(getValues()); // pega todos os campos atuais
+    console.log("envia o form", getValues());
   };
 
   return (
@@ -80,6 +82,7 @@ export default function FormStepLayout({
                 <Button.Root
                   color="green"
                   type="submit"
+                  disabled={isSubmitDisabled}
                 >
                   <span>Enviar</span>
                   <Button.Icon icon={IconArrowRight} />

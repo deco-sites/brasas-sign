@@ -3,7 +3,9 @@ import { useClickOutsideListener } from "../../helpers/useClickOutsideListener.t
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface Option {
+  id: number;
   value: string;
+  image?: string;
 }
 
 export interface InputProps {
@@ -102,9 +104,16 @@ export default function Select(
             {options.map((option, index) => (
               <div
                 key={index}
-                className="text-center cursor-pointer mb-[33px] last:mb-0"
+                className="flex gap-4 items-center px-4 text-center cursor-pointer mb-[33px] last:mb-0"
                 onClick={() => handleOptionClick(option.value)}
               >
+                {option.image && (
+                  <img
+                    src={option.image}
+                    alt={option.value}
+                    className="w-5 h-5 object-cover rounded-sm"
+                  />
+                )}
                 {option.value}
               </div>
             ))}
