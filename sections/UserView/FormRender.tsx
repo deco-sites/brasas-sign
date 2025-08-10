@@ -1,40 +1,57 @@
+import { UnitsProvider } from "../../contexts/UnitsContext.tsx";
 import FormController from "../../islands/UserView/FormController.tsx";
 import { type FnContext } from "@deco/deco";
 
-interface Props {}
-
-export default function FormRender({}: Props) {
-  return <FormController />;
+interface Branch {
+  id: string;
+  name: string;
+  nickname: string;
+  internal_name: string;
 }
 
-export const loader = (props: Props, req: Request, ctx: FnContext) => {
-  fetch("https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366", {
-    method: "GET",
-    headers: {
-      "community_id": "sophia-4375-44",
-    },
-  })
-    .then((response) => {
-      return response.json();
-    }).then((data) => {
-      console.log("Resposta da API:", data);
-      const token = data.access_token;
+interface Props {
+  units: Branch[];
+}
 
-      fetch("https://apitest.brasas.com/sophia/brasas/units", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "community_id": "sophia-4375-44",
-        },
-      }).then((response) => {
-        return response.json();
-      }).then((data) => {
-        console.log("Responsa final", data);
-      });
-    });
+export default function FormRender({ units }: Props) {
+  return (
+    
+      <FormController units={units} />
+
+  );
+}
+
+export const loader = async (props: Props, req: Request, ctx: FnContext) => {
+  const loginRes = await fetch(
+    "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366",
+    {
+      method: "GET",
+      headers: {
+        "community_id": "sophia-4375-44",
+      },
+    },
+  );
+
+  const loginData = await loginRes.json();
+  const token = loginData.access_token;
+
+  const unitsRes = await fetch(
+    "https://apitest.brasas.com/sophia/brasas/units",
+    {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "community_id": "sophia-4375-44",
+      },
+    },
+  );
+
+  const unitsData = await unitsRes.json();
+  console.log("unitsData", unitsData);
 
   return {
     ...props,
     device: ctx.device,
+    units: unitsData,
   };
 };
