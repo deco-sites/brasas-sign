@@ -7,11 +7,26 @@ import { useEffect, useState } from "preact/hooks";
 import { getCep } from "../../services/cep.ts";
 import { cepMask } from "../../helpers/cepMask.ts";
 import { useWatch } from "react-hook-form";
+import { useUnits } from "../../contexts/UnitsContext.tsx";
 
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
+  const { units } = useUnits();
+  const [branches, setBranches] = useState([]);
+
+  useEffect(() => {
+    console.log("unidades", units);
+    setBranches(
+      units?.map((unit, index) => ({
+        id: index + 1,
+        value: unit.internal_name,
+      })),
+    );
+  }, [units]);
+
   const { register, watch, setValue, formState: { errors } } = form;
+
   const options = [
     { id: 1, value: "Option 1" },
     { id: 2, value: "Option 2" },
@@ -196,7 +211,7 @@ export default function Step2(
       <SelectInput
         name="branches"
         label="*Unidades"
-        options={options}
+        options={branches}
         value={watch("branches")}
         error={errors.branches}
         placeholder="Selecione uma opção"

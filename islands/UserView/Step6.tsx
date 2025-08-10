@@ -8,8 +8,17 @@ export default function Step6(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
   const { register, watch, setValue } = form;
+
+  // Registrar os campos para o watch funcionar
+  useEffect(() => {
+    register("signature", { required: true });
+    register("agree", { required: true });
+  }, [register]);
+
   const sigCanvas = useRef(null);
   const moduleType = watch("module");
+  const signature = watch("signature");
+  const agree = watch("agree");
 
   // Salva a assinatura no form
   const handleEndSign = () => {
@@ -26,6 +35,16 @@ export default function Step6(
     setValue("signature", "", { shouldValidate: true });
   };
 
+  // Restaura a assinatura se o usuário voltar e avançar o step
+  useEffect(() => {
+  if (signature && sigCanvas.current) {
+    sigCanvas.current.fromDataURL(signature);
+  }
+  // executa apenas na montagem
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+
   return (
     <FormStepLayout
       steps={stepList}
@@ -33,6 +52,7 @@ export default function Step6(
       goToNextStep={goToNextStep}
       goToPreviousStep={goToPreviousStep}
       goToStep={goToStep}
+      isSubmitDisabled={!signature || !agree}
     >
       <RadioInput
         label="Autorizo o BRASAS English Course a utilizar-se, sem quaisquer ônus, da minha imagem para fins exclusivos de sua divulgação e de suas atividades, podendo, para tanto, reproduzi-la ou divulgá-la junto à internet, jornais e todos os meios de comunicação pública ou privada ficando desde já acordado que em nenhuma hipótese poderá a imagem ser utilizada de maneira contrária à moral ou aos bons costumes ou à ordem pública."
@@ -72,10 +92,10 @@ export default function Step6(
         <input
           type="checkbox"
           id="agree"
-          checked
-          {...register}
+          {...register("agree")}
           className="accent-blue-600 w-5 h-5 cursor-pointer"
         />
+
         <span className="text-sm text-gray-800">
           Concordo com os termos e condições
         </span>
