@@ -6,9 +6,9 @@ import { Context } from "@deco/deco";
 export default defineApp(async (_req, ctx) => {
   const revision = await Context.active().release?.revision();
 
-  // Aqui você pode buscar as units de forma global
+  // Buscando unidades
   const loginRes = await fetch(
-    "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366",
+    "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366?exp_secs=1200",
     {
       method: "GET",
       headers: {
