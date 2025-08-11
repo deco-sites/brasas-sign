@@ -59,10 +59,10 @@ export default function Step1(
 
       <TextInput
         required
-        htmlFor="school/company"
+        htmlFor="schoolOrCompany"
         label="Escola/Empresa"
         placeholder="Informe o nome da escola em que o aluno estuda ou empresa em que o aluno trabalha"
-        {...register("school/company")}
+        {...register("schoolOrCompany")}
       />
 
       <TextInput

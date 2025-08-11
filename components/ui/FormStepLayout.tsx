@@ -4,6 +4,7 @@ import { Button } from "../../components/ui/Button/index.tsx";
 import IconArrowLeft from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-left.tsx";
 import IconArrowRight from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-right.tsx";
 import { useFormContext } from "react-hook-form";
+import { saveCustomer } from "../../services/saveCustomers.ts";
 
 interface StepItem {
   step: number;
@@ -32,8 +33,11 @@ export default function FormStepLayout({
 }: Props) {
   const { handleSubmit, getValues } = useFormContext();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const body = getValues();
     console.log("envia o form", getValues());
+    const response = await saveCustomer(body);
+    console.log("response aqui", response);
   };
 
   return (
