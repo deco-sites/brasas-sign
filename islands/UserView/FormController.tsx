@@ -15,15 +15,47 @@ export default function FormController({ units }) {
   const [step, setStep] = useState<Step>(0);
 
   const requiredFieldsByStep: Record<number, string[]> = {
-    1: ["fullName", "email", "phone", "birthDate", "country"],
+    1: ["residence", "fullName", "email", "phone", "birthDate", "country", "cpf"],
     2: ["cep", "neighborhood", "city", "uf", "branches", "module"],
     3: [
       "isStudentFinancialResponsible",
       "financialResponsibleAddressEqualsStudent",
+
+      //Campos dependentes do isStudentFinancialResponsible
+      "financialResponsiblePersonType",
+      "financialResponsibleName",
+      "financialResponsibleKinship",
+      "financialResponsibleBirthDate",
+      "financialResponsibleCpf",
+      "financialResponsiblePhone",
+      "financialResponsibleEmail",
+
+      //Campos dependentes do financialResponsibleAddressEqualsStudent
+      "financialResponsibleResidence",
+      "financialResponsibleCep",
+      "financialResponsibleResidenceNeighborhood",
+      "financialResponsibleCity",
+      "financialResponsibleUf",
     ],
     4: [
       "isStudentPedagogicalResponsible",
       "pedagogicalResponsibleAddressEqualsStudent",
+
+      //Campos dependentes do isStudentPedagogicalResponsible
+      "pedagogicalResponsiblePersonType",
+      "pedagogicalResponsibleName",
+      "pedagogicalResponsibleKinship",
+      "pedagogicalResponsibleBirthDate",
+      "pedagogicalResponsibleCpf",
+      "pedagogicalResponsiblePhone",
+      "pedagogicalResponsibleEmail",
+
+      //Campos dependentes do pedagogicalResponsibleAddressEqualsStudent
+      "pedagogicalResponsibleResidence",
+      "pedagogicalResponsibleCep",
+      "pedagogicalResponsibleResidenceNeighborhood",
+      "pedagogicalResponsibleCity",
+      "pedagogicalResponsibleUf",
     ],
     5: ["preference", "howFind", "interest"],
   };
