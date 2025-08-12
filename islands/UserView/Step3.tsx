@@ -17,6 +17,10 @@ export default function Step3(
   const financialResponsibleAddressEqualsStudent = watch(
     "financialResponsibleAddressEqualsStudent",
   );
+  const financialResponsibleResidence = watch("financialResponsibleResidence");
+  const financialResponsiblePersonType = watch(
+    "financialResponsiblePersonType",
+  );
   const cep = useWatch({
     control: form.control,
     name: "financialResponsibleCep",
@@ -121,7 +125,7 @@ export default function Step3(
       goToStep={goToStep}
     >
       <RadioInput
-        label="O próprio aluno é responsável financeiro?"
+        label="*O próprio aluno é responsável financeiro?"
         name="isStudentFinancialResponsible"
         value={watch("isStudentFinancialResponsible")}
         options={[
@@ -148,88 +152,230 @@ export default function Step3(
               { id: "pf", value: "pf", label: "Pessoa Fìsica" },
               { id: "pj", value: "pj", label: "Pessoa Jurídica" },
             ]}
-            register={register("financialResponsiblePersonType")}
+            register={register("financialResponsiblePersonType", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsiblePersonType && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsiblePersonType.message}
+            </span>
+          )}
 
           <TextInput
             htmlFor="financialResponsibleName"
-            label="Nome completo do responsável financeiro"
-            placeholder="Informe o nome completo do responsável financeiro"
-            {...register("financialResponsibleName")}
+            label={financialResponsiblePersonType === "pj"
+              ? "*Razão social do responsável financeiro"
+              : "*Nome completo do responsável financeiro"}
+            placeholder={financialResponsiblePersonType === "pj"
+              ? "Informe a razão social do responsável financeiro"
+              : "Informe o nome completo do responsável financeiro"}
+            error={!!errors.financialResponsibleName}
+            {...register("financialResponsibleName", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsibleName && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleName.message}
+            </span>
+          )}
 
           <TextInput
             htmlFor="financialResponsibleKinship"
-            label="Parentesco"
+            label="*Parentesco"
+            error={!!errors.financialResponsibleKinship}
             placeholder="Informe qual o parentesco com o responsável financeiro"
-            {...register("financialResponsibleKinship")}
+            {...register("financialResponsibleKinship", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsibleKinship && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleKinship.message}
+            </span>
+          )}
 
           <TextInput
             type="date"
             htmlFor="financialResponsibleBirthDate"
             label="Data de nascimento"
             placeholder="DD/MM/YYYY"
-            {...register("financialResponsibleBirthDate")}
+            error={!!errors.financialResponsibleBirthDate}
+            {...register("financialResponsibleBirthDate", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsibleBirthDate && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleBirthDate.message}
+            </span>
+          )}
 
           <TextInput
             htmlFor="financialResponsibleCpf"
-            label="CPF"
-            note="O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"
-            placeholder="Insira seu CPF"
-            {...register("financialResponsibleCpf")}
+            label={financialResponsiblePersonType === "pj" ? "CNPJ" : "CPF"}
+            note={financialResponsiblePersonType === "pj"
+              ? false
+              : "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"}
+            error={!!errors.financialResponsibleCpf}
+            placeholder={financialResponsiblePersonType === "pj"
+              ? "Informe o CNPJ do responsável financeiro"
+              : "Informe o CPF do responsável financeiro"}
+            {...register("financialResponsibleCpf", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsibleCpf && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleCpf.message}
+            </span>
+          )}
 
           <TextInput
             htmlFor="financialResponsiblePhone"
             label="Telefone"
             placeholder="(XX) XXXXX-XXXX"
+            error={!!errors.financialResponsiblePhone}
             mask={phoneMask}
-            {...register("financialResponsiblePhone")}
+            {...register("financialResponsiblePhone", {
+              validate: (value) => {
+                if (watch("isStudentFinancialResponsible") === "no") {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsiblePhone && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsiblePhone.message}
+            </span>
+          )}
+
+          <TextInput
+            htmlFor="financialResponsibleEmail"
+            label="*E-mail"
+            error={!!errors.financialResponsibleEmail}
+            placeholder="Insira seu e-mail"
+            {...register("financialResponsibleEmail", {
+              validate: (value) => {
+                if (
+                  watch("isStudentFinancialResponsible") === "no"
+                ) {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
+          />
+          {errors.financialResponsibleEmail && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleEmail.message}
+            </span>
+          )}
+
+          <RadioInput
+            label="*Endereço igual do aluno?"
+            name="financialResponsibleAddressEqualsStudent"
+            value={watch("financialResponsibleAddressEqualsStudent")}
+            options={[
+              { id: "yes", value: "yes", label: "Sim" },
+              { id: "no", value: "no", label: "Não" },
+            ]}
+            register={register("financialResponsibleAddressEqualsStudent", {
+              required: "Selecione uma opção",
+            })}
+          />
+          {errors.financialResponsibleAddressEqualsStudent && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleAddressEqualsStudent.message}
+            </span>
+          )}
         </>
       )}
 
-      <RadioInput
-        label="Endereço igual do aluno?"
-        name="financialResponsibleAddressEqualsStudent"
-        value={watch("financialResponsibleAddressEqualsStudent")}
-        options={[
-          { id: "yes", value: "yes", label: "Sim" },
-          { id: "no", value: "no", label: "Não" },
-        ]}
-        register={register("financialResponsibleAddressEqualsStudent", {
-          required: "Selecione uma opção",
-        })}
-      />
-      {errors.financialResponsibleAddressEqualsStudent && (
-        <span className="text-red-300 text-xs">
-          {errors.financialResponsibleAddressEqualsStudent.message}
-        </span>
-      )}
-
-      {financialResponsibleAddressEqualsStudent === "no" && (
+      {financialResponsibleAddressEqualsStudent === "no" &&
+        isStudentFinancialResponsible === "no" && (
         <>
           <RadioInput
-            label="Onde você mora?"
+            label="*Onde você mora?"
             name="financialResponsibleResidence"
             value={watch("financialResponsibleResidence")}
             options={[
-              { id: "br", value: "br", label: "Brasil" },
-              { id: "fora", value: "fora", label: "Fora do Brasil" },
+              { id: "br", value: "brasil", label: "Brasil" },
+              { id: "fora", value: "fora-do-brasil", label: "Fora do Brasil" },
             ]}
-            register={register("financialResponsibleResidence")}
+            register={register("financialResponsibleResidence", {
+              validate: (value) => {
+                if (
+                  watch("financialResponsibleAddressEqualsStudent") === "no"
+                ) {
+                  return (value && value.trim() !== "") || "Campo obrigatório";
+                }
+                return true;
+              },
+            })}
           />
+          {errors.financialResponsibleResidence && (
+            <span className="text-red-300 text-xs">
+              {errors.financialResponsibleResidence.message}
+            </span>
+          )}
 
-          <TextInput
-            htmlFor="financialResponsibleCep"
-            label="Cep"
-            placeholder="XX.XXX-XX"
-            maxLength={10}
-            mask={cepMask}
-            {...register("financialResponsibleCep")}
-          />
+          {financialResponsibleResidence === "brasil" && (
+            <>
+              <TextInput
+                htmlFor="financialResponsibleCep"
+                label="*Cep"
+                placeholder="XX.XXX-XX"
+                maxLength={10}
+                error={!!errors.financialResponsibleCep}
+                mask={cepMask}
+                {...register("financialResponsibleCep", {
+                  validate: (value) => {
+                    if (
+                      watch("financialResponsibleAddressEqualsStudent") === "no"
+                    ) {
+                      return (value && value.trim() !== "") ||
+                        "Campo obrigatório";
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleCep && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleCep.message}
+                </span>
+              )}
+            </>
+          )}
 
           <TextInput
             htmlFor="financialResponsibleAddress"
@@ -239,43 +385,95 @@ export default function Step3(
             {...register("financialResponsibleAddress")}
           />
 
-          <TextInput
-            htmlFor="financialResponsibleResidenceNumber"
-            label="Número"
-            placeholder="Informe o número da residência"
-            {...register("financialResponsibleResidenceNumber")}
-          />
+          {financialResponsibleResidence === "brasil" && (
+            <>
+              <TextInput
+                htmlFor="financialResponsibleResidenceNumber"
+                label="Número"
+                placeholder="Informe o número da residência"
+                {...register("financialResponsibleResidenceNumber")}
+              />
 
-          <TextInput
-            htmlFor="financialResponsibleResidenceComplement"
-            label="Complemento"
-            placeholder="Possui complemento?"
-            {...register("financialResponsibleResidenceComplement")}
-          />
+              <TextInput
+                htmlFor="financialResponsibleResidenceComplement"
+                label="Complemento"
+                placeholder="Possui complemento?"
+                {...register("financialResponsibleResidenceComplement")}
+              />
 
-          <TextInput
-            htmlFor="financialResponsibleResidenceNeighborhood"
-            label="Bairro"
-            disabled={disabledFields.neighborhood}
-            placeholder="Bairro"
-            {...register("financialResponsibleResidenceNeighborhood")}
-          />
+              <TextInput
+                htmlFor="financialResponsibleResidenceNeighborhood"
+                label="*Bairro"
+                disabled={disabledFields.neighborhood}
+                error={!!errors.financialResponsibleResidenceNeighborhood}
+                placeholder="Bairro"
+                {...register("financialResponsibleResidenceNeighborhood", {
+                  validate: (value) => {
+                    if (
+                      watch("financialResponsibleAddressEqualsStudent") === "no"
+                    ) {
+                      return (value && value.trim() !== "") ||
+                        "Campo obrigatório";
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleResidenceNeighborhood && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleResidenceNeighborhood.message}
+                </span>
+              )}
 
-          <TextInput
-            htmlFor="financialResponsibleCity"
-            label="Cidade"
-            disabled={disabledFields.city}
-            placeholder="Cidade"
-            {...register("financialResponsibleCity")}
-          />
+              <TextInput
+                htmlFor="financialResponsibleCity"
+                label="*Cidade"
+                disabled={disabledFields.city}
+                error={!!errors.financialResponsibleCity}
+                placeholder="Cidade"
+                {...register("financialResponsibleCity", {
+                  validate: (value) => {
+                    if (
+                      watch("financialResponsibleAddressEqualsStudent") === "no"
+                    ) {
+                      return (value && value.trim() !== "") ||
+                        "Campo obrigatório";
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleCity && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleCity.message}
+                </span>
+              )}
 
-          <TextInput
-            htmlFor="financialResponsibleUf"
-            label="Uf"
-            disabled={disabledFields.uf}
-            placeholder="Estado"
-            {...register("financialResponsibleUf")}
-          />
+              <TextInput
+                htmlFor="financialResponsibleUf"
+                label="*Uf"
+                disabled={disabledFields.uf}
+                error={!!errors.financialResponsibleUf}
+                placeholder="Estado"
+                {...register("financialResponsibleUf", {
+                  validate: (value) => {
+                    if (
+                      watch("financialResponsibleAddressEqualsStudent") === "no"
+                    ) {
+                      return (value && value.trim() !== "") ||
+                        "Campo obrigatório";
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleUf && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleUf.message}
+                </span>
+              )}
+            </>
+          )}
         </>
       )}
     </FormStepLayout>

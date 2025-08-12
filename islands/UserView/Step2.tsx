@@ -26,11 +26,7 @@ export default function Step2(
   }, [units]);
 
   const { register, watch, setValue, formState: { errors } } = form;
-
-  const options = [
-    { id: 1, value: "Option 1" },
-    { id: 2, value: "Option 2" },
-  ];
+  const residence = watch("residence");
 
   const cep = useWatch({ control: form.control, name: "cep" });
   const [viaCepReturn, setViaCepReturn] = useState({});
@@ -129,19 +125,23 @@ export default function Step2(
       goToPreviousStep={goToPreviousStep}
       goToStep={goToStep}
     >
-      <TextInput
-        htmlFor="cep"
-        label="*Cep"
-        placeholder="XX.XXX-XX"
-        maxLength={10}
-        error={errors.cep}
-        mask={cepMask}
-        {...register("cep", { required: "Informe o cep" })}
-      />
-      {errors.cep && (
-        <span className="text-red-300 text-xs">
-          {errors.cep.message}
-        </span>
+      {residence === "brasil" && (
+        <>
+          <TextInput
+            htmlFor="cep"
+            label="*Cep"
+            placeholder="XX.XXX-XX"
+            maxLength={10}
+            error={errors.cep}
+            mask={cepMask}
+            {...register("cep", { required: "Informe o cep" })}
+          />
+          {errors.cep && (
+            <span className="text-red-300 text-xs">
+              {errors.cep.message}
+            </span>
+          )}
+        </>
       )}
 
       <TextInput
@@ -152,65 +152,69 @@ export default function Step2(
         {...register("address")}
       />
 
-      <TextInput
-        htmlFor="number"
-        label="Número"
-        placeholder="Informe o número da residência"
-        {...register("number")}
-      />
+      {residence === "brasil" && (
+        <>
+          <TextInput
+            htmlFor="number"
+            label="Número"
+            placeholder="Informe o número da residência"
+            {...register("number")}
+          />
 
-      <TextInput
-        htmlFor="complement"
-        label="Complemento"
-        placeholder="Possui complemento?"
-        {...register("complement")}
-      />
+          <TextInput
+            htmlFor="complement"
+            label="Complemento"
+            placeholder="Possui complemento?"
+            {...register("complement")}
+          />
 
-      <TextInput
-        htmlFor="neighborhood"
-        label="*Bairro"
-        placeholder="Bairro"
-        error={errors.neighborhood}
-        disabled={disabledFields.neighborhood}
-        {...register("neighborhood", { required: "Informe o bairro" })}
-      />
-      {errors.neighborhood && (
-        <span className="text-red-300 text-xs">
-          {errors.neighborhood.message}
-        </span>
-      )}
+          <TextInput
+            htmlFor="neighborhood"
+            label="*Bairro"
+            placeholder="Bairro"
+            error={errors.neighborhood}
+            disabled={disabledFields.neighborhood}
+            {...register("neighborhood", { required: "Informe o bairro" })}
+          />
+          {errors.neighborhood && (
+            <span className="text-red-300 text-xs">
+              {errors.neighborhood.message}
+            </span>
+          )}
 
-      <TextInput
-        htmlFor="city"
-        label="*Cidade"
-        disabled={disabledFields.city}
-        error={errors.city}
-        placeholder="Cidade"
-        {...register("city", { required: "Informe a cidade" })}
-      />
-      {errors.city && (
-        <span className="text-red-300 text-xs">
-          {errors.city.message}
-        </span>
-      )}
+          <TextInput
+            htmlFor="city"
+            label="*Cidade"
+            disabled={disabledFields.city}
+            error={errors.city}
+            placeholder="Cidade"
+            {...register("city", { required: "Informe a cidade" })}
+          />
+          {errors.city && (
+            <span className="text-red-300 text-xs">
+              {errors.city.message}
+            </span>
+          )}
 
-      <TextInput
-        htmlFor="uf"
-        label="*Uf"
-        disabled={disabledFields.uf}
-        error={errors.uf}
-        placeholder="Estado"
-        {...register("uf", { required: "Informe a UF" })}
-      />
-      {errors.uf && (
-        <span className="text-red-300 text-xs">
-          {errors.uf.message}
-        </span>
+          <TextInput
+            htmlFor="uf"
+            label="*Uf"
+            disabled={disabledFields.uf}
+            error={errors.uf}
+            placeholder="Estado"
+            {...register("uf", { required: "Informe a UF" })}
+          />
+          {errors.uf && (
+            <span className="text-red-300 text-xs">
+              {errors.uf.message}
+            </span>
+          )}
+        </>
       )}
 
       <SelectInput
         name="branches"
-        label="*Unidades"
+        label="*Unidade"
         options={branches}
         value={watch("branches")}
         error={errors.branches}

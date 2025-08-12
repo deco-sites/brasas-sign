@@ -9,18 +9,28 @@ import CheckboxInput from "../../components/ui/CheckboxInput.tsx";
 import MultiInput from "../../components/ui/MultiInput.tsx";
 import { phoneMask } from "../../helpers/phoneMask.ts";
 import { useEffect, useState } from "preact/hooks";
+import { cpfMask } from "../../helpers/cpfMask.ts";
+import { textMask } from "../../helpers/textMask.ts";
 
 export default function Step1(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue, getValues, formState: { errors } } = form;
+  const {
+    register,
+    watch,
+    setValue,
+    getValues,
+    trigger,
+    formState: { errors },
+  } = form;
 
   const [countries, setCountries] = useState([]);
+  const residence = watch("residence");
 
-  const options = [
-    { id: 1, value: "Option 1" },
-    { id: 2, value: "Option 2" },
-  ];
+  useEffect(() => {
+    // Revalida o cpf toda vez que residence mudar
+    trigger("cpf");
+  }, [residence]);
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all?fields=name,flags")
@@ -47,15 +57,20 @@ export default function Step1(
       goToStep={goToStep}
     >
       <RadioInput
-        label="Onde você mora?"
+        label="*Onde você mora?"
         name="residence"
         value={watch("residence")}
         options={[
           { id: "br", value: "brasil", label: "Brasil" },
           { id: "fora", value: "fora-do-brasil", label: "Fora do Brasil" },
         ]}
-        register={register("residence")}
+        register={register("residence", { required: "Selecione uma opção" })}
       />
+      {errors.residence && (
+        <span className="text-red-300 text-xs">
+          {errors.residence.message}
+        </span>
+      )}
 
       <TextInput
         required
@@ -69,6 +84,7 @@ export default function Step1(
         htmlFor="fullName"
         label="*Nome completo do aluno"
         error={errors.fullName}
+        mask={textMask}
         placeholder="Insira o nome completo do aluno"
         {...register("fullName", {
           required: "Informe o nome completo do aluno",
@@ -99,6 +115,7 @@ export default function Step1(
         htmlFor="phone"
         label="*Telefone"
         placeholder="(XX) XXXXX-XXXX"
+        minLength={11}
         error={errors.phone}
         mask={phoneMask}
         {...register("phone", { required: "Informe o telefone" })}
@@ -125,11 +142,27 @@ export default function Step1(
 
       <TextInput
         htmlFor="cpf"
-        label="CPF"
-        note="O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"
+        label={residence === "brasil" ? "*CPF" : "CPF"}
+        note={residence === "brasil"
+          ? false
+          : "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"}
+        mask={cpfMask}
+        minLength={14}
+        error={errors.cpf}
         placeholder="Insira seu CPF"
-        {...register("cpf")}
+        {...register("cpf", {
+          required: residence === "brasil" ? "Informe o CPF" : false,
+          minLength: {
+            value: 14,
+            message: "CPF deve ter pelo menos 11 dígitos",
+          },
+        })}
       />
+      {errors.cpf && (
+        <span className="text-red-300 text-xs">
+          {errors.cpf.message}
+        </span>
+      )}
 
       <SelectInput
         name="country"
