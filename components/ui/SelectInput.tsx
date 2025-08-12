@@ -11,9 +11,9 @@ interface Option {
 export interface InputProps {
   label: string;
   options: Option[];
-  value?: string;
+  value?: string | Option | null;
   placeholder: string;
-  setValue?: (name: string, value: string) => void;
+  setValue?: (name: string, value: any) => void;
   register?: UseFormRegisterReturn;
   name?: string;
   error?: boolean;
@@ -41,11 +41,17 @@ export default function Select(
     event.stopPropagation();
   };
 
+  const displayLabel = typeof value === "string"
+    ? value
+    : value && typeof value === "object"
+    ? (value as Option).value
+    : placeholder;
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: Option) => {
     if (setValue && name) setValue(name, option);
     setIsOpen(false);
   };
@@ -60,8 +66,10 @@ export default function Select(
       <input
         type="hidden"
         name={name}
-        value={value}
-        {...register}
+        value={value
+          ? (typeof value === "string" ? value : JSON.stringify(value))
+          : ""}
+        {...(register ?? {})}
       />
 
       <div className="relative w-full">
@@ -73,7 +81,7 @@ export default function Select(
           ref={avatarRef}
           onClick={toggleDropdown}
         >
-          <span>{value || placeholder}</span>
+          <span>{displayLabel || placeholder}</span>
           <svg
             className={`transform transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
@@ -105,7 +113,7 @@ export default function Select(
               <div
                 key={index}
                 className="flex gap-4 items-center px-4 text-center cursor-pointer mb-[33px] last:mb-0"
-                onClick={() => handleOptionClick(option.value)}
+                onClick={() => handleOptionClick(option)}
               >
                 {option.image && (
                   <img

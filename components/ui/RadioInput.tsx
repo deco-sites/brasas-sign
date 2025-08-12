@@ -45,6 +45,7 @@ export default function RadioInput({
             htmlFor={`${name}-${option.id}`}
             className="flex items-center gap-2 cursor-pointer"
           >
+            {/* Radio escondido */}
             <input
               type="radio"
               id={`${name}-${option.id}`}
@@ -53,8 +54,17 @@ export default function RadioInput({
               checked={value === option.value}
               onChange={onChange}
               {...register}
-              className="accent-blue-600 w-5 h-5 cursor-pointer"
+              className="hidden peer"
             />
+            {/* Círculo customizado */}
+            <span
+              className={`
+              w-5 h-5 rounded-full border-2 border-blue-300 
+              peer-checked:bg-blue-300 peer-checked:border-blue-300
+              transition-colors duration-150
+            `}
+            >
+            </span>
             <span className="text-sm text-gray-800">{option.label}</span>
           </label>
         ))}

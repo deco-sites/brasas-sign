@@ -25,7 +25,7 @@ export default function Step5(
       <div className="flex flex-col xl:flex-row gap-4">
         <div className="flex flex-col">
           <CheckboxInput
-            label="Por que você deu preferência ao BRASAS?"
+            label="*Por que você deu preferência ao BRASAS?"
             name="preference"
             options={[
               {
@@ -84,10 +84,19 @@ export default function Step5(
               {...register("whichOthersPreferences")}
             />
           )}
+          {Array.isArray(preference) &&
+            preference.includes("indication") && (
+            <TextInput
+              htmlFor="whichIndicationPreferences"
+              label="Nome"
+              placeholder="Informe o nome de quem te indicou o BRASAS"
+              {...register("whichIndicationPreferences")}
+            />
+          )}
         </div>
         <div className="flex flex-col">
           <CheckboxInput
-            label="Como conheceu o curso do BRASAS?"
+            label="*Como conheceu o curso do BRASAS?"
             name="howFind"
             options={[
               {
@@ -146,7 +155,7 @@ export default function Step5(
 
       <div className="max-w-fit">
         <CheckboxInput
-          label="Qual o seu interesse em aprender português?"
+          label="*Qual o seu interesse em aprender português?"
           name="interest"
           options={[
             {

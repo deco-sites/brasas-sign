@@ -9,15 +9,16 @@ export default function Step6(
 ) {
   const { register, watch, setValue } = form;
 
-  // Registrar os campos para o watch funcionar
   useEffect(() => {
     register("signature", { required: true });
+    register("signatureData", { required: false });
     register("agree", { required: true });
   }, [register]);
 
   const sigCanvas = useRef(null);
   const moduleType = watch("module");
   const signature = watch("signature");
+  const signatureData = watch("signatureData");
   const agree = watch("agree");
 
   // Salva a assinatura no form
@@ -25,7 +26,10 @@ export default function Step6(
     const base64 = sigCanvas.current
       .getTrimmedCanvas()
       .toDataURL("image/png");
+    const data = sigCanvas.current.toData();
+
     setValue("signature", base64, { shouldValidate: true });
+    setValue("signatureData", data, { shouldValidate: false });
   };
 
   // Limpa a assinatura
@@ -33,17 +37,16 @@ export default function Step6(
     e.preventDefault();
     sigCanvas.current.clear();
     setValue("signature", "", { shouldValidate: true });
+    setValue("signatureData", null, { shouldValidate: false });
   };
 
   // Restaura a assinatura se o usuário voltar e avançar o step
   useEffect(() => {
-  if (signature && sigCanvas.current) {
-    sigCanvas.current.fromDataURL(signature);
-  }
-  // executa apenas na montagem
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-
+    if (signatureData && sigCanvas.current) {
+      sigCanvas.current.fromData(signatureData);
+    }
+    // executa apenas na montagem
+  }, []);
 
   return (
     <FormStepLayout

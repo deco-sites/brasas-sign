@@ -20,6 +20,7 @@ interface FormValues {
   financialResponsibleName: string;
   financialResponsiblePersonType: string;
   financialResponsiblePhone: string;
+  financialResponsibleEmail: string;
   financialResponsibleResidence: string | null;
   financialResponsibleResidenceComplement: string | null;
   financialResponsibleResidenceNeighborhood: string;
@@ -45,6 +46,7 @@ interface FormValues {
   pedagogicalResponsibleName: string;
   pedagogicalResponsiblePersonType: string;
   pedagogicalResponsiblePhone: string;
+  pedagogicalResponsibleEmail: string;
   pedagogicalResponsibleResidence: string | null;
   pedagogicalResponsibleResidenceComplement: string | null;
   pedagogicalResponsibleResidenceNeighborhood: string;
@@ -53,7 +55,7 @@ interface FormValues {
   phone: string;
   preference: string[];
   residence: string;
-  ["school/company"]: string;
+  schoolOrCompany: string;
   signature: string;
   uf: string;
   whichOthersHowFind: string;
@@ -83,23 +85,25 @@ export const saveCustomer = async (body: FormValues) => {
 
     // 2. Mapear os dados do form para o formato esperado pela API
     const payload = {
-      unit_id: 45, //Mudar
-      unit_name: "Recreio", //Mudar
-      is_online_module: true,
+      unit_id: body.branches.id,
+      unit_name: body.branches.value,
+      is_online_module: body.module === "online",
       data_authorization: body.agree,
       name: body.fullName,
       gender: "M", //Não tem no form
       tax_number: body.cpf,
       national_id: null, //Mudar
       birth_date: body.birthDate,
-      origin_country: body.country,
+      origin_country: body.country.value,
       address: body.address,
       address_number: Number(body.number),
       address_complement: body.complement,
       address_neighborhood: body.neighborhood,
       address_city: body.city,
       address_state: body.uf,
-      address_zip_code: body?.cep?.replace(/\D/g, ""),
+      address_zip_code: body.residence === "fora-do-brasil"
+        ? "22775090"
+        : body?.cep?.replace(/\D/g, ""),
       phone_number: body.phone,
       email: body.email,
       signature: body.signature,
@@ -118,15 +122,19 @@ export const saveCustomer = async (body: FormValues) => {
         address_neighborhood: body.financialResponsibleResidenceNeighborhood,
         address_city: body.financialResponsibleCity,
         address_state: body.financialResponsibleUf,
-        address_zip_code: body?.financialResponsibleCep?.replace(/\D/g, "") ||
-          null,
+        address_zip_code:
+          body.financialResponsibleResidence === "fora-do-brasil"
+            ? "22775090"
+            : body?.financialResponsibleCep?.replace(/\D/g, "") ||
+              null,
         phone_number: body.financialResponsiblePhone || null,
-        email: "teste.pai@test.com", //Não tem no form
+        email: body.financialResponsibleEmail,
       },
       educational_administrator: {
         same_student_address:
           body.pedagogicalResponsibleAddressEqualsStudent === "yes",
-        same_educational_financial_administrator: false,
+        same_educational_financial_administrator:
+          body.isStudentPedagogicalResponsible === "yes",
         relationship: body.pedagogicalResponsibleKinship,
         name: body.pedagogicalResponsibleName,
         tax_number: body.pedagogicalResponsibleCpf,
@@ -139,10 +147,13 @@ export const saveCustomer = async (body: FormValues) => {
         address_neighborhood: body.pedagogicalResponsibleResidenceNeighborhood,
         address_city: body.pedagogicalResponsibleCity,
         address_state: body.pedagogicalResponsibleUf,
-        address_zip_code: body?.pedagogicalResponsibleCep?.replace(/\D/g, "") ||
-          null,
+        address_zip_code:
+          body.pedagogicalResponsibleResidence === "fora-do-brasil"
+            ? "22775090"
+            : body?.pedagogicalResponsibleCep?.replace(/\D/g, "") ||
+              null,
         phone_number: body.pedagogicalResponsiblePhone || null,
-        email: "teste.mae@test.com", //Não tem no form
+        email: body.pedagogicalResponsibleEmail,
       },
       marketing: {
         brasas_preference: body.preference,
@@ -152,7 +163,7 @@ export const saveCustomer = async (body: FormValues) => {
         brasas_language_interest: body.interest,
         brasas_language_interest_details: body.whichOthersInterest,
         spoken_languages: body.languages,
-        school_company_origin: body["school/company"],
+        school_company_origin: body.schoolOrCompany,
       },
     };
 
