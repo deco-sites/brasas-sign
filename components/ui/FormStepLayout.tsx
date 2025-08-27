@@ -5,6 +5,9 @@ import IconArrowLeft from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-
 import IconArrowRight from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-right.tsx";
 import { useFormContext } from "react-hook-form";
 import { saveCustomer } from "../../services/saveCustomers.ts";
+import { useState } from "preact/hooks";
+import { invoke } from "../../runtime.ts";
+import { getBranch } from "../../services/getBranch.ts";
 
 interface StepItem {
   step: number;
@@ -33,8 +36,98 @@ export default function FormStepLayout({
 }: Props) {
   const { handleSubmit, getValues } = useFormContext();
 
+  const getPdfAsBase64 = async (fileName: string) => {
+    const response = await fetch(`/${fileName}`);
+    const blob = await response.blob();
+
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = (reader.result as string).split(",")[1];
+        resolve(base64data);
+      };
+      reader.onerror = reject;
+    });
+  };
+
+  const handleSendEmailtoUser = async () => {
+    const fileName = getValues().module === "online"
+      ? "BOL.pdf"
+      : "PRESENCIAL.pdf"; //Limite de tamanho. Ao tentar enviar 545kb dava sucesso mas o e-mail não era enviado
+
+    const base64File = await getPdfAsBase64(fileName);
+
+    const emailSent = await invoke.site.actions.sendEmail({
+      RecipientsEmailArr: [{ email: getValues().email }],
+      subject: "Welcome to BRASAS!",
+      attachments: {
+        content: base64File,
+        filename: fileName,
+        type: "application/pdf",
+      },
+
+      data: `
+  <p>Olá, <strong>${getValues().fullName}</strong>, bem-vindo(a) ao BRASAS.</p>
+  <p>Detalhes do cadastro:</p>
+  <p>-----------------------------</p>
+  <p>
+    <strong>E-mail:</strong> ${getValues().email}<br />
+    <strong>Telefone:</strong> ${getValues().phone}
+  </p>
+`,
+    });
+
+    console.log("emailSent", emailSent);
+  };
+
+  const handleSendEmailtoUnity = async () => {
+    const selectedBranch = getValues().branches;
+
+    // 1. Obter token de uso único
+    const loginRes = await fetch(
+      "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366?exp_secs=20",
+      {
+        method: "GET",
+        headers: {
+          "community_id": "sophia-4375-44",
+        },
+      },
+    );
+
+    if (!loginRes.ok) {
+      throw new Error(`Erro ao obter token: ${loginRes.statusText}`);
+    }
+
+    const loginData = await loginRes.json();
+    const token = loginData.access_token;
+
+    const branch = await getBranch(selectedBranch.id, token);
+    console.log("Unidade:", branch);
+
+    const emailSent = await invoke.site.actions.sendEmail({
+      RecipientsEmailArr: [{ email: branch.email }],
+      //RecipientsEmailArr: [{ email: getValues().email }],
+      subject: "Cadastro Realizado",
+      data: `
+<p>Olá, ${branch.name || "Unidade BRASAS"}</p>
+<p>O(A) aluno(a) ${getValues().fullName} completou o cadastro no formulário de matrícula.</p>
+<p>Detalhes do cadastro:</p>
+<p>-----------------------------</p>
+<p>
+  <strong>E-mail:</strong> ${getValues().email}<br />
+  <strong>Telefone:</strong> ${getValues().phone}
+</p>
+`,
+    });
+
+    console.log("emailSent", emailSent);
+  };
+
   const onSubmit = async () => {
     const body = getValues();
+    handleSendEmailtoUser();
+    handleSendEmailtoUnity();
     console.log("envia o form", getValues());
     const response = await saveCustomer(body);
     console.log("response aqui", response);

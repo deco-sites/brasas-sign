@@ -2,15 +2,23 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $$$$$$$$$0 from "./actions/sendEmail.ts";
 import * as $$$$$$$$$$$0 from "./apps/deco/htmx.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
+import * as $$$0 from "./loaders/sendgridConfig.ts";
 import * as $$$$$$0 from "./sections/Theme/Theme.tsx";
 import * as $$$$$$1 from "./sections/UserView/FormRender.tsx";
 
 const manifest = {
+  "loaders": {
+    "site/loaders/sendgridConfig.ts": $$$0,
+  },
   "sections": {
     "site/sections/Theme/Theme.tsx": $$$$$$0,
     "site/sections/UserView/FormRender.tsx": $$$$$$1,
+  },
+  "actions": {
+    "site/actions/sendEmail.ts": $$$$$$$$$0,
   },
   "apps": {
     "site/apps/deco/htmx.ts": $$$$$$$$$$$0,
