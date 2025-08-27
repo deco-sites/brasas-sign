@@ -5,7 +5,7 @@ interface FormValues {
   branches: string;
   cep: string;
   city: string;
-  complement: string | null;
+  complement: string;
   country: string;
   courseType: string;
   cpf: string;
@@ -21,8 +21,8 @@ interface FormValues {
   financialResponsiblePersonType: string;
   financialResponsiblePhone: string;
   financialResponsibleEmail: string;
-  financialResponsibleResidence: string | null;
-  financialResponsibleResidenceComplement: string | null;
+  financialResponsibleResidence: string;
+  financialResponsibleResidenceComplement: string;
   financialResponsibleResidenceNeighborhood: string;
   financialResponsibleResidenceNumber: string;
   financialResponsibleUf: string;
@@ -47,8 +47,8 @@ interface FormValues {
   pedagogicalResponsiblePersonType: string;
   pedagogicalResponsiblePhone: string;
   pedagogicalResponsibleEmail: string;
-  pedagogicalResponsibleResidence: string | null;
-  pedagogicalResponsibleResidenceComplement: string | null;
+  pedagogicalResponsibleResidence: string;
+  pedagogicalResponsibleResidenceComplement: string;
   pedagogicalResponsibleResidenceNeighborhood: string;
   pedagogicalResponsibleResidenceNumber: string;
   pedagogicalResponsibleUf: string;
@@ -84,19 +84,19 @@ export const saveCustomer = async (body: FormValues) => {
     const token = loginData.access_token;
 
     // 2. Mapear os dados do form para o formato esperado pela API
-    const payload = {
+    const payload: any = {
       unit_id: body.branches.id,
       unit_name: body.branches.value,
       is_online_module: body.module === "online",
       data_authorization: body.agree,
       name: body.fullName,
-      gender: "M", //Não tem no form
+      gender: "M",
       tax_number: body.cpf,
-      national_id: null, //Mudar
-      birth_date: body.birthDate,
+      national_id: "",
+      birth_date: body.birthDate || "0001-01-01",
       origin_country: body.country.value,
       address: body.address,
-      address_number: Number(body.number),
+      address_number: Number(body.number) || 0,
       address_complement: body.complement,
       address_neighborhood: body.neighborhood,
       address_city: body.city,
@@ -107,54 +107,61 @@ export const saveCustomer = async (body: FormValues) => {
       phone_number: body.phone,
       email: body.email,
       signature: body.signature,
-      finance_administrator: {
-        same_student_address:
-          body.financialResponsibleAddressEqualsStudent === "yes",
-        relationship: body.financialResponsibleKinship,
-        name: body.financialResponsibleName,
-        tax_number: body.financialResponsibleCpf,
-        national_id: null, //Mudar
-        birth_date: body.financialResponsibleBirthDate || null,
-        address: body.financialResponsibleAddress,
-        address_number: Number(body.financialResponsibleResidenceNumber) ||
-          null,
-        address_complement: body.financialResponsibleResidenceComplement,
-        address_neighborhood: body.financialResponsibleResidenceNeighborhood,
-        address_city: body.financialResponsibleCity,
-        address_state: body.financialResponsibleUf,
-        address_zip_code:
-          body.financialResponsibleResidence === "fora-do-brasil"
-            ? "22775090"
-            : body?.financialResponsibleCep?.replace(/\D/g, "") ||
-              null,
-        phone_number: body.financialResponsiblePhone || null,
-        email: body.financialResponsibleEmail,
-      },
-      educational_administrator: {
-        same_student_address:
-          body.pedagogicalResponsibleAddressEqualsStudent === "yes",
-        same_educational_financial_administrator:
-          body.isStudentPedagogicalResponsible === "yes",
-        relationship: body.pedagogicalResponsibleKinship,
-        name: body.pedagogicalResponsibleName,
-        tax_number: body.pedagogicalResponsibleCpf,
-        national_id: null, //Mudar
-        birth_date: body.pedagogicalResponsibleBirthDate || null,
-        address: body.pedagogicalResponsibleAddress,
-        address_number: Number(body.pedagogicalResponsibleResidenceNumber) ||
-          null,
-        address_complement: body.pedagogicalResponsibleResidenceComplement,
-        address_neighborhood: body.pedagogicalResponsibleResidenceNeighborhood,
-        address_city: body.pedagogicalResponsibleCity,
-        address_state: body.pedagogicalResponsibleUf,
-        address_zip_code:
-          body.pedagogicalResponsibleResidence === "fora-do-brasil"
-            ? "22775090"
-            : body?.pedagogicalResponsibleCep?.replace(/\D/g, "") ||
-              null,
-        phone_number: body.pedagogicalResponsiblePhone || null,
-        email: body.pedagogicalResponsibleEmail,
-      },
+
+      // Adiciona finance_administrator somente se isStudentFinancialResponsible === "no"
+      ...(body.isStudentFinancialResponsible === "no" && {
+        finance_administrator: {
+          same_student_address:
+            body.financialResponsibleAddressEqualsStudent === "yes",
+          relationship: body.financialResponsibleKinship,
+          name: body.financialResponsibleName,
+          tax_number: body.financialResponsibleCpf,
+          national_id: "",
+          birth_date: body.financialResponsibleBirthDate || "0001-01-01",
+          address: body.financialResponsibleAddress,
+          address_number: Number(body.financialResponsibleResidenceNumber) || 0,
+          address_complement: body.financialResponsibleResidenceComplement,
+          address_neighborhood: body.financialResponsibleResidenceNeighborhood,
+          address_city: body.financialResponsibleCity,
+          address_state: body.financialResponsibleUf,
+          address_zip_code:
+            body.financialResponsibleResidence === "fora-do-brasil"
+              ? "22775090"
+              : body?.financialResponsibleCep?.replace(/\D/g, "") || "",
+          phone_number: body.financialResponsiblePhone || "",
+          email: body.financialResponsibleEmail,
+        },
+      }),
+
+      // Adiciona educational_administrator somente se isStudentPedagogicalResponsible === "no"
+      ...(body.isStudentPedagogicalResponsible === "no" && {
+        educational_administrator: {
+          same_student_address:
+            body.pedagogicalResponsibleAddressEqualsStudent === "yes",
+          same_educational_financial_administrator:
+            body.isStudentPedagogicalResponsible === "yes",
+          relationship: body.pedagogicalResponsibleKinship,
+          name: body.pedagogicalResponsibleName,
+          tax_number: body.pedagogicalResponsibleCpf,
+          national_id: "",
+          birth_date: body.pedagogicalResponsibleBirthDate || "0001-01-01",
+          address: body.pedagogicalResponsibleAddress,
+          address_number: Number(body.pedagogicalResponsibleResidenceNumber) ||
+            0,
+          address_complement: body.pedagogicalResponsibleResidenceComplement,
+          address_neighborhood:
+            body.pedagogicalResponsibleResidenceNeighborhood,
+          address_city: body.pedagogicalResponsibleCity,
+          address_state: body.pedagogicalResponsibleUf,
+          address_zip_code:
+            body.pedagogicalResponsibleResidence === "fora-do-brasil"
+              ? "22775090"
+              : body?.pedagogicalResponsibleCep?.replace(/\D/g, "") || "",
+          phone_number: body.pedagogicalResponsiblePhone || "",
+          email: body.pedagogicalResponsibleEmail,
+        },
+      }),
+
       marketing: {
         brasas_preference: body.preference,
         brasas_preference_others_details: body.whichOthersPreferences,

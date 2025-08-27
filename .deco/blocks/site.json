@@ -30,5 +30,27 @@
   "firstByteThresholdMS": true,
   "theme": {
     "__resolveType": "Neutral"
+  },
+  "abTesting": {
+    "replaces": [],
+    "includeScriptsToHead": {
+      "includes": []
+    },
+    "includeScriptsToBody": {
+      "includes": []
+    }
+  },
+  "flavor": {
+    "framework": "fresh"
+  },
+  "whilelistURLs": [],
+  "whitelistPatterns": [],
+  "sendgrid": {
+    "__resolveType": "site/loaders/sendgridConfig.ts",
+    "sendgridApiKey": {
+      "__resolveType": "website/loaders/secret.ts",
+      "encrypted": "d2d33055fd7bbe820944b027e607c5b406d2a88617ac834008b6f4f33313fa7ae423ec91a75b5729d30d718b77319b3f53fb0515722bac8b80da9e2469734b86d9e6e14bd6aba1bb6115abed18d09107",
+      "name": "SENDGRID_API_KEY"
+    }
   }
 }
