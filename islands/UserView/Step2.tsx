@@ -19,7 +19,7 @@ export default function Step2(
     console.log("unidades", units);
     setBranches(
       units?.map((unit, index) => ({
-        id: index + 1,
+        id: unit.id,
         value: unit.internal_name,
       })),
     );
