@@ -14,11 +14,7 @@ interface Props {
 }
 
 export default function FormRender({ units }: Props) {
-  return (
-    
-      <FormController units={units} />
-
-  );
+  return <FormController units={units} />;
 }
 
 export const loader = async (props: Props, req: Request, ctx: FnContext) => {
@@ -47,7 +43,6 @@ export const loader = async (props: Props, req: Request, ctx: FnContext) => {
   );
 
   const unitsData = await unitsRes.json();
-  console.log("unitsData", unitsData);
 
   return {
     ...props,

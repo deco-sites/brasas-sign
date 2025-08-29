@@ -81,7 +81,7 @@ const sendEmail = async (
     ];
   }
 
-  console.log("bateu aqui no sendgrid");
+  
   try {
     const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
       method: "POST",

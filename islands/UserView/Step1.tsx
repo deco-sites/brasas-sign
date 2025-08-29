@@ -184,7 +184,7 @@ export default function Step1(
         htmlFor="languages"
         label="Quais idiomas você fala?"
         placeholder="informe um idioma"
-        onChangeValues={(values) => console.log(values)}
+        //onChangeValues={(values) => {console.log(values)}}
         setValue={setValue}
         getValues={getValues}
       />
