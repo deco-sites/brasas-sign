@@ -16,7 +16,6 @@ export default function Step2(
   const [branches, setBranches] = useState([]);
 
   useEffect(() => {
-    console.log("unidades", units);
     setBranches(
       units?.map((unit, index) => ({
         id: unit.id,

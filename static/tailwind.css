@@ -2975,6 +2975,10 @@ html {
 .text-center {
   text-align: center;
 }
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
 .text-5xl {
   font-size: 3rem;
   line-height: 1;

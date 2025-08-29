@@ -192,7 +192,7 @@ export const saveCustomer = async (body: FormValues) => {
     }
 
     const data = await response.json();
-    console.log("retorno do save", data);
+    //console.log("retorno do save", data);
     return data;
   } catch (error) {
     console.error("Erro ao salvar cliente:", error);
