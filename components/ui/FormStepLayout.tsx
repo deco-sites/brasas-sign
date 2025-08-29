@@ -8,6 +8,7 @@ import { saveCustomer } from "../../services/saveCustomers.ts";
 import { useState } from "preact/hooks";
 import { invoke } from "../../runtime.ts";
 import { getBranch } from "../../services/getBranch.ts";
+import { useFinishForm } from "../../sdk/useFinishForm.ts";
 
 interface StepItem {
   step: number;
@@ -35,6 +36,7 @@ export default function FormStepLayout({
   isSubmitDisabled = false,
 }: Props) {
   const { handleSubmit, getValues } = useFormContext();
+  const { isFormFinished } = useFinishForm();
 
   const getPdfAsBase64 = async (fileName: string) => {
     const response = await fetch(`/${fileName}`);
@@ -54,7 +56,7 @@ export default function FormStepLayout({
   const handleSendEmailtoUser = async () => {
     const fileName = getValues().module === "online"
       ? "BOL.pdf"
-      : "PRESENCIAL.pdf"; //Limite de tamanho. Ao tentar enviar 545kb dava sucesso mas o e-mail não era enviado
+      : "PRESENCIAL.pdf";
 
     const base64File = await getPdfAsBase64(fileName);
 
@@ -77,8 +79,6 @@ export default function FormStepLayout({
   </p>
 `,
     });
-
-    console.log("emailSent", emailSent);
   };
 
   const handleSendEmailtoUnity = async () => {
@@ -103,7 +103,6 @@ export default function FormStepLayout({
     const token = loginData.access_token;
 
     const branch = await getBranch(selectedBranch.id, token);
-    console.log("Unidade:", branch);
 
     const emailSent = await invoke.site.actions.sendEmail({
       RecipientsEmailArr: [{ email: branch.email }],
@@ -120,17 +119,14 @@ export default function FormStepLayout({
 </p>
 `,
     });
-
-    console.log("emailSent", emailSent);
   };
 
   const onSubmit = async () => {
     const body = getValues();
     handleSendEmailtoUser();
     handleSendEmailtoUnity();
-    console.log("envia o form", getValues());
+    isFormFinished.value = true;
     const response = await saveCustomer(body);
-    console.log("response aqui", response);
   };
 
   return (

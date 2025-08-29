@@ -26,7 +26,7 @@ export const getBranch = async (
     }
 
     const data: BranchDetails = await response.json();
-    console.log("Branch details:", data);
+
     return data;
   } catch (error) {
     console.error("Erro no getBranch:", error);

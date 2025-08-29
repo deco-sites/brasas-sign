@@ -8,14 +8,25 @@ import Step4 from "./Step4.tsx";
 import Step5 from "./Step5.tsx";
 import Step6 from "./Step6.tsx";
 import { UnitsProvider } from "../../contexts/UnitsContext.tsx";
+import { useFinishForm } from "../../sdk/useFinishForm.ts";
+import FormFinished from "../../components/ui/FormFinished.tsx";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export default function FormController({ units }) {
   const [step, setStep] = useState<Step>(0);
+  const { isFormFinished } = useFinishForm();
 
   const requiredFieldsByStep: Record<number, string[]> = {
-    1: ["residence", "fullName", "email", "phone", "birthDate", "country", "cpf"],
+    1: [
+      "residence",
+      "fullName",
+      "email",
+      "phone",
+      "birthDate",
+      "country",
+      "cpf",
+    ],
     2: ["cep", "neighborhood", "city", "uf", "branches", "module"],
     3: [
       "isStudentFinancialResponsible",
@@ -124,33 +135,31 @@ export default function FormController({ units }) {
 
   const CurrentStepComponent = steps[step];
 
-  const nextStep = (data) => {
-    console.log("Foi pro próximo passo", data);
-
-    setStep((prev) => (prev + 1) as Step);
-  };
-
   return (
     <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
       <UnitsProvider units={units}>
         <FormProvider {...form}>
-          <CurrentStepComponent
-            step={step}
-            goToNextStep={goToNextStepWithValidation}
-            goToPreviousStep={() => {
-              if (step === 0) {
-                setStep(0);
-              } else {
-                setStep((prev) => (prev - 1) as Step);
-              }
-            }}
-            resetForm={() => {
-              setStep(0);
-            }}
-            stepList={stepList}
-            goToStep={goToStepWithValidation}
-            form={form}
-          />
+          {isFormFinished.value
+            ? <FormFinished form={form} setStep={setStep} />
+            : (
+              <CurrentStepComponent
+                step={step}
+                goToNextStep={goToNextStepWithValidation}
+                goToPreviousStep={() => {
+                  if (step === 0) {
+                    setStep(0);
+                  } else {
+                    setStep((prev) => (prev - 1) as Step);
+                  }
+                }}
+                resetForm={() => {
+                  setStep(0);
+                }}
+                stepList={stepList}
+                goToStep={goToStepWithValidation}
+                form={form}
+              />
+            )}
         </FormProvider>
       </UnitsProvider>
     </div>
