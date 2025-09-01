@@ -8,6 +8,8 @@ import { getCep } from "../../services/cep.ts";
 import { cepMask } from "../../helpers/cepMask.ts";
 import { useWatch } from "react-hook-form";
 import { useUnits } from "../../contexts/UnitsContext.tsx";
+import { useTranslations } from "../../sdk/useTranslations.ts";
+import { Step2Data } from "../../data/Step2/Step2Data.ts";
 
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -116,6 +118,8 @@ export default function Step2(
     setValue("uf", viaCepReturn.uf || "");
   }, [viaCepReturn, viaCepLoaded, setValue]);
 
+  const data = useTranslations(Step2Data);
+
   return (
     <FormStepLayout
       steps={stepList}
@@ -128,12 +132,12 @@ export default function Step2(
         <>
           <TextInput
             htmlFor="cep"
-            label="*Cep"
-            placeholder="XX.XXX-XX"
+            label={data.cep.label}
+            placeholder={data.cep.placeholder}
             maxLength={10}
             error={errors.cep}
             mask={cepMask}
-            {...register("cep", { required: "Informe o cep" })}
+            {...register("cep", { required: data.cep.requiredError })}
           />
           {errors.cep && (
             <span className="text-red-300 text-xs">
@@ -145,9 +149,9 @@ export default function Step2(
 
       <TextInput
         htmlFor="address"
-        label="Endereço"
+        label={data.address.label}
         disabled={disabledFields.address}
-        placeholder="Informe o nome da rua"
+        placeholder={data.address.placeholder}
         {...register("address")}
       />
 
@@ -155,25 +159,27 @@ export default function Step2(
         <>
           <TextInput
             htmlFor="number"
-            label="Número"
-            placeholder="Informe o número da residência"
+            label={data.number.label}
+            placeholder={data.number.placeholder}
             {...register("number")}
           />
 
           <TextInput
             htmlFor="complement"
-            label="Complemento"
-            placeholder="Possui complemento?"
+            label={data.complement.label}
+            placeholder={data.complement.placeholder}
             {...register("complement")}
           />
 
           <TextInput
             htmlFor="neighborhood"
-            label="*Bairro"
-            placeholder="Bairro"
+            label={data.neighborhood.label}
+            placeholder={data.neighborhood.placeholder}
             error={errors.neighborhood}
             disabled={disabledFields.neighborhood}
-            {...register("neighborhood", { required: "Informe o bairro" })}
+            {...register("neighborhood", {
+              required: data.neighborhood.requiredError,
+            })}
           />
           {errors.neighborhood && (
             <span className="text-red-300 text-xs">
@@ -183,11 +189,11 @@ export default function Step2(
 
           <TextInput
             htmlFor="city"
-            label="*Cidade"
+            label={data.city.label}
             disabled={disabledFields.city}
             error={errors.city}
-            placeholder="Cidade"
-            {...register("city", { required: "Informe a cidade" })}
+            placeholder={data.city.placeholder}
+            {...register("city", { required: data.city.requiredError })}
           />
           {errors.city && (
             <span className="text-red-300 text-xs">
@@ -197,11 +203,11 @@ export default function Step2(
 
           <TextInput
             htmlFor="uf"
-            label="*Uf"
+            label={data.uf.label}
             disabled={disabledFields.uf}
             error={errors.uf}
-            placeholder="Estado"
-            {...register("uf", { required: "Informe a UF" })}
+            placeholder={data.uf.placeholder}
+            {...register("uf", { required: data.uf.requiredError })}
           />
           {errors.uf && (
             <span className="text-red-300 text-xs">
@@ -213,12 +219,14 @@ export default function Step2(
 
       <SelectInput
         name="branches"
-        label="*Unidade"
+        label={data.branches.label}
         options={branches}
         value={watch("branches")}
         error={errors.branches}
-        placeholder="Selecione uma opção"
-        register={register("branches", { required: "Selecione uma opção" })}
+        placeholder={data.branches.placeholder}
+        register={register("branches", {
+          required: data.branches.requiredError,
+        })}
         setValue={setValue}
       />
       {errors.branches && (
@@ -228,14 +236,18 @@ export default function Step2(
       )}
 
       <RadioInput
-        label="*Qual o módulo desejado?"
+        label={data.module.label}
         name="module"
         value={watch("module")}
         options={[
-          { id: "presencial", value: "presencial", label: "Presencial" },
-          { id: "online", value: "online", label: "Online" },
+          {
+            id: "presencial",
+            value: "presencial",
+            label: data.module.options[0],
+          },
+          { id: "online", value: "online", label: data.module.options[1] },
         ]}
-        register={register("module", { required: "Selecione um módulo" })}
+        register={register("module", { required: data.module.requiredError })}
       />
       {errors.module && (
         <span className="text-red-300 text-xs">
