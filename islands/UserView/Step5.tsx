@@ -4,6 +4,8 @@ import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import CheckboxInput from "../../components/ui/CheckboxInput.tsx";
 import TextInput from "../../components/ui/TextInput.tsx";
 import { useEffect } from "preact/hooks";
+import { Step5Data } from "../../data/Step5/Step5Data.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
 
 export default function Step5(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -13,6 +15,8 @@ export default function Step5(
   const preference = watch("preference");
   const howFind = watch("howFind");
   const interest = watch("interest");
+
+  const data = useTranslations(Step5Data);
 
   return (
     <FormStepLayout
@@ -25,49 +29,53 @@ export default function Step5(
       <div className="flex flex-col xl:flex-row gap-4">
         <div className="flex flex-col">
           <CheckboxInput
-            label="*Por que você deu preferência ao BRASAS?"
+            label={data.preference.label}
             name="preference"
             options={[
               {
                 id: "reputation",
                 value: "reputation",
-                label: "Reputação e tradição do curso",
+                label: data.preference.options[0],
               },
-              { id: "method", value: "method", label: "Método de ensino" },
+              {
+                id: "method",
+                value: "method",
+                label: data.preference.options[1],
+              },
               {
                 id: "indication",
                 value: "indication",
-                label: "Indicação de amigos ou familiares",
+                label: data.preference.options[2],
               },
               {
                 id: "quality",
                 value: "quality",
-                label: "Qualidade dos professores",
+                label: data.preference.options[3],
               },
               {
                 id: "flexibility",
                 value: "flexibility",
-                label: "Flexibilidade de horários",
+                label: data.preference.options[4],
               },
               {
                 id: "experience",
                 value: "experience",
-                label: "Experiência em aulas demonstrativas",
+                label: data.preference.options[5],
               },
               {
                 id: "results",
                 value: "results",
-                label: "Resultados comprovados de outros alunos",
+                label: data.preference.options[6],
               },
               {
                 id: "preferenceOther",
                 value: "preferenceOther",
-                label: "Outro",
+                label: data.preference.options[7],
               },
             ]}
             register={register("preference", {
               validate: (value) =>
-                value?.length > 0 || "Selecione pelo menos uma opção",
+                value?.length > 0 || data.preference.requiredError,
             })}
           />
           {errors.preference && (
@@ -79,8 +87,8 @@ export default function Step5(
             preference.includes("preferenceOther") && (
             <TextInput
               htmlFor="whichOthersPreferences"
-              label="Quais outros"
-              placeholder="Informe por que você deu preferência ao BRASAS?"
+              label={data.whichOthersPreferences.label}
+              placeholder={data.whichOthersPreferences.placeholder}
               {...register("whichOthersPreferences")}
             />
           )}
@@ -88,53 +96,61 @@ export default function Step5(
             preference.includes("indication") && (
             <TextInput
               htmlFor="whichIndicationPreferences"
-              label="Nome"
-              placeholder="Informe o nome de quem te indicou o BRASAS"
+              label={data.whichIndicationPreferences.label}
+              placeholder={data.whichIndicationPreferences.placeholder}
               {...register("whichIndicationPreferences")}
             />
           )}
         </div>
         <div className="flex flex-col">
           <CheckboxInput
-            label="*Como conheceu o curso do BRASAS?"
+            label={data.howFind.label}
             name="howFind"
             options={[
               {
                 id: "google",
                 value: "google",
-                label: "Google",
+                label: data.howFind.options[0],
               },
-              { id: "facebook", value: "facebook", label: "Facebook" },
+              {
+                id: "facebook",
+                value: "facebook",
+                label: data.howFind.options[1],
+              },
               {
                 id: "instagram",
                 value: "instagram",
-                label: "Instagram",
+                label: data.howFind.options[2],
               },
               {
                 id: "tiktok",
                 value: "tiktok",
-                label: "TikTok",
+                label: data.howFind.options[3],
               },
               {
                 id: "linkedin",
                 value: "linkedin",
-                label: "Linkedin",
+                label: data.howFind.options[4],
               },
               {
                 id: "indication",
                 value: "indication",
-                label: "Indicação",
+                label: data.howFind.options[5],
               },
               {
                 id: "disclosure",
                 value: "disclosure",
-                label: "Divulgação feita pela empresa",
+                label: data.howFind.options[6],
               },
-              { id: "howFindOther", value: "howFindOther", label: "Outro" },
+              {
+                id: "howFindOther",
+                value: "howFindOther",
+                label: data.howFind.options[7],
+              },
             ]}
             register={register("howFind", {
               validate: (value) =>
-                value?.length > 0 || "Selecione pelo menos uma opção",
+                value?.length > 0 || data.howFind.requiredError,
             })}
           />
           {errors.howFind && (
@@ -145,8 +161,8 @@ export default function Step5(
           {Array.isArray(howFind) && howFind.includes("howFindOther") && (
             <TextInput
               htmlFor="whichOthersHowFind"
-              label="Quais outros"
-              placeholder="Informe por quais outros meios conheceu o curso do BRASAS?"
+              label={data.whichOthersHowFind.label}
+              placeholder={data.whichOthersHowFind.placeholder}
               {...register("whichOthersHowFind")}
             />
           )}
@@ -155,35 +171,39 @@ export default function Step5(
 
       <div className="max-w-fit">
         <CheckboxInput
-          label="*Qual o seu interesse em aprender português?"
+          label={data.interest.label}
           name="interest"
           options={[
             {
               id: "work",
               value: "work",
-              label: "Trabalho",
+              label: data.interest.options[0],
             },
-            { id: "trip", value: "trip", label: "Viagem" },
+            { id: "trip", value: "trip", label: data.interest.options[1] },
             {
               id: "live",
               value: "live",
-              label: "Morar no Brasil",
+              label: data.interest.options[2],
             },
             {
               id: "learn",
               value: "learn",
-              label: "Aprender uma nova língua",
+              label: data.interest.options[3],
             },
             {
               id: "study",
               value: "study",
-              label: "Estudo",
+              label: data.interest.options[4],
             },
-            { id: "interestOther", value: "interestOther", label: "Outro" },
+            {
+              id: "interestOther",
+              value: "interestOther",
+              label: data.interest.options[5],
+            },
           ]}
           register={register("interest", {
             validate: (value) =>
-              value?.length > 0 || "Selecione pelo menos uma opção",
+              value?.length > 0 || data.interest.requiredError,
           })}
         />
         {errors.interest && (
@@ -195,8 +215,8 @@ export default function Step5(
         {Array.isArray(interest) && interest.includes("interestOther") && (
           <TextInput
             htmlFor="whichOthersInterest"
-            label="Quais outros"
-            placeholder="Informe outros interesses em aprender português"
+            label={data.whichOthersInterest.label}
+            placeholder={data.whichOthersInterest.placeholder}
             {...register("whichOthersInterest")}
           />
         )}
