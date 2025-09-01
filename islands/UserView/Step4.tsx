@@ -6,6 +6,8 @@ import { cepMask } from "../../helpers/cepMask.ts";
 import { phoneMask } from "../../helpers/phoneMask.ts";
 import { useWatch } from "react-hook-form";
 import { getCep } from "../../services/cep.ts";
+import { Step4Data } from "../../data/Step4/Step4Data.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
 
 export default function Step4(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -118,6 +120,8 @@ export default function Step4(
     setValue("pedagogicalResponsibleUf", viaCepReturn.uf || "");
   }, [viaCepReturn, viaCepLoaded, setValue]);
 
+  const data = useTranslations(Step4Data);
+
   return (
     <FormStepLayout
       steps={stepList}
@@ -127,15 +131,23 @@ export default function Step4(
       goToStep={goToStep}
     >
       <RadioInput
-        label="*O próprio aluno é responsável pedagógico?"
+        label={data.isStudentPedagogicalResponsible.label}
         name="isStudentPedagogicalResponsible"
         value={watch("isStudentPedagogicalResponsible")}
         options={[
-          { id: "yes", value: "yes", label: "Sim" },
-          { id: "no", value: "no", label: "Não" },
+          {
+            id: "yes",
+            value: "yes",
+            label: data.isStudentPedagogicalResponsible.options[0],
+          },
+          {
+            id: "no",
+            value: "no",
+            label: data.isStudentPedagogicalResponsible.options[1],
+          },
         ]}
         register={register("isStudentPedagogicalResponsible", {
-          required: "Selecione uma opção",
+          required: data.isStudentPedagogicalResponsible.requiredError,
         })}
       />
       {errors.isStudentPedagogicalResponsible && (
@@ -147,19 +159,28 @@ export default function Step4(
       {isStudentPedagogicalResponsible === "no" && (
         <>
           <RadioInput
-            label="*Tipo de pessoa do responsável pedagógico"
+            label={data.pedagogicalResponsiblePersonType.label}
             name="pedagogicalResponsiblePersonType"
             value={watch("pedagogicalResponsiblePersonType")}
             options={[
-              { id: "pf", value: "pf", label: "Pessoa Fìsica" },
-              { id: "pj", value: "pj", label: "Pessoa Jurídica" },
+              {
+                id: "pf",
+                value: "pf",
+                label: data.pedagogicalResponsiblePersonType.options[0],
+              },
+              {
+                id: "pj",
+                value: "pj",
+                label: data.pedagogicalResponsiblePersonType.options[1],
+              },
             ]}
             register={register("pedagogicalResponsiblePersonType", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsiblePersonType.requiredError;
                 }
                 return true;
               },
@@ -174,18 +195,19 @@ export default function Step4(
           <TextInput
             htmlFor="pedagogicalResponsibleName"
             label={pedagogicalResponsiblePersonType === "pj"
-              ? "*Razão social do responsável pedagógico"
-              : "*Nome completo do responsável pedagógico"}
+              ? data.pedagogicalResponsibleName.labelPj
+              : data.pedagogicalResponsibleName.labelPf}
             placeholder={pedagogicalResponsiblePersonType === "pj"
-              ? "Informe a razão social do responsável pedagógico"
-              : "Informe o nome completo do responsável pedagógico"}
+              ? data.pedagogicalResponsibleName.placeholderPj
+              : data.pedagogicalResponsibleName.placeholderPf}
             error={!!errors.pedagogicalResponsibleName}
             {...register("pedagogicalResponsibleName", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsibleName.requiredError;
                 }
                 return true;
               },
@@ -199,15 +221,16 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsibleKinship"
-            label="*Parentesco"
-            placeholder="Informe o parentesco com o responsável pedagógico"
+            label={data.pedagogicalResponsibleKinship.label}
+            placeholder={data.pedagogicalResponsibleKinship.placeholder}
             error={!!errors.pedagogicalResponsibleKinship}
             {...register("pedagogicalResponsibleKinship", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsibleKinship.requiredError;
                 }
                 return true;
               },
@@ -222,15 +245,16 @@ export default function Step4(
           <TextInput
             type="date"
             htmlFor="pedagogicalResponsibleBirthDate"
-            label="*Data de nascimento"
-            placeholder="DD/MM/YYYY"
+            label={data.pedagogicalResponsibleBirthDate.label}
+            placeholder={data.pedagogicalResponsibleBirthDate.placeholder}
             error={!!errors.pedagogicalResponsibleBirthDate}
             {...register("pedagogicalResponsibleBirthDate", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsibleBirthDate.requiredError;
                 }
                 return true;
               },
@@ -244,20 +268,23 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsibleCpf"
-            label={pedagogicalResponsiblePersonType === "pj" ? "CNPJ" : "CPF"}
+            label={pedagogicalResponsiblePersonType === "pj"
+              ? data.pedagogicalResponsibleCpf.labelPj
+              : data.pedagogicalResponsibleCpf.labelPf}
             note={pedagogicalResponsiblePersonType === "pj"
               ? false
-              : "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"}
+              : data.pedagogicalResponsibleCpf.note}
             placeholder={pedagogicalResponsiblePersonType === "pj"
-              ? "Informe o CNPJ do responsável financeiro"
-              : "Informe o CPF do responsável financeiro"}
+              ? data.pedagogicalResponsibleCpf.placeholderPj
+              : data.pedagogicalResponsibleCpf.placeholderPf}
             error={!!errors.pedagogicalResponsibleCpf}
             {...register("pedagogicalResponsibleCpf", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsibleCpf.requiredError;
                 }
                 return true;
               },
@@ -271,8 +298,8 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsiblePhone"
-            label="*Telefone"
-            placeholder="(XX) XXXXX-XXXX"
+            label={data.pedagogicalResponsiblePhone.label}
+            placeholder={data.pedagogicalResponsiblePhone.placeholder}
             mask={phoneMask}
             error={!!errors.pedagogicalResponsiblePhone}
             {...register("pedagogicalResponsiblePhone", {
@@ -280,7 +307,8 @@ export default function Step4(
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsiblePhone.requiredError;
                 }
                 return true;
               },
@@ -294,15 +322,16 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsibleEmail"
-            label="*E-mail"
+            label={data.pedagogicalResponsibleEmail.label}
             error={!!errors.pedagogicalResponsibleEmail}
-            placeholder="Insira seu e-mail"
+            placeholder={data.pedagogicalResponsibleEmail.placeholder}
             {...register("pedagogicalResponsibleEmail", {
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
                 ) {
-                  return (value && value.trim() !== "") || "Campo obrigatório";
+                  return (value && value.trim() !== "") ||
+                    data.pedagogicalResponsibleEmail.requiredError;
                 }
                 return true;
               },
@@ -315,15 +344,26 @@ export default function Step4(
           )}
 
           <RadioInput
-            label="*Endereço igual do aluno?"
+            label={data.pedagogicalResponsibleAddressEqualsStudent.label}
             name="pedagogicalResponsibleAddressEqualsStudent"
             value={watch("pedagogicalResponsibleAddressEqualsStudent")}
             options={[
-              { id: "yes", value: "yes", label: "Sim" },
-              { id: "no", value: "no", label: "Não" },
+              {
+                id: "yes",
+                value: "yes",
+                label:
+                  data.pedagogicalResponsibleAddressEqualsStudent.options[0],
+              },
+              {
+                id: "no",
+                value: "no",
+                label:
+                  data.pedagogicalResponsibleAddressEqualsStudent.options[1],
+              },
             ]}
             register={register("pedagogicalResponsibleAddressEqualsStudent", {
-              required: "Selecione uma opção",
+              required:
+                data.pedagogicalResponsibleAddressEqualsStudent.requiredError,
             })}
           />
           {errors.pedagogicalResponsibleAddressEqualsStudent && (
@@ -338,15 +378,19 @@ export default function Step4(
         isStudentPedagogicalResponsible === "no" && (
         <>
           <RadioInput
-            label="*Onde você mora?"
+            label={data.pedagogicalResponsibleResidence.label}
             name="pedagogicalResponsibleResidence"
             value={watch("pedagogicalResponsibleResidence")}
             options={[
-              { id: "br", value: "brasil", label: "Brasil" },
+              {
+                id: "br",
+                value: "brasil",
+                label: data.pedagogicalResponsibleResidence.options[0],
+              },
               {
                 id: "fora",
                 value: "fora-do-brasil",
-                label: "Fora do Brasil",
+                label: data.pedagogicalResponsibleResidence.options[1],
               },
             ]}
             register={register("pedagogicalResponsibleResidence", {
@@ -356,7 +400,7 @@ export default function Step4(
                     "no"
                 ) {
                   return (value && value.trim() !== "") ||
-                    "Campo obrigatório";
+                    data.pedagogicalResponsibleResidence.requiredError;
                 }
                 return true;
               },
@@ -372,8 +416,8 @@ export default function Step4(
             <>
               <TextInput
                 htmlFor="pedagogicalResponsibleCep"
-                label="*Cep"
-                placeholder="XX.XXX-XX"
+                label={data.pedagogicalResponsibleCep.label}
+                placeholder={data.pedagogicalResponsibleCep.placeholder}
                 maxLength={10}
                 mask={cepMask}
                 error={!!errors.pedagogicalResponsibleCep}
@@ -386,7 +430,7 @@ export default function Step4(
                         "no"
                     ) {
                       return (value && value.trim() !== "") ||
-                        "Campo obrigatório";
+                        data.pedagogicalResponsibleCep.requiredError;
                     }
                     return true;
                   },
@@ -402,8 +446,8 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsibleAddress"
-            label="Endereço completo do responsável pedagógico"
-            placeholder="Informe o nome da rua"
+            label={data.pedagogicalResponsibleAddress.label}
+            placeholder={data.pedagogicalResponsibleAddress.placeholder}
             disabled={disabledFields.address}
             {...register("pedagogicalResponsibleAddress")}
           />
@@ -412,22 +456,25 @@ export default function Step4(
             <>
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceNumber"
-                label="Número"
-                placeholder="Informe o número da residência"
+                label={data.pedagogicalResponsibleResidenceNumber.label}
+                placeholder={data.pedagogicalResponsibleResidenceNumber
+                  .placeholder}
                 {...register("pedagogicalResponsibleResidenceNumber")}
               />
 
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceComplement"
-                label="Complemento"
-                placeholder="Possui complemento?"
+                label={data.pedagogicalResponsibleResidenceComplement.label}
+                placeholder={data.pedagogicalResponsibleResidenceComplement
+                  .placeholder}
                 {...register("pedagogicalResponsibleResidenceComplement")}
               />
 
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceNeighborhood"
-                label="*Bairro"
-                placeholder="Bairro"
+                label={data.pedagogicalResponsibleResidenceNeighborhood.label}
+                placeholder={data.pedagogicalResponsibleResidenceNeighborhood
+                  .placeholder}
                 disabled={disabledFields.neighborhood}
                 error={!!errors.pedagogicalResponsibleResidenceNeighborhood}
                 {...register(
@@ -441,7 +488,8 @@ export default function Step4(
                           "no"
                       ) {
                         return (value && value.trim() !== "") ||
-                          "Campo obrigatório";
+                          data.pedagogicalResponsibleResidenceNeighborhood
+                            .requiredError;
                       }
                       return true;
                     },
@@ -457,10 +505,10 @@ export default function Step4(
 
               <TextInput
                 htmlFor="pedagogicalResponsibleCity"
-                label="*Cidade"
+                label={data.pedagogicalResponsibleCity.label}
                 disabled={disabledFields.city}
                 error={!!errors.pedagogicalResponsibleCity}
-                placeholder="Cidade"
+                placeholder={data.pedagogicalResponsibleCity.placeholder}
                 {...register("pedagogicalResponsibleCity", {
                   validate: (value) => {
                     if (
@@ -470,7 +518,7 @@ export default function Step4(
                         "no"
                     ) {
                       return (value && value.trim() !== "") ||
-                        "Campo obrigatório";
+                        data.pedagogicalResponsibleCity.requiredError;
                     }
                     return true;
                   },
@@ -484,10 +532,10 @@ export default function Step4(
 
               <TextInput
                 htmlFor="pedagogicalResponsibleUf"
-                label="*Uf"
+                label={data.pedagogicalResponsibleUf.label}
                 disabled={disabledFields.uf}
                 error={!!errors.pedagogicalResponsibleUf}
-                placeholder="Estado"
+                placeholder={data.pedagogicalResponsibleUf.placeholder}
                 {...register("pedagogicalResponsibleUf", {
                   validate: (value) => {
                     if (
@@ -497,7 +545,7 @@ export default function Step4(
                         "no"
                     ) {
                       return (value && value.trim() !== "") ||
-                        "Campo obrigatório";
+                        data.pedagogicalResponsibleUf.requiredError;
                     }
                     return true;
                   },

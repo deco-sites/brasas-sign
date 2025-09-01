@@ -11,6 +11,8 @@ import { phoneMask } from "../../helpers/phoneMask.ts";
 import { useEffect, useState } from "preact/hooks";
 import { cpfMask } from "../../helpers/cpfMask.ts";
 import { textMask } from "../../helpers/textMask.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
+import { Step1Data } from "../../data/Step1/Step1Data.ts";
 
 export default function Step1(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -23,6 +25,8 @@ export default function Step1(
     trigger,
     formState: { errors },
   } = form;
+
+  const data = useTranslations(Step1Data);
 
   const [countries, setCountries] = useState([]);
   const residence = watch("residence");
@@ -57,14 +61,20 @@ export default function Step1(
       goToStep={goToStep}
     >
       <RadioInput
-        label="*Onde você mora?"
+        label={data.whereDoYouLive.label}
         name="residence"
         value={watch("residence")}
         options={[
-          { id: "br", value: "brasil", label: "Brasil" },
-          { id: "fora", value: "fora-do-brasil", label: "Fora do Brasil" },
+          { id: "br", value: "brasil", label: data.whereDoYouLive.options[0] },
+          {
+            id: "fora",
+            value: "fora-do-brasil",
+            label: data.whereDoYouLive.options[1],
+          },
         ]}
-        register={register("residence", { required: "Selecione uma opção" })}
+        register={register("residence", {
+          required: data.whereDoYouLive.requiredError,
+        })}
       />
       {errors.residence && (
         <span className="text-red-300 text-xs">
@@ -75,19 +85,19 @@ export default function Step1(
       <TextInput
         required
         htmlFor="schoolOrCompany"
-        label="Escola/Empresa"
-        placeholder="Informe o nome da escola em que o aluno estuda ou empresa em que o aluno trabalha"
+        label={data.schoolCompany.label}
+        placeholder={data.schoolCompany.placeholder}
         {...register("schoolOrCompany")}
       />
 
       <TextInput
         htmlFor="fullName"
-        label="*Nome completo do aluno"
+        label={data.fullName.label}
         error={errors.fullName}
         mask={textMask}
-        placeholder="Insira o nome completo do aluno"
+        placeholder={data.fullName.placeholder}
         {...register("fullName", {
-          required: "Informe o nome completo do aluno",
+          required: data.fullName.requiredError,
         })}
       />
       {errors.fullName && (
@@ -98,9 +108,9 @@ export default function Step1(
 
       <TextInput
         htmlFor="email"
-        label="*E-mail"
+        label={data.email.label}
         error={errors.email}
-        placeholder="Insira seu e-mail"
+        placeholder={data.email.placeholder}
         {...register("email", {
           required: "Informe seu e-mail",
         })}
@@ -113,8 +123,8 @@ export default function Step1(
 
       <TextInput
         htmlFor="phone"
-        label="*Telefone"
-        placeholder="(XX) XXXXX-XXXX"
+        label={data.phone.label}
+        placeholder={data.phone.placeholder}
         minLength={11}
         error={errors.phone}
         mask={phoneMask}
@@ -129,10 +139,10 @@ export default function Step1(
       <TextInput
         type="date"
         htmlFor="birthDate"
-        label="*Data de nascimento"
+        label={data.birthDate.label}
         error={errors.birthDate}
-        placeholder="DD/MM/YYYY"
-        {...register("birthDate", { required: "Informe a data de nascimento" })}
+        placeholder={data.birthDate.placeholder}
+        {...register("birthDate", { required: data.birthDate.error })}
       />
       {errors.birthDate && (
         <span className="text-red-300 text-xs">
@@ -142,19 +152,17 @@ export default function Step1(
 
       <TextInput
         htmlFor="cpf"
-        label={residence === "brasil" ? "*CPF" : "CPF"}
-        note={residence === "brasil"
-          ? false
-          : "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário"}
+        label={!residence ? "*CPF" : residence === "brasil" ? "*CPF" : "CPF"}
+        note={residence === "brasil" ? false : data.cpf.warning}
         mask={cpfMask}
         minLength={14}
         error={errors.cpf}
-        placeholder="Insira seu CPF"
+        placeholder={data.cpf.placeholder}
         {...register("cpf", {
           required: residence === "brasil" ? "Informe o CPF" : false,
           minLength: {
             value: 14,
-            message: "CPF deve ter pelo menos 11 dígitos",
+            message: data.cpf.error,
           },
         })}
       />
@@ -166,12 +174,14 @@ export default function Step1(
 
       <SelectInput
         name="country"
-        label="*País de origem"
+        label={data.originCountry.label}
         options={countries}
         value={watch("country")}
         error={errors.country}
-        placeholder="Selecione uma opção"
-        register={register("country", { required: "Selecione uma opção" })}
+        placeholder={data.originCountry.placeholder}
+        register={register("country", {
+          required: data.originCountry.placeholder,
+        })}
         setValue={setValue}
       />
       {errors.country && (
@@ -182,8 +192,8 @@ export default function Step1(
 
       <MultiInput
         htmlFor="languages"
-        label="Quais idiomas você fala?"
-        placeholder="informe um idioma"
+        label={data.languages.label}
+        placeholder={data.languages.placeholder}
         //onChangeValues={(values) => {console.log(values)}}
         setValue={setValue}
         getValues={getValues}

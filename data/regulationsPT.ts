@@ -1,5 +1,4 @@
-// /data/regulations.ts
-export const regulations = {
+export const regulationsPT = {
   presencial: `
 REGULAMENTO BRASAS PRESENCIAL – Métodos | Fevereiro 2024 - 1o semestre
 MÉTODOS E MATERIAIS
@@ -180,11 +179,11 @@ pagará segundo a tabela vigente na secretaria.
 ● FÉRIAS: Férias individuais acarretarão reclassificação em outra turma. Férias coletivas serão
 determinadas pelas unidades regionais.
 ● INTERRUPÇÕES DE CURSOS: Para interromper seu curso, o aluno deve pedir por escrito o
-cancelamento da sua matrícula antes da cobrança da próxima mensalidade agendada. A solicitação
+cancelamento da sua matrícula antes da cobrança da próxima mensalidade agendada. 
 
 4
 
-precisa ser feita para o e-mail da sua unidade. É necessário também preencher o formulário que
+A solicitação precisa ser feita para o e-mail da sua unidade. É necessário também preencher o formulário que
 formaliza a interrupção do curso e quitar quaisquer débitos em aberto. Para retornar ao curso após
 uma interrupção de menos de 3 meses, deverá quitar todos os encargos relativos ao período não
 cursado. O aluno que passou mais de três meses sem assistir a aula deverá submeter-se a um

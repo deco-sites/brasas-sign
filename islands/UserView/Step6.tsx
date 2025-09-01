@@ -2,7 +2,11 @@ import { useEffect, useRef } from "preact/hooks";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
 import SignatureCanvas from "react-signature-canvas";
-import { regulations } from "../../data/regulations.ts";
+import { regulationsPT } from "../../data/regulationsPT.ts";
+import { regulationsEN } from "../../data/regulationsEN.ts";
+import { Step6Data } from "../../data/Step6/Step6Data.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
+import { useLanguage } from "../../sdk/useLanguage.ts";
 
 export default function Step6(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -48,6 +52,23 @@ export default function Step6(
     // executa apenas na montagem
   }, []);
 
+  const data = useTranslations(Step6Data);
+  const { language } = useLanguage();
+
+  const getRegulation = () => {
+    if (!moduleType) return "";
+
+    if (language.value === "pt-br") {
+      return regulationsPT[moduleType];
+    }
+
+    if (language.value === "en-us") {
+      return regulationsEN[moduleType];
+    }
+
+    return "";
+  };
+
   return (
     <FormStepLayout
       steps={stepList}
@@ -58,12 +79,12 @@ export default function Step6(
       isSubmitDisabled={!signature || !agree}
     >
       <RadioInput
-        label="Autorizo o BRASAS English Course a utilizar-se, sem quaisquer ônus, da minha imagem para fins exclusivos de sua divulgação e de suas atividades, podendo, para tanto, reproduzi-la ou divulgá-la junto à internet, jornais e todos os meios de comunicação pública ou privada ficando desde já acordado que em nenhuma hipótese poderá a imagem ser utilizada de maneira contrária à moral ou aos bons costumes ou à ordem pública."
+        label={data.imageAuth.label}
         name="imageAuth"
         value={watch("imageAuth")}
         options={[
-          { id: "yes", value: "yes", label: "Sim" },
-          { id: "no", value: "no", label: "Não" },
+          { id: "yes", value: "yes", label: data.imageAuth.options[0] },
+          { id: "no", value: "no", label: data.imageAuth.options[1] },
         ]}
         register={register("imageAuth")}
       />
@@ -71,20 +92,16 @@ export default function Step6(
       <hr className="h-[1px] bg-black-500 border-0" />
 
       <span>
-        Com o objetivo de viabilizar a educação inclusiva e o aprendizado pleno
-        do aluno, convidamos o aluno e/ou responsável, a se assim desejar,
-        informar os recursos de acessibilidade necessários para a sua
-        participação, conforme previsão legal do artigo 30, inciso II, da Lei
-        13.146/2015, em caso de pessoa com deficiência
+        {data.objectiveText}
       </span>
 
       <hr className="h-[1px] bg-black-500 border-0" />
 
       {/*O regulamento só aparece quando o módulo é escolhido (ou presencial ou online) e muda de acordo com a opção escolhida*/}
-      <label>Regulamento</label>
+      <label>{data.regulationTitle}</label>
       <textarea
         className="rounded-sm h-80"
-        value={moduleType ? regulations[moduleType] : ""}
+        value={getRegulation()}
         readOnly
       />
 
@@ -100,7 +117,7 @@ export default function Step6(
         />
 
         <span className="text-sm text-gray-800">
-          Concordo com os termos e condições
+          {data.agreeText}
         </span>
       </label>
 
@@ -116,13 +133,13 @@ export default function Step6(
       />
       <div className="flex w-full justify-between">
         <span className="text-gray-500 text-xs font-light">
-          Assinatura acima
+          {data.signAbove}
         </span>
         <button
           onClick={handleCleanSign}
           className="text-gray-500 text-xs font-light cursor-pointer"
         >
-          Limpar assinatura
+          {data.cleanSign}
         </button>
       </div>
     </FormStepLayout>
