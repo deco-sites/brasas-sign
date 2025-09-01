@@ -10,6 +10,10 @@ import Step6 from "./Step6.tsx";
 import { UnitsProvider } from "../../contexts/UnitsContext.tsx";
 import { useFinishForm } from "../../sdk/useFinishForm.ts";
 import FormFinished from "../../components/ui/FormFinished.tsx";
+import Image from "apps/website/components/Image.tsx";
+import Internationalization from "../../components/ui/Internationalization.tsx";
+import { LayoutData } from "../../data/Layout/Layout.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -124,19 +128,22 @@ export default function FormController({ units }) {
     6: Step6,
   };
 
+  const data = useTranslations(LayoutData);
+
   const stepList = [
-    { step: 1, title: "Step 1", subtitle: "Informações pessoais" },
-    { step: 2, title: "Step 2", subtitle: "Endereço" },
-    { step: 3, title: "Step 3", subtitle: "Financeiro" },
-    { step: 4, title: "Step 4", subtitle: "Pedagógico" },
-    { step: 5, title: "Step 5", subtitle: "Interesses" },
-    { step: 6, title: "Step 6", subtitle: "Autorizações" },
+    { step: 1, title: data.step1.title, subtitle: data.step1.subtitle },
+    { step: 2, title: data.step2.title, subtitle: data.step2.subtitle },
+    { step: 3, title: data.step3.title, subtitle: data.step3.subtitle },
+    { step: 4, title: data.step4.title, subtitle: data.step4.subtitle },
+    { step: 5, title: data.step5.title, subtitle: data.step5.subtitle },
+    { step: 6, title: data.step6.title, subtitle: data.step6.subtitle },
   ];
 
   const CurrentStepComponent = steps[step];
 
   return (
     <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
+      <Internationalization />
       <UnitsProvider units={units}>
         <FormProvider {...form}>
           {isFormFinished.value

@@ -9,6 +9,8 @@ import { useState } from "preact/hooks";
 import { invoke } from "../../runtime.ts";
 import { getBranch } from "../../services/getBranch.ts";
 import { useFinishForm } from "../../sdk/useFinishForm.ts";
+import { LayoutData } from "../../data/Layout/Layout.ts";
+import { useTranslations } from "../../sdk/useTranslations.ts";
 
 interface StepItem {
   step: number;
@@ -129,6 +131,8 @@ export default function FormStepLayout({
     const response = await saveCustomer(body);
   };
 
+  const data = useTranslations(LayoutData);
+
   return (
     <div className="flex flex-col w-full lg:flex-row lg:h-4/5 lg:w-4/5 rounded-lg">
       {/* Lado esquerdo */}
@@ -159,7 +163,7 @@ export default function FormStepLayout({
         >
           <div>
             <h1 className="py-4 text-center text-xl">
-              Formulário de Matrícula
+              {data.formTitle}
             </h1>
             <div className="flex flex-col gap-2">{children}</div>
           </div>
@@ -167,7 +171,7 @@ export default function FormStepLayout({
           <div className="flex justify-between mt-8">
             <Button.Root color="blue" onClickAction={goToPreviousStep}>
               <Button.Icon icon={IconArrowLeft} />
-              <span>Passo anterior</span>
+              <span>{data.previousButtonText}</span>
             </Button.Root>
 
             {currentStep === steps.length
@@ -177,7 +181,7 @@ export default function FormStepLayout({
                   type="submit"
                   disabled={isSubmitDisabled}
                 >
-                  <span>Enviar</span>
+                  <span>{data.submitButtonText}</span>
                   <Button.Icon icon={IconArrowRight} />
                 </Button.Root>
               )
@@ -187,7 +191,7 @@ export default function FormStepLayout({
                   color="red"
                   onClickAction={goToNextStep}
                 >
-                  <span>Próximo passo</span>
+                  <span>{data.nextButtonText}</span>
                   <Button.Icon icon={IconArrowRight} />
                 </Button.Root>
               )}
