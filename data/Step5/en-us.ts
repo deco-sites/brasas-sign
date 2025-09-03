@@ -16,6 +16,7 @@ export const step5DataEN = {
   "whichOthersPreferences": {
     "label": "Which others",
     "placeholder": "Tell us why you chose BRASAS",
+    "requiredError": "Please inform which others",
   },
   "whichIndicationPreferences": {
     "label": "Name",
@@ -38,6 +39,7 @@ export const step5DataEN = {
   "whichOthersHowFind": {
     "label": "Which others",
     "placeholder": "Tell us other ways you found out about BRASAS",
+    "requiredError": "Please inform which others",
   },
   "interest": {
     "labelRegular": "*What is your interest in learning English?",
@@ -56,5 +58,6 @@ export const step5DataEN = {
   "whichOthersInterest": {
     "label": "Which others",
     "placeholder": "Tell us other interests in learning Portuguese",
+    "requiredError": "Please inform which others",
   },
 };

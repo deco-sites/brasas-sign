@@ -72,7 +72,14 @@ export default function FormController({ units }) {
       "pedagogicalResponsibleCity",
       "pedagogicalResponsibleUf",
     ],
-    5: ["preference", "howFind", "interest"],
+    5: [
+      "preference",
+      "howFind",
+      "interest",
+      "whichOthersPreferences",
+      "whichOthersHowFind",
+      "whichOthersInterest",
+    ],
   };
 
   const form = useForm({
