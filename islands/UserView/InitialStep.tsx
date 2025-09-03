@@ -27,7 +27,7 @@ export default function InitialStep({ form, goToNextStep }) {
             uppercaseText
             type="button"
             onClickAction={() => {
-              setValue("courseType", "curso regular");
+              setValue("courseType", "regular");
               goToNextStep();
             }}
           >
@@ -38,7 +38,7 @@ export default function InitialStep({ form, goToNextStep }) {
             uppercaseText
             type="button"
             onClickAction={() => {
-              setValue("courseType", "portuguese for foreigners");
+              setValue("courseType", "pff");
               goToNextStep();
             }}
           >

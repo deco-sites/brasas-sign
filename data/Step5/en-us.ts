@@ -40,11 +40,13 @@ export const step5DataEN = {
     "placeholder": "Tell us other ways you found out about BRASAS",
   },
   "interest": {
-    "label": "*What is your interest in learning Portuguese?",
+    "labelRegular": "*What is your interest in learning English?",
+    "labelPff": "*What is your interest in learning Portuguese?",
     "options": [
       "Work",
       "Travel",
       "Living in Brazil",
+      "Living outside Brazil",
       "Learning a new language",
       "Study",
       "Other",

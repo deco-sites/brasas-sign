@@ -40,11 +40,13 @@ export const step5DataPT = {
     "placeholder": "Informe por quais outros meios conheceu o curso do BRASAS?",
   },
   "interest": {
-    "label": "*Qual o seu interesse em aprender português?",
+    "labelRegular": "*Qual o seu interesse em aprender inglês?",
+    "labelPff": "*Qual o seu interesse em aprender português?",
     "options": [
       "Trabalho",
       "Viagem",
       "Morar no Brasil",
+      "Morar fora do Brasil",
       "Aprender uma nova língua",
       "Estudo",
       "Outro",
