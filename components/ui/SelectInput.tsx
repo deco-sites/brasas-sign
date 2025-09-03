@@ -75,11 +75,21 @@ export default function Select(
       <div className="relative w-full">
         {/* Select box */}
         <div
+          tabIndex={0}
+          role="button"
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
           className={`flex items-center bg-white border outline-none text-sm placeholder:text-sm placeholder:text-gray-500 text-gray-500 rounded-lg p-2 w-full ${
             error ? "border-red-300" : "border-gray-500"
           }`}
           ref={avatarRef}
           onClick={toggleDropdown}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleDropdown();
+            }
+          }}
         >
           <span>{displayLabel || placeholder}</span>
           <svg

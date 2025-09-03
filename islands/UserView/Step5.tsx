@@ -19,10 +19,6 @@ export default function Step5(
 
   const data = useTranslations(Step5Data);
 
-  useEffect(() => {
-    console.log("aki", courseType);
-  }, []);
-
   return (
     <FormStepLayout
       steps={stepList}
@@ -90,12 +86,22 @@ export default function Step5(
           )}
           {Array.isArray(preference) &&
             preference.includes("preferenceOther") && (
-            <TextInput
-              htmlFor="whichOthersPreferences"
-              label={data.whichOthersPreferences.label}
-              placeholder={data.whichOthersPreferences.placeholder}
-              {...register("whichOthersPreferences")}
-            />
+            <>
+              <TextInput
+                htmlFor="whichOthersPreferences"
+                label={data.whichOthersPreferences.label}
+                placeholder={data.whichOthersPreferences.placeholder}
+                {...register("whichOthersPreferences", {
+                  required: data.whichOthersPreferences.requiredError,
+                })}
+              />
+
+              {errors.whichOthersPreferences && (
+                <span className="text-red-300 text-xs">
+                  {errors.whichOthersPreferences.message}
+                </span>
+              )}
+            </>
           )}
           {Array.isArray(preference) &&
             preference.includes("indication") && (
@@ -164,12 +170,21 @@ export default function Step5(
             </span>
           )}
           {Array.isArray(howFind) && howFind.includes("howFindOther") && (
-            <TextInput
-              htmlFor="whichOthersHowFind"
-              label={data.whichOthersHowFind.label}
-              placeholder={data.whichOthersHowFind.placeholder}
-              {...register("whichOthersHowFind")}
-            />
+            <>
+              <TextInput
+                htmlFor="whichOthersHowFind"
+                label={data.whichOthersHowFind.label}
+                placeholder={data.whichOthersHowFind.placeholder}
+                {...register("whichOthersHowFind", {
+                  required: data.whichOthersHowFind.requiredError,
+                })}
+              />
+              {errors.whichOthersHowFind && (
+                <span className="text-red-300 text-xs">
+                  {errors.whichOthersHowFind.message}
+                </span>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -222,12 +237,21 @@ export default function Step5(
         )}
 
         {Array.isArray(interest) && interest.includes("interestOther") && (
-          <TextInput
-            htmlFor="whichOthersInterest"
-            label={data.whichOthersInterest.label}
-            placeholder={data.whichOthersInterest.placeholder}
-            {...register("whichOthersInterest")}
-          />
+          <>
+            <TextInput
+              htmlFor="whichOthersInterest"
+              label={data.whichOthersInterest.label}
+              placeholder={data.whichOthersInterest.placeholder}
+              {...register("whichOthersInterest", {
+                required: data.whichOthersInterest.requiredError,
+              })}
+            />
+            {errors.whichOthersInterest && (
+              <span className="text-red-300 text-sm">
+                {errors.whichOthersInterest.message}
+              </span>
+            )}
+          </>
         )}
       </div>
     </FormStepLayout>
