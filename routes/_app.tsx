@@ -1,35 +1,9 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { defineApp } from "$fresh/server.ts";
-import { Unit, UnitsProvider } from "../contexts/UnitsContext.tsx";
 import Theme from "../sections/Theme/Theme.tsx";
 import { Context } from "@deco/deco";
 export default defineApp(async (_req, ctx) => {
   const revision = await Context.active().release?.revision();
-
-  // Buscando unidades
-  const loginRes = await fetch(
-    "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366?exp_secs=1200",
-    {
-      method: "GET",
-      headers: {
-        "community_id": "sophia-4375-44",
-      },
-    },
-  );
-  const loginData = await loginRes.json();
-  const token = loginData.access_token;
-
-  const unitsRes = await fetch(
-    "https://apitest.brasas.com/sophia/brasas/units",
-    {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "community_id": "sophia-4375-44",
-      },
-    },
-  );
-  const unitsData: Unit[] = await unitsRes.json();
 
   return (
     <>
@@ -171,9 +145,7 @@ export default defineApp(async (_req, ctx) => {
       </Head>
 
       {/* Rest of Preact tree */}
-      <UnitsProvider units={unitsData}>
-        <ctx.Component />
-      </UnitsProvider>
+      <ctx.Component />
     </>
   );
 });
