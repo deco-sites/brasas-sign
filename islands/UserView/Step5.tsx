@@ -15,8 +15,13 @@ export default function Step5(
   const preference = watch("preference");
   const howFind = watch("howFind");
   const interest = watch("interest");
+  const courseType = watch("courseType");
 
   const data = useTranslations(Step5Data);
+
+  useEffect(() => {
+    console.log("aki", courseType);
+  }, []);
 
   return (
     <FormStepLayout
@@ -171,7 +176,9 @@ export default function Step5(
 
       <div className="max-w-fit">
         <CheckboxInput
-          label={data.interest.label}
+          label={courseType === "pff"
+            ? data.interest.labelPff
+            : data.interest.labelRegular}
           name="interest"
           options={[
             {
@@ -183,22 +190,24 @@ export default function Step5(
             {
               id: "live",
               value: "live",
-              label: data.interest.options[2],
+              label: courseType === "pff"
+                ? data.interest.options[2]
+                : data.interest.options[3],
             },
             {
               id: "learn",
               value: "learn",
-              label: data.interest.options[3],
+              label: data.interest.options[4],
             },
             {
               id: "study",
               value: "study",
-              label: data.interest.options[4],
+              label: data.interest.options[5],
             },
             {
               id: "interestOther",
               value: "interestOther",
-              label: data.interest.options[5],
+              label: data.interest.options[6],
             },
           ]}
           register={register("interest", {
