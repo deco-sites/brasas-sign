@@ -1,7 +1,7 @@
 export const step6DataEN = {
   "imageAuth": {
     "label":
-      "I authorize BRASAS English Course to use my image, free of charge, exclusively for its promotion and activities, and for this purpose, it may reproduce or disclose it on the internet, newspapers, and all means of public or private communication. It is hereby agreed that under no circumstances may the image be used in a manner contrary to morality, good customs, or public order.",
+      "I authorize BRASAS English Course to use my image and/or voice, free of charge, exclusively for its promotion and activities, and for this purpose, it may reproduce or disclose it on the internet, newspapers, and all means of public or private communication. It is hereby agreed that under no circumstances may the image be used in a manner contrary to morality, good customs, or public order.",
     "options": ["Yes", "No"],
   },
   "objectiveText":

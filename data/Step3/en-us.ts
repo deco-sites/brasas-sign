@@ -30,7 +30,7 @@ export const step3DataEN = {
     "labelPf": "CPF",
     "labelPj": "CNPJ",
     "note":
-      "CPF is a Brazilian document and is not mandatory for filling out the form",
+      "CPF is a Brazilian document and it is not mandatory to fill out here",
     "placeholderPf": "Enter the CPF of the financial responsible",
     "placeholderPj": "Enter the CNPJ of the financial responsible",
     "requiredError": "Required field",
