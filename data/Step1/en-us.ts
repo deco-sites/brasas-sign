@@ -30,7 +30,7 @@ export const step1DataEN = {
   "cpf": {
     "label": "CPF",
     "warning":
-      "CPF is a Brazilian document and it is not mandatory to fill out this form",
+      "CPF is a Brazilian document and it is not mandatory to fill out here",
     "placeholder": "Enter your CPF",
     "error": "CPF must have at least 11 digits",
   },
