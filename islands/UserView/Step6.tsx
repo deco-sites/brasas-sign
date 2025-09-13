@@ -21,6 +21,7 @@ export default function Step6(
 
   const sigCanvas = useRef(null);
   const moduleType = watch("module");
+  const courseType = watch("courseType");
   const signature = watch("signature");
   const signatureData = watch("signatureData");
   const agree = watch("agree");
@@ -57,6 +58,24 @@ export default function Step6(
 
   const getRegulation = () => {
     if (!moduleType) return "";
+
+    if (courseType === "private") {
+      if (language.value === "pt-br") {
+        return regulationsPT["private"];
+      }
+      if (language.value === "en-us") {
+        return regulationsEN["private"];
+      }
+    }
+
+    if (courseType === "pff") {
+      if (language.value === "pt-br") {
+        return regulationsPT["pff"];
+      }
+      if (language.value === "en-us") {
+        return regulationsEN["pff"];
+      }
+    }
 
     if (language.value === "pt-br") {
       return regulationsPT[moduleType];
