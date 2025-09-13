@@ -445,4 +445,219 @@ FÉRIAS: Os professores do BRASAS Online gozarão de férias coletivas por 23 di
 **Podem ser dois dias diferentes na semana ou duas aulas consecutivas em um mesmo dia da semana.
 NOSSOS ALUNOS ESTÃO PREPARADOS PARA FAZER EXAMES DE CERTIFICAÇÃO INTERNACIONAL, TAIS COMO TOEFL® OU TOEIC®, E FAZER INTERC MBIOS, CURSOS DE PÓS-GRADUAÇÃO NO EXTERIOR E MANTER CONTATOS PROFISSIONAIS.
   `,
+  private: `Regulamento Aulas Privadas`,
+  pff: `POLÍTICA BRASAS ONLINE
+MÉTODO BRASAS – PORTUGUÊS PARA ESTRANGEIROS
+
+O curso de Português para Estrangeiros foi criado em 2014 e sempre teve como objetivo o ensino eficiente e rápido do português brasileiro, utilizando a metodologia BRASAS desenvolvida por George P. Zinovetz e os materiais escritos por Eleonora Zinovetz.
+
+O português é utilizado exclusivamente desde o primeiro dia de aula. Todos os novos professores passam por nosso Programa de Treinamento, onde aprendem a aplicar nossa metodologia. A BRASAS mantém rigoroso controle de qualidade de seus professores, com constante supervisão da coordenação pedagógica e treinamentos sistemáticos por meio de workshops e seminários.
+
+Nossas aulas são dinâmicas e descontraídas, sempre com ênfase na conversação estruturada. A gramática é ensinada de forma natural, não como um fim em si, mas como elemento comunicativo, garantindo que os alunos falem de maneira adequada e correta. Utilizamos uma grande variedade de atividades e exploramos situações do dia a dia.
+
+MATERIAL BRASAS
+
+Todo o material didático é exclusivo, criado pela BRASAS, e passa por frequentes revisões pedagógicas e constantes atualizações.
+
+Os livros e materiais de apoio estarão disponíveis em uma plataforma acessada por meio de login e senha, válidos apenas durante o curso. O acesso não permite reprodução do conteúdo por impressão ou exportação em qualquer formato (como PDF ou Word), nem acesso após o término do curso.
+
+O material didático adotado pela BRASAS é essencial para que os alunos acompanhem as aulas adequadamente e é protegido pela Lei de Direitos Autorais nº 9.610/98.
+
+BRASAS ONLINE
+
+Com o objetivo de garantir o ensino a distância com a mesma qualidade e metodologia do curso presencial, foi desenvolvido o BRASAS ONLINE, que consiste em aulas por videoconferência, vídeos, slides, materiais de leitura e exercícios.
+
+CONDUTA DO ALUNO
+
+Para o correto aproveitamento do curso, o aluno deve obrigatoriamente realizar as seguintes atividades:
+
+DEVERES DO ALUNO
+
+Conectar-se no horário agendado e permanecer durante toda a aula, sempre com a câmera ligada, permitindo a visualização de imagem e áudio.
+
+Importante: O microfone deve permanecer desligado durante repetições em grupo e ligado durante a participação individual. Caso haja apenas um aluno presente, o microfone deve permanecer ligado o tempo todo.
+
+Comportar-se com respeito durante as aulas e estar devidamente vestido.
+
+Atenção: É estritamente proibido gravar ou compartilhar as aulas, total ou parcialmente, em áudio ou vídeo. A BRASAS tomará medidas legais para proteger sua propriedade intelectual e os direitos de seus professores.
+
+Realizar todas as tarefas de casa e ouvir os áudios.
+
+Falar apenas em português durante a aula.
+
+Informar ao professor caso tenha dificuldades para acompanhar a aula.
+
+Apresentar comprovantes de pagamento sempre que solicitado.
+
+Manter todas as informações de contato (endereço, telefone e e-mail) atualizadas, inclusive quando houver mudança de responsabilidade financeira.
+
+Solicitar por escrito (online@brasas.com
+) o cancelamento (trancamento) do módulo ou a transferência para outro horário.
+
+Quitar eventuais débitos anteriores antes de se desligar oficialmente do curso.
+
+DURANTE A AULA ONLINE
+
+Repetição: Exercícios de articulação, fixação de estruturas básicas, pronúncia e entonação.
+
+Substituição: Ponte entre repetição e comunicação consciente.
+
+Perguntas: Baseadas em material já assimilado por repetição, substituição ou leitura.
+
+Diálogos: Simples e criativos, ampliando o repertório de expressões mais usadas.
+
+Correções: Sempre orais, com repetição e explicação.
+
+Conversação: Desenvolvimento oral que estimula o raciocínio em português. A conversação livre só é usada quando os alunos já dominam as estruturas necessárias, para evitar reforçar erros.
+
+Pronúncia e entonação: Os professores usam pronúncia, ritmo, entonação e velocidade naturais.
+
+Vídeo: Recurso para enriquecer o aprendizado e proporcionar contato com o português.
+
+Slides BRASAS: Apresentações interativas usadas para ensinar o conteúdo de forma dinâmica.
+
+FORA DA SALA DE AULA ONLINE
+
+O que se espera do aluno para complementar o aprendizado:
+
+Organização visual do material apresentado oralmente em aula.
+
+Regras gramaticais para estudo comparativo.
+
+Leituras em casa, com compreensão discutida em aula.
+
+Lista de novas palavras com definições e exemplos (em português).
+
+Agrupamento de ideias ou objetos relacionados.
+
+Resumos e esquemas do material apresentado.
+
+Exercícios escritos.
+
+Assistir a programas e vídeos com legendas em português.
+
+CÓDIGO DE CONDUTA DO ALUNO – BRASAS ONLINE
+
+Na BRASAS Online, nos comprometemos a oferecer um ambiente aberto, seguro e amigável para aprender e praticar português. Para garantir a melhor experiência de aprendizado, pedimos que os alunos sigam as seguintes regras de conduta:
+
+Trate todos com respeito: Aqui você encontrará professores e alunos do mundo todo, com diferentes religiões, culturas e valores. Trate a todos com gentileza e consideração. Temos tolerância zero para discriminação de qualquer tipo.
+
+Vista-se adequadamente: O código de vestimenta é semelhante ao de uma escola ou faculdade presencial. Roupas casuais são permitidas, mas os alunos devem estar devidamente vestidos.
+
+Participe de um local tranquilo: Sempre que possível, assista às aulas em um ambiente silencioso e sem interrupções. Login e senha são pessoais e intransferíveis.
+
+Religião, política e temas polêmicos: Podem surgir conversas nesses assuntos, mas se ficarem negativas ou ofensivas, deve-se mudar o tema.
+
+Peça permissão antes de compartilhar gravações ou vídeos: As gravações das aulas ficam disponíveis até o fim da semana. Compartilhar sem autorização pode gerar pedido de remoção.
+
+Bebidas alcoólicas proibidas: Não é permitido consumir álcool durante as aulas. Também evite fumar, comer ou mascar chiclete.
+
+Não compartilhe contatos externos: Para sua segurança, não compartilhe redes sociais ou outros meios. Use apenas Google Meet e Google Classroom.
+
+Não ofereça nem aceite serviços externos: O ambiente é exclusivo para aprendizado de português. Não é permitido oferecer ou aceitar serviços, pagamentos, presentes ou gorjetas.
+
+Câmeras ligadas: É obrigatório manter a câmera ligada durante a aula, para que o professor acompanhe a articulação das palavras e para aumentar o engajamento.
+
+FAIXAS DE ÁUDIO BRASAS
+
+Os áudios são parte fundamental do método e possibilitam:
+
+Aprendizado individualizado.
+
+Desenvolvimento da compreensão, treinando diferentes vozes, sotaques e variações regionais.
+
+Melhoria da pronúncia e entonação com repetições em velocidades crescentes, contrações e omissões típicas da fala natural.
+
+Repetição de trechos quantas vezes for necessário.
+
+Os áudios foram gravados por falantes nativos de português brasileiro, refletindo situações do dia a dia.
+É recomendado ouvir os áudios o máximo possível para aumentar fluência e confiança.
+Repita cada áudio oralmente pelo menos três vezes.
+
+DEVERES DA BRASAS
+
+Avaliar novos alunos e colocá-los no nível adequado.
+
+Iniciar e terminar as aulas pontualmente.
+
+Contratar professores fluentes, competentes e bem preparados.
+
+Ensinar exclusivamente em português e incentivar o uso dentro e fora da sala.
+
+Aplicar a metodologia BRASAS de forma uniforme.
+
+Acompanhar o progresso individual dos alunos e reclassificar quando necessário.
+
+Prevenir comportamentos que possam atrapalhar a aula.
+
+REQUISITOS TÉCNICOS MÍNIMOS
+
+Para participar das aulas, o aluno deve ter:
+
+Conexão banda larga com pelo menos 1Mb/s de download e upload, ou conexão 4G estável.
+
+Equipamento com câmera, microfone e alto-falantes.
+
+Plano de dados compatível com atividades online.
+
+Observação: A BRASAS não se responsabiliza por problemas técnicos como instabilidade de internet ou falha do equipamento do aluno.
+
+GRAVAÇÃO DE AULAS PELA BRASAS
+
+O aluno reconhece e autoriza que as aulas sejam gravadas pela BRASAS, consentindo com a captura de sua imagem e voz. As gravações são de uso exclusivamente pedagógico, permitindo a revisão das aulas até o final do módulo vigente.
+
+ABERTURA E REMANEJAMENTO DE TURMAS
+
+Novas turmas podem ser abertas em qualquer época do ano, desde que haja número mínimo de alunos pagantes para viabilidade didática e econômica.
+
+O mínimo é de 5 alunos pagantes por turma. Enquanto esse número for mantido, a turma continua em seu horário original. Caso caia abaixo de 5, os alunos poderão ser remanejados.
+
+O compromisso de continuidade é recíproco: 12 mensalidades consecutivas por ano, incluindo feriados, férias e recessos.
+
+ROTINAS ADMINISTRATIVAS
+
+Mensalidade: Cada aluno paga 12 mensalidades consecutivas por ano, incluindo feriados e recessos. O pagamento é devido independentemente da frequência.
+
+Forma de pagamento: Exclusivamente por cartão de crédito, em modelo de assinatura recorrente.
+
+Planos:
+
+Mensal (sem desconto)
+
+Semestral (6 parcelas, 8% de desconto)
+
+Anual (12 parcelas, 12% de desconto)
+
+Cancelamentos: Podem estar sujeitos a multa contratual.
+
+Suspensão por inadimplência: A falta de pagamento suspende o acesso às aulas até a regularização.
+
+Reembolsos: Só ocorrem se a BRASAS não puder iniciar a turma e o aluno não quiser transferir.
+
+Férias individuais: Resultam em remanejamento de turma, sem garantia de continuidade no mesmo ponto do curso.
+
+Interrupção do curso: O cancelamento deve ser solicitado antes da próxima cobrança por e-mail (online@brasas.com
+). Débitos devem ser quitados.
+
+Se retornar em menos de 3 meses, o aluno deve pagar as mensalidades do período ausente.
+
+Ausências acima de 3 meses exigem novo teste de nivelamento.
+
+Exemplo: Um aluno que cancela em novembro e retorna em fevereiro deve pagar dezembro e janeiro.
+
+Feriados: São observados apenas os feriados nacionais do Brasil.
+
+CERTIFICADO E COMUNICAÇÃO
+
+Os alunos autorizam o envio eletrônico de materiais promocionais, acadêmicos, financeiros e comunicados necessários.
+
+DURAÇÃO DO CURSO
+
+Nivelamento: O aluno passa por teste gratuito, exceto iniciantes.
+
+Carga: O nível Básico possui 40 aulas; o Intermediário, 45. A duração depende do progresso da turma.
+
+Ajuste de preços: Sujeitos a reajustes por convenções salariais e custos operacionais.
+
+Férias: Professores da BRASAS Online têm 23 dias de férias coletivas (dezembro a janeiro) e 7 dias na última semana de julho.`,
 };

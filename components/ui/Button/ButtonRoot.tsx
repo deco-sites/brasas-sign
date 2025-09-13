@@ -2,7 +2,7 @@ interface ButtonRootProps {
   children: preact.ComponentChildren;
   type?: "button" | "submit" | "reset";
   uppercaseText?: boolean;
-  color: "red" | "blue" | "white" | "green";
+  color: "red" | "blue" | "white" | "green" | "navy";
   onClickAction?: () => void;
   disabled?: boolean;
 }
@@ -10,6 +10,7 @@ interface ButtonRootProps {
 const BG_COLORS = {
   red: "bg-red-400",
   blue: "bg-blue-500",
+  navy: "bg-blue-900",
   white: "bg-white",
   green: "bg-green-300",
 };

@@ -519,4 +519,211 @@ FULL PROGRAM:
 
 Students are prepared for international certification exams (TOEFL®, TOEIC®), study abroad, postgraduate courses, and professional networking.
   `,
+  private: `Private Lessons Regulations`,
+  pff: `BRASAS ONLINE POLICY  
+BRASAS METHOD – PORTUGUESE FOR FOREIGNERS 
+The Portuguese for Foreigners course was created in 2014 and has always aimed at 
+efficient and rapid teaching of Brazilian Portuguese, using the BRASAS methodology 
+developed by George P. Zinovetz and the materials written by Eleonora Zinovetz. 
+Portuguese is used exclusively from the first day of class. All new teachers undergo our 
+Training Program, where they learn to apply our methodology. BRASAS maintains strict 
+quality control of its teachers, with constant supervision from the pedagogical coordination 
+team and systematic training through workshops and seminars. 
+Our classes are dynamic and relaxed, always emphasizing structured conversation. 
+Grammar is taught naturally, not as an end in itself, but as a communicative element, 
+ensuring that students speak appropriately and correctly. We use a wide variety of activities 
+and explore everyday situations. 
+BRASAS MATERIAL 
+All teaching materials are exclusive, created by BRASAS, and undergo frequent pedagogical 
+review and constant updates. The books and support materials will be available on a 
+platform accessed through a username and password, valid only during the course. Access 
+does not permit reproduction of the content by printing or exporting in any format (such as 
+PDF or Word), nor does it allow access after the course ends. 
+The teaching material adopted by BRASAS is essential for students to follow classes 
+adequately and is protected under Copyright Law No. 9.610/98. 
+BRASAS ONLINE 
+To ensure distance learning with the same quality and methodology as the face-to-face 
+course, BRASAS ONLINE was developed. It consists of videoconference classes, videos, 
+slides, reading materials, and exercises. 
+STUDENT CONDUCT 
+For the proper achievement of the course objectives, the student must necessarily perform 
+the following activities: 
+STUDENT DUTIES 
+● Connect at the scheduled class time and attend the class in full, always with the 
+camera on, allowing both image and audio to be visible. Important: Microphones 
+should remain off during group repetitions and on during individual participation. If 
+only one student is present, the microphone must remain on at all times. 
+● Behave respectfully during classes and be properly dressed. 
+● Attention: Recording or sharing classes in whole or in part, whether in audio or 
+video format, is strictly prohibited. BRASAS will take legal measures to protect its 
+intellectual property and teachers’ rights. 
+● Complete all homework assignments and listen to the audios. 
+● Speak only in Portuguese during class. 
+● Inform the teacher if experiencing difficulties keeping up with the class. 
+● Present payment receipts whenever requested. Keep all contact information 
+(address, phone number, and email) updated, including when financial responsibility 
+changes. 
+● Request, in writing (online@brasas.com), the cancellation (withdrawal) of the module 
+or transfer to another schedule. 
+● Settle any outstanding debts from previous periods before officially leaving the 
+course. 
+DURING THE ONLINE CLASS 
+● Repetition: Exercises for articulation, fixation of basic structures, pronunciation, and 
+intonation. 
+● Substitution: The bridge between repetition and conscious communication. 
+● Questions: Based on material already assimilated through repetition, substitution, or 
+reading. 
+● Dialogues: Simple and creative, expanding the repertoire of commonly used 
+expressions. 
+● Corrections: Always oral, with repetition and explanation. 
+● Conversation: Oral development that encourages reasoning in Portuguese. Free 
+conversation is used only when students have already mastered the necessary 
+structures, in order to avoid reinforcing mistakes. 
+● Pronunciation and Intonation: Teachers use natural pronunciation, rhythm, 
+intonation, and speed. 
+● Video: Used to enrich learning and provide contact with Portuguese. 
+● BRASAS Slides: Interactive presentations used to dynamically teach content. 
+OUTSIDE THE ONLINE CLASSROOM 
+What is expected of the student to complement classroom learning: 
+● Visual organization of material orally presented in class. 
+● Grammar rules for comparative study. 
+● Reading texts at home, with comprehension discussed in class. 
+● A list of new words with definitions and examples (in Portuguese). 
+● Related groups of ideas or objects. 
+● Summaries and outlines of presented material. 
+● Written exercises. 
+● Watching programs and videos with Portuguese subtitles. 
+BRASAS ONLINE STUDENT CODE OF CONDUCT 
+At BRASAS Online, we are committed to offering an open, safe, and friendly environment to 
+learn and practice Portuguese. To ensure the best possible learning experience, we ask 
+students to follow the conduct rules below. 
+● Treat everyone with respect: At BRASAS Online, you will meet teachers and 
+students from around the world, with different religions, cultures, and values. Please 
+treat everyone with kindness, respect, and consideration for differences. We have a 
+zero-tolerance policy for discrimination based on race, culture, religion, physical 
+appearance, or sexual orientation. 
+● Dress appropriately: Our dress code is similar to any in-person school or college. 
+Casual clothing is fine, but students must be fully dressed. 
+● Participate from a quiet place: Whenever possible, attend BRASAS Online classes 
+in a quiet environment without excessive noise or interruptions. Your login and 
+password are personal and non-transferable. BRASAS Online is exclusively for you. 
+● Religion, politics, and controversial topics: Some teacher–student relationships 
+may be open enough for discussions on religion, politics, or other sensitive topics. 
+However, if the conversation becomes negative or offensive, please change the 
+subject. 
+● Always ask permission before sharing recordings or videos: You may review the 
+recording of your class, which will be available from your teacher until the end of the 
+week. Homework and other assignments will be posted in your Google Classroom. 
+You may also share your experience on social media, but only after receiving 
+permission from your teacher and/or classmates who appear in the video. 
+Unauthorized sharing may result in a request to remove the video. 
+● No alcoholic beverages during classes: Consuming alcohol during classes is 
+prohibited. Since BRASAS Online is a learning environment, please also avoid 
+smoking, eating, or chewing gum. 
+● Do not share external contacts: For your privacy and security, BRASAS Online 
+asks that you do not share external contact details (Facebook, Skype, WhatsApp, 
+Instagram, WeChat, etc.). Use Google Meet and Google Classroom for safe 
+communication. 
+● Do not offer or accept external services: BRASAS Online is a dedicated 
+environment for learning Portuguese. To keep it safe and professional, do not 
+promote or accept external services. Payments, gifts, or tips must not be offered or 
+requested. 
+● Cameras on : During online classes, students are required to keep their cameras on 
+so that the teacher can observe how they articulate words. Having cameras on also 
+fosters better interaction, increases focus, and helps create a more engaging 
+learning environment. 
+BRASAS AUDIO TRACKS 
+The audio tracks are an integral part of our method, which enables: 
+● Individualized learning. 
+● Development of comprehension, training students to understand different voices, 
+accents, and regional variations. 
+● Improvement of pronunciation and intonation through individual repetition, at 
+increasing speeds, with natural contractions and omissions typical of spoken 
+Portuguese. 
+● Repetition of selected passages as often as necessary. 
+The audios were recorded by native Brazilian Portuguese speakers, incorporating the 
+natural rhythm of the language and reflecting everyday situations. 
+It is recommended to listen to the audios as often as possible to increase students’ fluency 
+and confidence. Audios can be accessed within the digital books. 
+Listen and repeat each audio orally at least three times. 
+BRASAS DUTIES 
+● Evaluate new students and place them in the appropriate level. 
+● Start and end classes on time. 
+● Hire fluent, competent, and well-prepared teachers. 
+● Teach exclusively in Portuguese and encourage the use of Portuguese inside and 
+outside the classroom. 
+● Uniformly apply the BRASAS methodology. 
+● Monitor each student’s progress individually and reclassify when necessary. 
+● Prevent behaviors that may disturb the class. 
+MINIMUM TECHNICAL REQUIREMENTS 
+To participate in classes, students must have: 
+● A broadband connection with at least 1Mb/s download and upload speed, or a stable 
+4G connection. 
+● Equipment with camera, microphone, and speakers. 
+● A compatible data plan to support online activities. 
+Note: BRASAS is not responsible for technical problems such as internet instability or 
+malfunction of the student’s equipment. 
+CLASS RECORDINGS BY BRASAS 
+Students expressly acknowledge that classes may be recorded by BRASAS, consenting in 
+advance to the capture of their image and voice. Recordings are strictly for pedagogical 
+purposes, allowing students to review classes until the end of the current module. 
+OPENING AND RELOCATION OF CLASSES 
+New classes may open at any time of the year when enrollment reaches the minimum 
+required for didactic and economic viability. 
+● The minimum is 5 paying students per class. As long as this number is maintained, 
+BRASAS will keep the class at its original time. If the number falls below 5, students 
+may be relocated to other classes, if available. 
+The obligation to continue classes is reciprocal. 
+○ 12 consecutive monthly installments per year, including holidays, vacations, 
+and breaks.” 
+ADMINISTRATIVE ROUTINES 
+● Tuition: Each student pays 12 consecutive monthly installments per year, including 
+holidays, vacations, and breaks. Payment is due regardless of attendance. Charges 
+are made by recurring credit card on the same day as the first payment. Enrollment 
+renewal is automatic. To discontinue, the student must notify BRASAS via official 
+service channels before the next scheduled payment (email: online@brasas.com). 
+● Payments: Tuition is paid exclusively by credit card in a subscription model. The 
+monthly charge occurs automatically and does not affect the total card limit, only the 
+monthly limit. Subscription options: monthly (no discount), semi-annual (8% 
+discount), or annual (12% discount), according to the current price table. 
+● Semi-annual or Annual Plans: 
+○ Semi-annual: Six consecutive monthly installments (including holidays, 
+vacations, and breaks), with an 8% discount. 
+○ Annual: Twelve consecutive monthly installments (including holidays, 
+vacations, and breaks), with a 12% discount. 
+● Important: Cancellation or transfer requests for classes or modalities may be subject 
+to a contractual fee. Please review the loyalty clause in the Terms and Conditions 
+before subscribing. 
+● Cancellations: BRASAS may suspend or cancel enrollment for non-payment, 
+preventing access to online classes until the overdue balance and applicable charges 
+are settled. 
+● Refunds: Payments are refundable only if BRASAS is unable to start the class for 
+internal reasons and the student does not wish to transfer to another schedule. 
+● Vacations: Individual student vacations will result in reallocation to another class; 
+however, continuity at the same lesson stage and the same schedule cannot be 
+guaranteed. 
+● Course interruptions: Students must request cancellation before the next 
+scheduled payment by emailing online@brasas.com and filling out the official 
+cancellation form. Outstanding debts must be settled. Students returning after less 
+than three months must pay tuition for the period missed. Absence longer than three 
+months requires a new placement test. 
+Example: a student who cancels in November and returns in February must pay 
+tuition for December and January. 
+● Holidays: BRASAS observes national holidays in Brazil. Classes continue as normal 
+on local holidays. 
+CERTIFICATE AND COMMUNICATION 
+Students authorize the electronic sending of promotional, academic, and financial materials, 
+as well as other notices necessary for communication between the parties. 
+COURSE DURATION 
+● Placement: Students undergo a free evaluation test. Beginners, however, are not 
+required to take the placement test. After placement, the frequency of studies is 
+chosen, and tuition varies accordingly. 
+● Duration: The Basic level includes 40 lessons, and the Intermediate level includes 
+45 lessons. The pace of the course depends on the group’s progress, as lessons 
+may be extended until the teacher feels the content has been mastered. The total 
+duration of the course will vary according to the students’ progress. 
+● Price adjustment: Prices are subject to adjustment due to teacher wage 
+agreements and operational costs. 
+● Vacations: BRASAS Online teachers have 23 collective vacation days (between 
+December and January) and 7 days in the last week of July.`,
 };
