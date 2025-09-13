@@ -44,6 +44,17 @@ export default function InitialStep({ form, goToNextStep }) {
           >
             <span>{data.pffCourseButtonText}</span>
           </Button.Root>
+          <Button.Root
+            color="navy"
+            uppercaseText
+            type="button"
+            onClickAction={() => {
+              setValue("courseType", "private");
+              goToNextStep();
+            }}
+          >
+            <span>{data.privateClassesButtonText}</span>
+          </Button.Root>
         </div>
       </div>
     </div>
