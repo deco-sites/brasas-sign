@@ -56,9 +56,15 @@ export default function FormStepLayout({
   };
 
   const handleSendEmailtoUser = async () => {
-    const fileName = getValues().module === "online"
-      ? "BOL.pdf"
-      : "PRESENCIAL.pdf";
+    let fileName = "";
+
+    if (getValues().courseType === "pff") fileName = "PFF.pdf";
+    if (getValues().courseType === "private") fileName = "PRIVATE.pdf";
+
+    if (getValues().courseType === "regular") {
+      if (getValues().module === "online") fileName = "BOL.pdf";
+      if (getValues().module === "presencial") fileName = "PRESENCIAL.pdf";
+    }
 
     const base64File = await getPdfAsBase64(fileName);
 
