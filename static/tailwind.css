@@ -2637,6 +2637,9 @@ html {
 .animate-\[dropdown-bounce_0\.3s_ease-out\] {
   animation: dropdown-bounce 0.3s ease-out;
 }
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
 .cursor-pointer {
   cursor: pointer;
 }
@@ -3120,6 +3123,9 @@ html {
 }
 .accent-blue-600 {
   accent-color: #EDF7FB;
+}
+.opacity-50 {
+  opacity: 0.5;
 }
 .outline-none {
   outline: 2px solid transparent;
