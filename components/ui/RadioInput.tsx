@@ -17,6 +17,7 @@ interface RadioInputProps {
   labelClassName?: string;
   groupClassName?: string;
   register?: UseFormRegisterReturn;
+  disabledOptions?: string[];
 }
 
 export default function RadioInput({
@@ -29,6 +30,7 @@ export default function RadioInput({
   className = "",
   labelClassName = "",
   groupClassName = "",
+  disabledOptions,
 }: RadioInputProps) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -43,7 +45,13 @@ export default function RadioInput({
           <label
             key={option.id}
             htmlFor={`${name}-${option.id}`}
-            className="flex items-center gap-2 cursor-pointer"
+            className={`flex items-center gap-2 
+    ${
+              disabledOptions?.includes(option.value)
+                ? "cursor-not-allowed opacity-50"
+                : "cursor-pointer"
+            }
+  `}
           >
             {/* Radio escondido */}
             <input
@@ -53,6 +61,7 @@ export default function RadioInput({
               value={option.value}
               checked={value === option.value}
               onChange={onChange}
+              disabled={disabledOptions?.includes(option.value)}
               {...register}
               className="hidden peer"
             />
