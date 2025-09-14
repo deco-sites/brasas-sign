@@ -28,6 +28,13 @@ export default function Step2(
 
   const { register, watch, setValue, formState: { errors } } = form;
   const residence = watch("residence");
+  const courseType = watch("courseType");
+
+  useEffect(() => {
+    if (courseType === "pff") {
+      setValue("module", "online");
+    }
+  }, [courseType, setValue]);
 
   const cep = useWatch({ control: form.control, name: "cep" });
   const [viaCepReturn, setViaCepReturn] = useState({});
@@ -217,22 +224,26 @@ export default function Step2(
         </>
       )}
 
-      <SelectInput
-        name="branches"
-        label={data.branches.label}
-        options={branches}
-        value={watch("branches")}
-        error={errors.branches}
-        placeholder={data.branches.placeholder}
-        register={register("branches", {
-          required: data.branches.requiredError,
-        })}
-        setValue={setValue}
-      />
-      {errors.branches && (
-        <span className="text-red-300 text-xs">
-          {errors.branches.message}
-        </span>
+      {courseType !== "pff" && (
+        <>
+          <SelectInput
+            name="branches"
+            label={data.branches.label}
+            options={branches}
+            value={watch("branches")}
+            error={errors.branches}
+            placeholder={data.branches.placeholder}
+            register={register("branches", {
+              required: data.branches.requiredError,
+            })}
+            setValue={setValue}
+          />
+          {errors.branches && (
+            <span className="text-red-300 text-xs">
+              {errors.branches.message}
+            </span>
+          )}
+        </>
       )}
 
       <RadioInput
@@ -248,6 +259,7 @@ export default function Step2(
           { id: "online", value: "online", label: data.module.options[1] },
         ]}
         register={register("module", { required: data.module.requiredError })}
+        disabledOptions={courseType === "pff" ? ["presencial"] : []}
       />
       {errors.module && (
         <span className="text-red-300 text-xs">
