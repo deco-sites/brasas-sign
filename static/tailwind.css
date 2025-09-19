@@ -2860,6 +2860,10 @@ html {
   --tw-bg-opacity: 1;
   background-color: rgb(196 232 107 / var(--tw-bg-opacity));
 }
+.bg-red-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 16 46 / var(--tw-bg-opacity));
+}
 .bg-red-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(224 0 77 / var(--tw-bg-opacity));
@@ -3090,6 +3094,10 @@ html {
 .text-black-800 {
   --tw-text-opacity: 1;
   color: rgb(56 56 56 / var(--tw-text-opacity));
+}
+.text-blue-900 {
+  --tw-text-opacity: 1;
+  color: rgb(0 30 96 / var(--tw-text-opacity));
 }
 .text-gray-500 {
   --tw-text-opacity: 1;
