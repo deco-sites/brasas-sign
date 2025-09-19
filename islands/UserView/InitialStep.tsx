@@ -23,7 +23,7 @@ export default function InitialStep({ form, goToNextStep }) {
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Button.Root
-            color="red"
+            color="regular"
             uppercaseText
             type="button"
             onClickAction={() => {
