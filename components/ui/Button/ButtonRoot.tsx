@@ -10,7 +10,7 @@ interface ButtonRootProps {
 const BG_COLORS = {
   red: "bg-red-400",
   blue: "bg-blue-500",
-  regular: "bg-blue-200",
+  regular: "bg-red-300",
   navy: "bg-blue-900",
   white: "bg-white",
   green: "bg-green-300",
@@ -30,11 +30,7 @@ export function ButtonRoot(
     <button
       type={type}
       className={`flex items-center justify-center gap-4 ${
-        color === "white"
-          ? "text-blue-300"
-          : color === "regular"
-          ? "text-blue-300"
-          : "text-white"
+        color === "white" ? "text-blue-900" : "text-white"
       } ${
         BG_COLORS[color]
       } rounded-lg py-2 px-4 text-sm font-semibold cursor-pointer whitespace-nowrap ${
