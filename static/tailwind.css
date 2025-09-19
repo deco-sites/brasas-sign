@@ -2844,10 +2844,6 @@ html {
   --tw-bg-opacity: 1;
   background-color: rgb(44 44 44 / var(--tw-bg-opacity));
 }
-.bg-blue-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(54 188 238 / var(--tw-bg-opacity));
-}
 .bg-blue-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 87 184 / var(--tw-bg-opacity));
@@ -2863,6 +2859,10 @@ html {
 .bg-green-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(196 232 107 / var(--tw-bg-opacity));
+}
+.bg-red-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 16 46 / var(--tw-bg-opacity));
 }
 .bg-red-400 {
   --tw-bg-opacity: 1;
@@ -3095,9 +3095,9 @@ html {
   --tw-text-opacity: 1;
   color: rgb(56 56 56 / var(--tw-text-opacity));
 }
-.text-blue-300 {
+.text-blue-900 {
   --tw-text-opacity: 1;
-  color: rgb(30 34 190 / var(--tw-text-opacity));
+  color: rgb(0 30 96 / var(--tw-text-opacity));
 }
 .text-gray-500 {
   --tw-text-opacity: 1;
