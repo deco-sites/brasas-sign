@@ -38,7 +38,7 @@ export default function MultiInput(props: Props) {
   const [multiStepItems, setMultiStepItems] = useState(
     initialValues.length > 0
       ? initialValues.map((v) => createItem(v))
-      : [createItem()]
+      : [createItem()],
   );
 
   const updateFormValue = (updatedItems: typeof multiStepItems) => {

@@ -5,7 +5,6 @@ import IconArrowLeft from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-
 import IconArrowRight from "https://deno.land/x/tabler_icons_tsx@0.0.7/tsx/arrow-right.tsx";
 import { useFormContext } from "react-hook-form";
 import { saveCustomer } from "../../services/saveCustomers.ts";
-import { useState } from "preact/hooks";
 import { invoke } from "../../runtime.ts";
 import { getBranch } from "../../services/getBranch.ts";
 import { useFinishForm } from "../../sdk/useFinishForm.ts";

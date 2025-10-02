@@ -1,11 +1,7 @@
-import { useForm } from "react-hook-form";
-import { Input } from "../../components/ui/Input/index.tsx";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
-
 import SelectInput from "../../components/ui/SelectInput.tsx";
 import TextInput from "../../components/ui/TextInput.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
-import CheckboxInput from "../../components/ui/CheckboxInput.tsx";
 import MultiInput from "../../components/ui/MultiInput.tsx";
 import { phoneMask } from "../../helpers/phoneMask.ts";
 import { useEffect, useState } from "preact/hooks";

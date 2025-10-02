@@ -1,4 +1,3 @@
-import { useForm } from "react-hook-form";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import TextInput from "../../components/ui/TextInput.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
@@ -19,7 +18,7 @@ export default function Step2(
 
   useEffect(() => {
     setBranches(
-      units?.map((unit, index) => ({
+      units?.map((unit) => ({
         id: unit.id,
         value: unit.internal_name,
       })),

@@ -456,20 +456,19 @@ video {
 html {
   -webkit-tap-highlight-color: transparent;
 }
-
   /* Allow changing font family via CMS */
   html {
     font-family: var(--font-family);
   }
 
   /** Remove default styles from input[type=number] */
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  input[type=number] {
+  input[type="number"] {
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
             appearance: textfield;
@@ -2355,9 +2354,6 @@ html {
 .mb-5 {
   margin-bottom: 1.25rem;
 }
-.mb-\[33px\] {
-  margin-bottom: 33px;
-}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -2718,9 +2714,6 @@ html {
 .overflow-x-scroll {
   overflow-x: scroll;
 }
-.overflow-y-scroll {
-  overflow-y: scroll;
-}
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2945,9 +2938,9 @@ html {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
-.py-\[30px\] {
-  padding-top: 30px;
-  padding-bottom: 30px;
+.py-\[10px\] {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .pb-4 {
   padding-bottom: 1rem;
@@ -3123,9 +3116,6 @@ html {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-.text-opacity-25 {
-  --tw-text-opacity: 0.25;
-}
 .underline {
   text-decoration-line: underline;
 }
@@ -3171,33 +3161,33 @@ html {
   }
 /*Efeito do input select*/
 @keyframes dropdown-bounce {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    40% {
+      transform: translateY(10px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-  40% {
-    transform: translateY(10px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 @keyframes dropdown-retract {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    60% {
+      transform: translateY(-10px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
   }
-  60% {
-    transform: translateY(-10px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-}
 @media (min-width: 768px) {
 
   .md\:btn-sm {
@@ -3236,9 +3226,6 @@ html {
 .placeholder\:text-gray-500::placeholder {
   --tw-text-opacity: 1;
   color: rgb(146 146 146 / var(--tw-text-opacity));
-}
-.last\:mb-0:last-child {
-  margin-bottom: 0px;
 }
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;

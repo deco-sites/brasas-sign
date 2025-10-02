@@ -1,5 +1,3 @@
-import { useForm } from "react-hook-form";
-import { Input } from "../../components/ui/Input/index.tsx";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import RadioInput from "../../components/ui/RadioInput.tsx";
 import { useEffect, useState } from "preact/hooks";
