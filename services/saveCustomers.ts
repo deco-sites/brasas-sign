@@ -63,6 +63,80 @@ interface FormValues {
   whichOthersPreferences: string;
 }
 
+interface FinanceAdministrator {
+  same_student_address: boolean;
+  relationship: string;
+  name: string;
+  tax_number: string;
+  national_id: string;
+  birth_date: string;
+  address: string;
+  address_number: number;
+  address_complement: string;
+  address_neighborhood: string;
+  address_city: string;
+  address_state: string;
+  address_zip_code: string;
+  phone_number: string;
+  email: string;
+}
+
+interface EducationalAdministrator {
+  same_student_address: boolean;
+  same_educational_financial_administrator: boolean;
+  relationship: string;
+  name: string;
+  tax_number: string;
+  national_id: string;
+  birth_date: string;
+  address: string;
+  address_number: number;
+  address_complement: string;
+  address_neighborhood: string;
+  address_city: string;
+  address_state: string;
+  address_zip_code: string;
+  phone_number: string;
+  email: string;
+}
+
+interface MarketingData {
+  brasas_preference: string[];
+  brasas_preference_others_details: string;
+  brasas_find: string[];
+  brasas_find_others_details: string;
+  brasas_language_interest: string[];
+  brasas_language_interest_details: string;
+  spoken_languages: string[];
+  school_company_origin: string;
+}
+
+interface CustomerPayload {
+  unit_id: number | string;
+  unit_name: string;
+  is_online_module: boolean;
+  data_authorization: boolean;
+  name: string;
+  gender: string;
+  tax_number: string;
+  national_id: string;
+  birth_date: string;
+  origin_country: string;
+  address: string;
+  address_number: number;
+  address_complement?: string;
+  address_neighborhood?: string;
+  address_city?: string;
+  address_state?: string;
+  address_zip_code?: string;
+  phone_number?: string;
+  email?: string;
+  signature?: string;
+  finance_administrator?: FinanceAdministrator;
+  educational_administrator?: EducationalAdministrator;
+  marketing: MarketingData;
+}
+
 export const saveCustomer = async (body: FormValues) => {
   try {
     // 1. Obter token de uso único
@@ -84,7 +158,7 @@ export const saveCustomer = async (body: FormValues) => {
     const token = loginData.access_token;
 
     // 2. Mapear os dados do form para o formato esperado pela API
-    const payload: any = {
+    const payload: CustomerPayload = {
       unit_id: body.branches.id,
       unit_name: body.branches.value,
       is_online_module: body.module === "online",
@@ -108,7 +182,6 @@ export const saveCustomer = async (body: FormValues) => {
       email: body.email,
       signature: body.signature,
 
-      // Adiciona finance_administrator somente se isStudentFinancialResponsible === "no"
       ...(body.isStudentFinancialResponsible === "no" && {
         finance_administrator: {
           same_student_address:
@@ -133,7 +206,6 @@ export const saveCustomer = async (body: FormValues) => {
         },
       }),
 
-      // Adiciona educational_administrator somente se isStudentPedagogicalResponsible === "no"
       ...(body.isStudentPedagogicalResponsible === "no" && {
         educational_administrator: {
           same_student_address:
