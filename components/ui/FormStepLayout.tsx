@@ -67,7 +67,7 @@ export default function FormStepLayout({
 
     const base64File = await getPdfAsBase64(fileName);
 
-    const emailSent = await invoke.site.actions.sendEmail({
+    await invoke.site.actions.sendEmail({
       RecipientsEmailArr: [{ email: getValues().email }],
       subject: "Welcome to BRASAS!",
       attachments: {
@@ -111,7 +111,7 @@ export default function FormStepLayout({
 
     const branch = await getBranch(selectedBranch.id, token);
 
-    const emailSent = await invoke.site.actions.sendEmail({
+    await invoke.site.actions.sendEmail({
       RecipientsEmailArr: [{ email: branch.email }],
       //RecipientsEmailArr: [{ email: getValues().email }],
       subject: "Cadastro Realizado",
@@ -133,7 +133,7 @@ export default function FormStepLayout({
     handleSendEmailtoUser();
     handleSendEmailtoUnity();
     isFormFinished.value = true;
-    const response = await saveCustomer(body);
+    await saveCustomer(body);
   };
 
   const data = useTranslations(LayoutData);
