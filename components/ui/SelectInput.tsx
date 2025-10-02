@@ -11,7 +11,7 @@ interface Option {
 export interface InputProps {
   label: string;
   options: Option[];
-  value?: string | Option | null;
+  value?: string | null;
   placeholder: string;
   setValue?: (name: string, value: any) => void;
   register?: UseFormRegisterReturn;
@@ -19,56 +19,45 @@ export interface InputProps {
   error?: boolean;
 }
 
-export default function Select(
-  {
-    label,
-    options,
-    value,
-    placeholder,
-    register,
-    setValue,
-    name,
-    error,
-  }: InputProps,
-) {
+export default function Select({
+  label,
+  options,
+  value,
+  placeholder,
+  register,
+  setValue,
+  name,
+  error,
+}: InputProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const avatarRef = useRef(null);
-  const dropdownRef = useRef(null);
+  const avatarRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useClickOutsideListener(dropdownRef, avatarRef, setIsOpen);
 
-  const handleClickInside = (event: MouseEvent) => {
-    event.stopPropagation();
-  };
+  const toggleDropdown = () => setIsOpen((s) => !s);
 
-  const displayLabel = typeof value === "string"
-    ? value
-    : value && typeof value === "object"
-    ? (value as Option).value
-    : placeholder;
+  const selectedOption = options.find((opt) => opt.value === value);
+  const displayLabel = selectedOption ? selectedOption.value : placeholder;
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option: Option) => {
-    if (setValue && name) setValue(name, option);
+  const handleOptionSelect = (option: Option) => {
+    if (setValue && name) {
+      setValue(name, option.value);
+    }
     setIsOpen(false);
   };
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1" translate="no" data-notranslate>
       <label className="text-black-800 uppercase text-sm font-semibold">
         {label}
       </label>
 
-      {/* Hidden input to integrate with react-hook-form */}
+      {/* input hidden para compatibilidade com react-hook-form */}
       <input
         type="hidden"
         name={name}
-        value={value
-          ? (typeof value === "string" ? value : JSON.stringify(value))
-          : ""}
+        value={value ?? ""}
         {...(register ?? {})}
       />
 
@@ -90,8 +79,10 @@ export default function Select(
               toggleDropdown();
             }
           }}
+          translate="no"
         >
           <span>{displayLabel || placeholder}</span>
+
           <svg
             className={`transform transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
@@ -116,23 +107,29 @@ export default function Select(
         {isOpen && (
           <div
             ref={dropdownRef}
-            onClick={handleClickInside}
-            className={`absolute z-50 max-h-80 overflow-y-scroll left-0 mt-[14px] bg-white text-black text-opacity-25 rounded-xl py-[30px] w-full animate-[dropdown-bounce_0.3s_ease-out]`}
+            translate="no"
+            className={`absolute z-50 max-h-80 overflow-y-auto left-0 mt-[14px] bg-white text-black rounded-xl py-[10px] w-full animate-[dropdown-bounce_0.3s_ease-out] notranslate`}
+            role="listbox"
           >
-            {options.map((option, index) => (
+            {options.map((option) => (
               <div
-                key={index}
-                className="flex gap-4 items-center px-4 text-center cursor-pointer mb-[33px] last:mb-0"
-                onClick={() => handleOptionClick(option)}
+                key={option.id}
+                role="option"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  handleOptionSelect(option);
+                }}
+                className="flex gap-4 items-center px-4 py-2 text-left cursor-pointer hover:bg-gray-50"
               >
                 {option.image && (
                   <img
                     src={option.image}
                     alt={option.value}
                     className="w-5 h-5 object-cover rounded-sm"
+                    draggable={false}
                   />
                 )}
-                {option.value}
+                <span>{option.value}</span>
               </div>
             ))}
           </div>

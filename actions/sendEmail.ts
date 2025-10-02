@@ -1,7 +1,4 @@
 import { AppContext } from "site/apps/site.ts";
-import { Secret } from "apps/website/loaders/secret.ts";
-import sendgrid from "sendgrid"; //assim tbm funcionou, basta usar sendgrid no lugar de sgMail, por exemplo sendgrid.setApiKey ou sengrid.send
-//import sgMail from "sendgrid";      Esse aqui também funcionou, basta usar sgMail no lugar de sendgrid
 
 export interface DataProps {
   name: string;
@@ -81,7 +78,6 @@ const sendEmail = async (
     ];
   }
 
-  
   try {
     const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
       method: "POST",

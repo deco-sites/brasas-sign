@@ -10,7 +10,6 @@ import Step6 from "./Step6.tsx";
 import { UnitsProvider } from "../../contexts/UnitsContext.tsx";
 import { useFinishForm } from "../../sdk/useFinishForm.ts";
 import FormFinished from "../../components/ui/FormFinished.tsx";
-import Image from "apps/website/components/Image.tsx";
 import Internationalization from "../../components/ui/Internationalization.tsx";
 import { LayoutData } from "../../data/Layout/Layout.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
@@ -123,7 +122,7 @@ export default function FormController({ units }) {
     setStep((prev) => (prev + 1) as Step);
   };
 
-  const { handleSubmit, trigger } = form;
+  const { trigger } = form;
 
   const steps = {
     0: InitialStep,

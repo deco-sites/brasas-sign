@@ -1,16 +1,13 @@
-import { useForm } from "react-hook-form";
-import { Input } from "../../components/ui/Input/index.tsx";
 import FormStepLayout from "../../components/ui/FormStepLayout.tsx";
 import CheckboxInput from "../../components/ui/CheckboxInput.tsx";
 import TextInput from "../../components/ui/TextInput.tsx";
-import { useEffect } from "preact/hooks";
 import { Step5Data } from "../../data/Step5/Step5Data.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 
 export default function Step5(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
-  const { register, watch, setValue, formState: { errors } } = form;
+  const { register, watch, formState: { errors } } = form;
 
   const preference = watch("preference");
   const howFind = watch("howFind");

@@ -155,6 +155,7 @@ export default function Step6(
           {data.signAbove}
         </span>
         <button
+          type="button"
           onClick={handleCleanSign}
           className="text-gray-500 text-xs font-light cursor-pointer"
         >
