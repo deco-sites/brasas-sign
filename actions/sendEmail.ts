@@ -33,7 +33,7 @@ export interface Props {
 
 const sendEmail = async (
   props: Props,
-  req: Request,
+  _req: Request,
   ctx: AppContext,
 ) => {
   const { sendgrid } = ctx;

@@ -16,7 +16,7 @@ export default function FormRender({ units }: Props) {
   return <FormController units={units} />;
 }
 
-export const loader = async (props: Props, req: Request, ctx: FnContext) => {
+export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
   const loginRes = await fetch(
     "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366",
     {
