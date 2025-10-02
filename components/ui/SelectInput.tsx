@@ -13,7 +13,7 @@ export interface InputProps {
   options: Option[];
   value?: string | null;
   placeholder: string;
-  setValue?: (name: string, value: any) => void;
+  setValue?: (name: string, value: string) => void;
   register?: UseFormRegisterReturn;
   name?: string;
   error?: boolean;

@@ -11,8 +11,8 @@ interface MultiInputProps {
   label: string;
   icon?: ComponentType<{ class?: string }>;
   onChangeValues?: (values: string[]) => void;
-  setValue: (name: string, value: any) => void;
-  getValues: (name: string) => any;
+  setValue: (name: string, value: string[]) => void;
+  getValues: (name: string) => string[];
 }
 
 type Props = MultiInputProps & InputFieldProps;
