@@ -1,10 +1,19 @@
 import { createContext } from "preact";
 
-export const InputSelectContext = createContext<{
+type InputSelectContextType = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onChange?: (value: string) => void;
   value?: string;
   triggerRef: preact.RefObject<HTMLDivElement>;
   dropdownRef: preact.RefObject<HTMLDivElement>;
-}>(null as any);
+};
+
+export const InputSelectContext = createContext<InputSelectContextType>({
+  isOpen: false,
+  setIsOpen: () => {},
+  onChange: undefined,
+  value: undefined,
+  triggerRef: { current: null },
+  dropdownRef: { current: null },
+});

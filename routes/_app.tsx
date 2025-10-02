@@ -72,64 +72,53 @@ export default defineApp(async (_req, ctx) => {
           as="font"
           type="font/otf"
         />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `@font-face {
-                      font-family: 'Museo Sans';
-                      font-style: normal;
-                      font-weight: 100;
-                      font-display: swap;
-                      src: url(${
-              asset("MuseoSans-100.otf")
-            }) format('opentype');
-                    }
+        <style>
+          {`
+    @font-face {
+      font-family: 'Museo Sans';
+      font-style: normal;
+      font-weight: 100;
+      font-display: swap;
+      src: url(${asset("MuseoSans-100.otf")}) format('opentype');
+    }
 
-                    @font-face {
-                      font-family: 'Museo Sans';
-                      font-style: normal;
-                      font-weight: 300;
-                      font-display: swap;
-                      src: url(${
-              asset("MuseoSans-300.otf")
-            }) format('opentype');
-                    }
+    @font-face {
+      font-family: 'Museo Sans';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(${asset("MuseoSans-300.otf")}) format('opentype');
+    }
 
-                    @font-face {
-                      font-family: 'Museo Sans';
-                      font-style: normal;
-                      font-weight: 500;
-                      font-display: swap;
-                      src: url(${
-              asset("MuseoSans-500.otf")
-            }) format('opentype');
-                    }
+    @font-face {
+      font-family: 'Museo Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(${asset("MuseoSans-500.otf")}) format('opentype');
+    }
 
-                    @font-face {
-                      font-family: 'Museo Sans';
-                      font-style: normal;
-                      font-weight: 700;
-                      font-display: swap;
-                      src: url(${
-              asset("MuseoSans-700.otf")
-            }) format('opentype');
-                    }
+    @font-face {
+      font-family: 'Museo Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url(${asset("MuseoSans-700.otf")}) format('opentype');
+    }
 
-                    @font-face {
-                      font-family: 'Museo Sans';
-                      font-style: normal;
-                      font-weight: 100;
-                      font-display: swap;
-                      src: url(${
-              asset("MuseoSans-900.otf")
-            }) format('opentype');
-                    }
-                      
-                    * {
-                      font-family: 'Museo Sans', sans-serif  
-                    }
-                    `,
-          }}
-        />
+    @font-face {
+      font-family: 'Museo Sans';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url(${asset("MuseoSans-900.otf")}) format('opentype');
+    }
+
+    * {
+      font-family: 'Museo Sans', sans-serif;
+    }
+  `}
+        </style>
 
         {/* Enable View Transitions API */}
         <meta name="view-transition" content="same-origin" />
