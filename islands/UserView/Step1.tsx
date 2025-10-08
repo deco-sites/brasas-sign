@@ -24,6 +24,12 @@ export default function Step1(
 
   const data = useTranslations(Step1Data);
 
+  const genderOptions = [
+    { id: "masculino", value: data.gender.options[0] },
+    { id: "feminino", value: data.gender.options[1] },
+    { id: "prefiro-nao-informar", value: data.gender.options[2] },
+  ];
+
   const [countries, setCountries] = useState([]);
   const residence = watch("residence");
 
@@ -99,6 +105,24 @@ export default function Step1(
       {errors.fullName && (
         <span className="text-red-300 text-xs">
           {errors.fullName.message}
+        </span>
+      )}
+
+      <SelectInput
+        name="gender"
+        label={data.gender.label}
+        options={genderOptions}
+        value={watch("gender")}
+        error={errors.country}
+        placeholder={data.gender.placeholder}
+        register={register("gender", {
+          required: data.gender.requiredError,
+        })}
+        setValue={setValue}
+      />
+      {errors.gender && (
+        <span className="text-red-300 text-xs">
+          {errors.gender.message}
         </span>
       )}
 
