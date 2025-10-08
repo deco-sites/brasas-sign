@@ -14,6 +14,12 @@ export const step1DataPT = {
     "placeholder": "Insira o nome completo do aluno",
     "requiredError": "Informe o nome completo do aluno",
   },
+  "gender": {
+    "label": "*Gênero do aluno",
+    "placeholder": "Escolha o gênero do aluno",
+    "options": ["Masculino", "Feminino", "Prefiro não informar"],
+    "requiredError": "Selecione uma opção",
+  },
   "email": {
     "label": "*E-mail",
     "placeholder": "Insira seu e-mail",
