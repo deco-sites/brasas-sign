@@ -24,6 +24,7 @@ export default function FormController({ units }) {
     1: [
       "residence",
       "fullName",
+      "gender",
       "email",
       "phone",
       "birthDate",
