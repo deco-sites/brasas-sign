@@ -15,8 +15,8 @@ export const step1DataPT = {
     "requiredError": "Informe o nome completo do aluno",
   },
   "gender": {
-    "label": "*Gênero do aluno",
-    "placeholder": "Escolha o gênero do aluno",
+    "label": "*Sexo do aluno",
+    "placeholder": "Escolha o sexo do aluno",
     "options": ["Masculino", "Feminino", "Prefiro não informar"],
     "requiredError": "Selecione uma opção",
   },
