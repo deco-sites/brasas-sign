@@ -9,9 +9,10 @@ export const getBranch = async (
   branchId: number,
   token: string,
 ): Promise<BranchDetails> => {
+  const API_URL = Deno.env.get("DECO_API_BASE_URL");
   try {
     const response = await fetch(
-      `https://apitest.brasas.com/sophia/brasas/units/${branchId}/details`,
+      `${API_URL}/sophia/brasas/units/${branchId}/details`,
       {
         method: "GET",
         headers: {
