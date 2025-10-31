@@ -17,8 +17,10 @@ export default function FormRender({ units }: Props) {
 }
 
 export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
+  const API_URL = Deno.env.get("DECO_API_BASE_URL");
+
   const loginRes = await fetch(
-    "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366",
+    `${API_URL}/users/login/651f0350e5085e6250f6b366`,
     {
       method: "GET",
       headers: {
@@ -31,7 +33,7 @@ export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
   const token = loginData.access_token;
 
   const unitsRes = await fetch(
-    "https://apitest.brasas.com/sophia/brasas/units",
+    `${API_URL}/sophia/brasas/units`,
     {
       method: "GET",
       headers: {

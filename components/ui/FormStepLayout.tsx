@@ -90,10 +90,11 @@ export default function FormStepLayout({
 
   const handleSendEmailtoUnity = async () => {
     const selectedBranch = getValues().branches;
+    const API_URL = Deno.env.get("DECO_API_BASE_URL");
 
     // 1. Obter token de uso único
     const loginRes = await fetch(
-      "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366?exp_secs=20",
+      `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=20`,
       {
         method: "GET",
         headers: {

@@ -138,10 +138,11 @@ interface CustomerPayload {
 }
 
 export const saveCustomer = async (body: FormValues) => {
+  const API_URL = Deno.env.get("DECO_API_BASE_URL");
   try {
     // 1. Obter token de uso único
     const loginRes = await fetch(
-      "https://apitest.brasas.com/users/login/651f0350e5085e6250f6b366?exp_secs=1200",
+      `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=1200`,
       {
         method: "GET",
         headers: {
@@ -248,7 +249,7 @@ export const saveCustomer = async (body: FormValues) => {
 
     // 3. Enviar payload para a API principal
     const response = await fetch(
-      "https://apitest.brasas.com/sophia/customers",
+      `${API_URL}/sophia/customers`,
       {
         method: "POST",
         headers: {
