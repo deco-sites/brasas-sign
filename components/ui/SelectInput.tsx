@@ -11,7 +11,7 @@ interface Option {
 export interface InputProps {
   label: string;
   options: Option[];
-  value?: string | null;
+  value?: Option | null;
   placeholder: string;
   setValue?: (name: string, value: string) => void;
   register?: UseFormRegisterReturn;
@@ -37,12 +37,12 @@ export default function Select({
 
   const toggleDropdown = () => setIsOpen((s) => !s);
 
-  const selectedOption = options.find((opt) => opt.value === value);
+  const selectedOption = value ? value : null;
   const displayLabel = selectedOption ? selectedOption.value : placeholder;
 
   const handleOptionSelect = (option: Option) => {
     if (setValue && name) {
-      setValue(name, option.value);
+      setValue(name, option);
     }
     setIsOpen(false);
   };
@@ -57,7 +57,7 @@ export default function Select({
       <input
         type="hidden"
         name={name}
-        value={value ?? ""}
+        value={value ? JSON.stringify(value) : ""}
         {...(register ?? {})}
       />
 

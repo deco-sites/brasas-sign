@@ -2,9 +2,12 @@ import website, { Props } from "apps/website/mod.ts";
 import manifest, { Manifest } from "../manifest.gen.ts";
 import { type App, type AppContext as AC } from "@deco/deco";
 import { Sendgrid } from "../loaders/sendgridConfig.ts";
+import { ApiBaseUrl } from "../loaders/apiBaseUrl.ts";
+
 type WebsiteApp = ReturnType<typeof website>;
 export interface SiteProps extends Props {
   sendgrid: Sendgrid;
+  apiBaseUrl: ApiBaseUrl;
 }
 /**
  * @title Site
@@ -13,13 +16,14 @@ export interface SiteProps extends Props {
  * @logo https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1/0ac02239-61e6-4289-8a36-e78c0975bcc8
  */
 export default function Site(
-  { sendgrid, ...state }: SiteProps,
+  { sendgrid, apiBaseUrl, ...state }: SiteProps,
 ): App<Manifest, SiteProps, [
   WebsiteApp,
 ]> {
   return {
     state: {
       sendgrid,
+      apiBaseUrl,
       ...state,
     },
     manifest,
