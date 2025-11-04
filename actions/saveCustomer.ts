@@ -1,67 +1,4 @@
-interface FormValues {
-  address: string;
-  agree: boolean;
-  birthDate: string;
-  branches: string;
-  cep: string;
-  city: string;
-  complement: string;
-  country: string;
-  courseType: string;
-  cpf: string;
-  email: string;
-  financialResponsibleAddress: string;
-  financialResponsibleAddressEqualsStudent: "yes" | "no";
-  financialResponsibleBirthDate: string;
-  financialResponsibleCep: string;
-  financialResponsibleCity: string;
-  financialResponsibleCpf: string;
-  financialResponsibleKinship: string;
-  financialResponsibleName: string;
-  financialResponsiblePersonType: string;
-  financialResponsiblePhone: string;
-  financialResponsibleEmail: string;
-  financialResponsibleResidence: string;
-  financialResponsibleResidenceComplement: string;
-  financialResponsibleResidenceNeighborhood: string;
-  financialResponsibleResidenceNumber: string;
-  financialResponsibleUf: string;
-  fullName: string;
-  howFind: string[];
-  imageAuth: "yes" | "no";
-  interest: string[];
-  isStudentFinancialResponsible: "yes" | "no";
-  isStudentPedagogicalResponsible: "yes" | "no";
-  languages: string[];
-  module: string;
-  neighborhood: string;
-  number: string;
-  pedagogicalResponsibleAddress: string;
-  pedagogicalResponsibleAddressEqualsStudent: "yes" | "no";
-  pedagogicalResponsibleBirthDate: string;
-  pedagogicalResponsibleCep: string;
-  pedagogicalResponsibleCity: string;
-  pedagogicalResponsibleCpf: string;
-  pedagogicalResponsibleKinship: string;
-  pedagogicalResponsibleName: string;
-  pedagogicalResponsiblePersonType: string;
-  pedagogicalResponsiblePhone: string;
-  pedagogicalResponsibleEmail: string;
-  pedagogicalResponsibleResidence: string;
-  pedagogicalResponsibleResidenceComplement: string;
-  pedagogicalResponsibleResidenceNeighborhood: string;
-  pedagogicalResponsibleResidenceNumber: string;
-  pedagogicalResponsibleUf: string;
-  phone: string;
-  preference: string[];
-  residence: string;
-  schoolOrCompany: string;
-  signature: string;
-  uf: string;
-  whichOthersHowFind: string;
-  whichOthersInterest: string;
-  whichOthersPreferences: string;
-}
+import { AppContext } from "site/apps/site.ts";
 
 interface FinanceAdministrator {
   same_student_address: boolean;
@@ -137,12 +74,21 @@ interface CustomerPayload {
   marketing: MarketingData;
 }
 
-export const saveCustomer = async (body: FormValues) => {
-  const API_URL = Deno.env.get("DECO_API_BASE_URL");
+interface FormValues {
+  // 👇 você pode manter aqui tudo que já tinha
+  [key: string]: any;
+}
+
+const saveCustomer = async (
+  body: FormValues,
+  _req: Request,
+  ctx: AppContext,
+) => {
+  const API_URL = ctx.apiBaseUrl;
   try {
-    // 1. Obter token de uso único
+    // Obter token temporário
     const loginRes = await fetch(
-      `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=1200000`,
+      `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=1200`,
       {
         method: "GET",
         headers: {
@@ -158,14 +104,14 @@ export const saveCustomer = async (body: FormValues) => {
     const loginData = await loginRes.json();
     const token = loginData.access_token;
 
-    // 2. Mapear os dados do form para o formato esperado pela API
+    // Montar payload conforme o schema
     const payload: CustomerPayload = {
       unit_id: body.branches.id,
       unit_name: body.branches.value,
       is_online_module: body.module === "online",
       data_authorization: body.agree,
       name: body.fullName,
-      gender: "M",
+      gender: body.gender.value,
       tax_number: body.cpf,
       national_id: "",
       birth_date: body.birthDate || "0001-01-01",
@@ -247,30 +193,28 @@ export const saveCustomer = async (body: FormValues) => {
       },
     };
 
-    // 3. Enviar payload para a API principal
-    const response = await fetch(
-      `${API_URL}/sophia/customers`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
+    // Enviar o payload para a API
+    const response = await fetch(`${API_URL}/sophia/customers`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-    );
-
-    if (response) console.log("Cliente salvo", response);
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
+      const text = await response.text();
+      console.error("Erro na API Sophia:", text);
       throw new Error(`Erro na requisição: ${response.statusText}`);
     }
 
     const data = await response.json();
-    //console.log("retorno do save", data);
     return data;
   } catch (error) {
     console.error("Erro ao salvar cliente:", error);
     throw error;
   }
 };
+
+export default saveCustomer;

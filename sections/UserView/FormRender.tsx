@@ -1,5 +1,6 @@
 import FormController from "../../islands/UserView/FormController.tsx";
 import { type FnContext } from "@deco/deco";
+import type { ApiBaseUrl } from "../../loaders/apiBaseUrl.ts";
 
 interface Branch {
   id: string;
@@ -10,6 +11,7 @@ interface Branch {
 
 interface Props {
   units: Branch[];
+  apiBaseUrl: ApiBaseUrl;
 }
 
 export default function FormRender({ units }: Props) {
@@ -17,10 +19,10 @@ export default function FormRender({ units }: Props) {
 }
 
 export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
-  const API_URL = Deno.env.get("DECO_API_BASE_URL");
+  const API_URL = ctx.apiBaseUrl;
 
   const loginRes = await fetch(
-    `${API_URL}/users/login/651f0350e5085e6250f6b366`,
+    `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=1200`,
     {
       method: "GET",
       headers: {
@@ -49,5 +51,6 @@ export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
     ...props,
     device: ctx.device,
     units: unitsData,
+    apiBaseUrl: API_URL,
   };
 };

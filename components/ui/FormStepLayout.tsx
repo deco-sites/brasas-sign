@@ -10,6 +10,8 @@ import { getBranch } from "../../services/getBranch.ts";
 import { useFinishForm } from "../../sdk/useFinishForm.ts";
 import { LayoutData } from "../../data/Layout/Layout.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
+import { FnContext } from "@deco/deco";
+import { useEffect } from "preact/hooks";
 
 interface StepItem {
   step: number;
@@ -35,6 +37,7 @@ export default function FormStepLayout({
   goToPreviousStep,
   goToStep,
   isSubmitDisabled = false,
+  apiBaseUrl,
 }: Props) {
   const { handleSubmit, getValues } = useFormContext();
   const { isFormFinished } = useFinishForm();
@@ -90,27 +93,16 @@ export default function FormStepLayout({
 
   const handleSendEmailtoUnity = async () => {
     const selectedBranch = getValues().branches;
-    const API_URL = Deno.env.get("DECO_API_BASE_URL");
+
+    //const API_URL = Deno.env.get("DECO_API_BASE_URL");
 
     // 1. Obter token de uso único
-    const loginRes = await fetch(
-      `${API_URL}/users/login/651f0350e5085e6250f6b366?exp_secs=20`,
-      {
-        method: "GET",
-        headers: {
-          "community_id": "sophia-4375-44",
-        },
-      },
-    );
-
-    if (!loginRes.ok) {
-      throw new Error(`Erro ao obter token: ${loginRes.statusText}`);
-    }
-
-    const loginData = await loginRes.json();
-    const token = loginData.access_token;
-
-    const branch = await getBranch(selectedBranch.id, token);
+    const token = await invoke.site.actions.getToken();
+    const branch = await invoke.site.actions.getBranch({
+      branchId: getValues().branches.id,
+      token: token.access_token,
+    });
+    //const branch = await getBranch(null, selectedBranch.id, token.access_token);
 
     await invoke.site.actions.sendEmail({
       RecipientsEmailArr: [{ email: branch.email }],
@@ -129,12 +121,41 @@ export default function FormStepLayout({
     });
   };
 
+  {
+    /*
+  const handleSendEmailtoUnity = async () => {
+    await invoke.site.actions.sendEmailToUnity({
+      fullName: getValues().fullName,
+      email: getValues().email,
+      phone: getValues().phone,
+      branchId: getValues().branches.id,
+    });
+  };*/
+  }
+
   const onSubmit = async () => {
     const body = getValues();
     handleSendEmailtoUser();
     handleSendEmailtoUnity();
     isFormFinished.value = true;
-    await saveCustomer(body);
+
+    //Aqui vou precisar fazer uma nova requisição para pegar o id correto da unidade
+    const token = await invoke.site.actions.getToken();
+    const branch = await invoke.site.actions.getBranch({
+      branchId: getValues().branches.id,
+      token: token.access_token,
+    });
+
+    const newBody = {
+      ...body,
+      branches: {
+        ...body.branches,
+        id: branch.id,
+      },
+    };
+
+    //await saveCustomer(body);
+    await invoke.site.actions.saveCustomer(newBody);
   };
 
   const data = useTranslations(LayoutData);
@@ -207,3 +228,12 @@ export default function FormStepLayout({
     </div>
   );
 }
+
+export const loader = async (props: Props, _req: Request, ctx: FnContext) => {
+  const API_URL = ctx.apiBaseUrl;
+
+  return {
+    ...props,
+    apiBaseUrl: API_URL,
+  };
+};
