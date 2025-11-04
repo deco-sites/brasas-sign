@@ -1,3 +1,10 @@
+import { AppContext } from "site/apps/site.ts";
+
+export interface Props {
+  branchId: number;
+  token: string;
+}
+
 export interface BranchDetails {
   id: number;
   name: string;
@@ -5,23 +12,21 @@ export interface BranchDetails {
   sophia_code: number;
 }
 
-export const getBranch = async (
-  ctx,
-  branchId: number,
-  token: string,
+const getBranch = async (
+  props: Props,
+  _req: Request,
+  ctx: AppContext,
 ): Promise<BranchDetails> => {
-  //const API_URL = Deno.env.get("DECO_API_BASE_URL");
   const API_URL = ctx.apiBaseUrl;
-
 
   try {
     const response = await fetch(
-      `${API_URL}/sophia/brasas/units/${branchId}/details`,
+      `${API_URL}/sophia/brasas/units/${props.branchId}/details`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${props.token}`,
         },
       },
     );
@@ -31,10 +36,11 @@ export const getBranch = async (
     }
 
     const data: BranchDetails = await response.json();
-
     return data;
   } catch (error) {
     console.error("Erro no getBranch:", error);
     throw error;
   }
 };
+
+export default getBranch;
