@@ -9,7 +9,14 @@ import { useTranslations } from "../../sdk/useTranslations.ts";
 import { useLanguage } from "../../sdk/useLanguage.ts";
 
 export default function Step6(
-  { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
+  {
+    step,
+    stepList,
+    goToNextStep,
+    goToPreviousStep,
+    goToStep,
+    form,
+  },
 ) {
   const { register, watch, setValue } = form;
 

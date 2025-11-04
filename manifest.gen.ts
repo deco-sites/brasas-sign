@@ -2,23 +2,33 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $$$$$$$$$0 from "./actions/sendEmail.ts";
+import * as $$$$$$$$$0 from "./actions/getBranch.ts";
+import * as $$$$$$$$$1 from "./actions/getToken.ts";
+import * as $$$$$$$$$2 from "./actions/saveCustomer.ts";
+import * as $$$$$$$$$3 from "./actions/sendEmail.ts";
+import * as $$$$$$$$$4 from "./actions/sendEmailToUnity.ts";
 import * as $$$$$$$$$$$0 from "./apps/deco/htmx.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
-import * as $$$0 from "./loaders/sendgridConfig.ts";
+import * as $$$0 from "./loaders/apiBaseUrl.ts";
+import * as $$$1 from "./loaders/sendgridConfig.ts";
 import * as $$$$$$0 from "./sections/Theme/Theme.tsx";
 import * as $$$$$$1 from "./sections/UserView/FormRender.tsx";
 
 const manifest = {
   "loaders": {
-    "site/loaders/sendgridConfig.ts": $$$0,
+    "site/loaders/apiBaseUrl.ts": $$$0,
+    "site/loaders/sendgridConfig.ts": $$$1,
   },
   "sections": {
     "site/sections/Theme/Theme.tsx": $$$$$$0,
     "site/sections/UserView/FormRender.tsx": $$$$$$1,
   },
   "actions": {
-    "site/actions/sendEmail.ts": $$$$$$$$$0,
+    "site/actions/getBranch.ts": $$$$$$$$$0,
+    "site/actions/getToken.ts": $$$$$$$$$1,
+    "site/actions/saveCustomer.ts": $$$$$$$$$2,
+    "site/actions/sendEmail.ts": $$$$$$$$$3,
+    "site/actions/sendEmailToUnity.ts": $$$$$$$$$4,
   },
   "apps": {
     "site/apps/deco/htmx.ts": $$$$$$$$$$$0,
