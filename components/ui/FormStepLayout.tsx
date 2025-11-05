@@ -60,7 +60,14 @@ export default function FormStepLayout({
   const handleSendEmailtoUser = async () => {
     let fileName = "";
 
-    if (getValues().courseType === "pff") fileName = "PFF.pdf";
+    if (getValues().courseType === "pff") {
+      if (getValues().module === "online") {
+        fileName = "PFF_ONLINE.pdf";
+      } else if (getValues().module === "presencial") {
+        fileName = "PFF_PRESENCIAL.pdf";
+      }
+    }
+
     if (getValues().courseType === "private") fileName = "PRIVATE.pdf";
 
     if (getValues().courseType === "regular") {
