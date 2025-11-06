@@ -258,7 +258,7 @@ export default function Step2(
           { id: "online", value: "online", label: data.module.options[1] },
         ]}
         register={register("module", { required: data.module.requiredError })}
-        disabledOptions={courseType === "pff" ? ["presencial"] : []}
+        //disabledOptions={courseType === "pff" ? ["presencial"] : []}
       />
       {errors.module && (
         <span className="text-red-300 text-xs">
