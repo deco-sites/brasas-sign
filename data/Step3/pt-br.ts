@@ -16,6 +16,11 @@ export const step3DataPT = {
     "placeholderPj": "Informe a razão social do responsável financeiro",
     "requiredError": "Campo obrigatório",
   },
+  "financialResponsibleFantasyName": {
+    "label": "*Nome fantasia do responsável financeiro",
+    "placeholder": "Informe o nome fantasia do responsável financeiro",
+    "requiredError": "Campo obrigatório",
+  },
   "financialResponsibleKinship": {
     "label": "*Parentesco",
     "placeholder": "Informe qual o parentesco com o responsável financeiro",
@@ -33,6 +38,8 @@ export const step3DataPT = {
       "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário",
     "placeholderPf": "Informe o CPF do responsável financeiro",
     "placeholderPj": "Informe o CNPJ do responsável financeiro",
+    "lengthErrorPf": "O CPF deve ter 11 dígitos",
+    "lengthErrorPj": "O CNPJ deve ter 14 dígitos",
     "requiredError": "Campo obrigatório",
   },
   "financialResponsiblePhone": {
