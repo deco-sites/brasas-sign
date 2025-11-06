@@ -18,6 +18,7 @@ interface FormValues {
   financialResponsibleCpf: string;
   financialResponsibleKinship: string;
   financialResponsibleName: string;
+  financialResponsibleFantasyName: string;
   financialResponsiblePersonType: string;
   financialResponsiblePhone: string;
   financialResponsibleEmail: string;
@@ -79,6 +80,7 @@ interface FinanceAdministrator {
   address_zip_code: string;
   phone_number: string;
   email: string;
+  trade_name: string;
 }
 
 interface EducationalAdministrator {
@@ -204,6 +206,7 @@ export const saveCustomer = async (body: FormValues) => {
               : body?.financialResponsibleCep?.replace(/\D/g, "") || "",
           phone_number: body.financialResponsiblePhone || "",
           email: body.financialResponsibleEmail,
+          trade_name: body.financialResponsibleFantasyName,
         },
       }),
 

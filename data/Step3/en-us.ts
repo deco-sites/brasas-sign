@@ -16,6 +16,11 @@ export const step3DataEN = {
     "placeholderPj": "Enter the corporate name of the financial responsible",
     "requiredError": "Required field",
   },
+  "financialResponsibleFantasyName": {
+    "label": "*Trade name of the financial responsible",
+    "placeholder": "Enter the trade name of the financial responsible",
+    "requiredError": "Required field",
+  },
   "financialResponsibleKinship": {
     "label": "*Relationship",
     "placeholder": "Enter the relationship with the financial responsible",
@@ -33,6 +38,8 @@ export const step3DataEN = {
       "CPF is a Brazilian document and it is not mandatory to fill out here",
     "placeholderPf": "Enter the CPF of the financial responsible",
     "placeholderPj": "Enter the CNPJ of the financial responsible",
+    "lengthErrorPf": "The CPF number must have 11 digits.",
+    "lengthErrorPj": "The CNPJ number must have 14 digits.",
     "requiredError": "Required field",
   },
   "financialResponsiblePhone": {
