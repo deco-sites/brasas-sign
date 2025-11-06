@@ -39,6 +39,7 @@ export default function FormController({ units }) {
       //Campos dependentes do isStudentFinancialResponsible
       "financialResponsiblePersonType",
       "financialResponsibleName",
+      "financialResponsibleFantasyName",
       "financialResponsibleKinship",
       "financialResponsibleBirthDate",
       "financialResponsibleCpf",
