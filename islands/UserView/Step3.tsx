@@ -8,6 +8,8 @@ import { useWatch } from "react-hook-form";
 import { getCep } from "../../services/cep.ts";
 import { Step3Data } from "../../data/Step3/Step3Data.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
+import { cpfMask } from "../../helpers/cpfMask.ts";
+import { cnpjMask } from "../../helpers/cnpjMask.ts";
 
 export default function Step3(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -211,51 +213,57 @@ export default function Step3(
             </span>
           )}
 
-          <TextInput
-            htmlFor="financialResponsibleKinship"
-            label={data.financialResponsibleKinship.label}
-            error={!!errors.financialResponsibleKinship}
-            placeholder={data.financialResponsibleKinship.placeholder}
-            {...register("financialResponsibleKinship", {
-              validate: (value) => {
-                if (watch("isStudentFinancialResponsible") === "no") {
-                  return (value && value.trim() !== "") ||
-                    data.financialResponsibleKinship.requiredError;
-                }
-                return true;
-              },
-            })}
-          />
-          {errors.financialResponsibleKinship && (
-            <span className="text-red-300 text-xs">
-              {errors.financialResponsibleKinship.message}
-            </span>
-          )}
+          {financialResponsiblePersonType !== "pj" && (
+            <>
+              <TextInput
+                htmlFor="financialResponsibleKinship"
+                label={data.financialResponsibleKinship.label}
+                error={!!errors.financialResponsibleKinship}
+                placeholder={data.financialResponsibleKinship.placeholder}
+                {...register("financialResponsibleKinship", {
+                  validate: (value) => {
+                    if (watch("isStudentFinancialResponsible") === "no") {
+                      return (value && value.trim() !== "") ||
+                        data.financialResponsibleKinship.requiredError;
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleKinship && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleKinship.message}
+                </span>
+              )}
 
-          <TextInput
-            type="date"
-            htmlFor="financialResponsibleBirthDate"
-            label={data.financialResponsibleBirthDate.label}
-            placeholder={data.financialResponsibleBirthDate.placeholder}
-            error={!!errors.financialResponsibleBirthDate}
-            {...register("financialResponsibleBirthDate", {
-              validate: (value) => {
-                if (watch("isStudentFinancialResponsible") === "no") {
-                  return (value && value.trim() !== "") ||
-                    data.financialResponsibleBirthDate.requiredError;
-                }
-                return true;
-              },
-            })}
-          />
-          {errors.financialResponsibleBirthDate && (
-            <span className="text-red-300 text-xs">
-              {errors.financialResponsibleBirthDate.message}
-            </span>
+              <TextInput
+                type="date"
+                htmlFor="financialResponsibleBirthDate"
+                label={data.financialResponsibleBirthDate.label}
+                placeholder={data.financialResponsibleBirthDate.placeholder}
+                error={!!errors.financialResponsibleBirthDate}
+                {...register("financialResponsibleBirthDate", {
+                  validate: (value) => {
+                    if (watch("isStudentFinancialResponsible") === "no") {
+                      return (value && value.trim() !== "") ||
+                        data.financialResponsibleBirthDate.requiredError;
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleBirthDate && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleBirthDate.message}
+                </span>
+              )}
+            </>
           )}
 
           <TextInput
             htmlFor="financialResponsibleCpf"
+            mask={financialResponsiblePersonType === "pj" ? cnpjMask : cpfMask}
+            minLength={financialResponsiblePersonType === "pj" ? 18 : 14}
             label={financialResponsiblePersonType === "pj"
               ? data.financialResponsibleCpf.labelPj
               : data.financialResponsibleCpf.labelPf}
@@ -267,6 +275,12 @@ export default function Step3(
               ? data.financialResponsibleCpf.placeholderPj
               : data.financialResponsibleCpf.placeholderPf}
             {...register("financialResponsibleCpf", {
+              minLength: {
+                value: financialResponsiblePersonType === "pf" ? 14 : 18,
+                message: financialResponsiblePersonType === "pj"
+                  ? data.financialResponsibleCpf.lengthErrorPj
+                  : data.financialResponsibleCpf.lengthErrorPf,
+              },
               validate: (value) => {
                 if (watch("isStudentFinancialResponsible") === "no") {
                   return (value && value.trim() !== "") ||
@@ -282,76 +296,107 @@ export default function Step3(
             </span>
           )}
 
-          <TextInput
-            htmlFor="financialResponsiblePhone"
-            label={data.financialResponsiblePhone.label}
-            placeholder={data.financialResponsiblePhone.placeholder}
-            error={!!errors.financialResponsiblePhone}
-            mask={phoneMask}
-            {...register("financialResponsiblePhone", {
-              validate: (value) => {
-                if (watch("isStudentFinancialResponsible") === "no") {
-                  return (value && value.trim() !== "") ||
-                    data.financialResponsiblePhone.requiredError;
-                }
-                return true;
-              },
-            })}
-          />
-          {errors.financialResponsiblePhone && (
-            <span className="text-red-300 text-xs">
-              {errors.financialResponsiblePhone.message}
-            </span>
+          {financialResponsiblePersonType !== "pj" && (
+            <>
+              <TextInput
+                htmlFor="financialResponsiblePhone"
+                label={data.financialResponsiblePhone.label}
+                placeholder={data.financialResponsiblePhone.placeholder}
+                error={!!errors.financialResponsiblePhone}
+                mask={phoneMask}
+                {...register("financialResponsiblePhone", {
+                  validate: (value) => {
+                    if (watch("isStudentFinancialResponsible") === "no") {
+                      return (value && value.trim() !== "") ||
+                        data.financialResponsiblePhone.requiredError;
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsiblePhone && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsiblePhone.message}
+                </span>
+              )}
+
+              <TextInput
+                htmlFor="financialResponsibleEmail"
+                label={data.financialResponsibleEmail.label}
+                error={!!errors.financialResponsibleEmail}
+                placeholder={data.financialResponsibleEmail.placeholder}
+                {...register("financialResponsibleEmail", {
+                  validate: (value) => {
+                    if (
+                      watch("isStudentFinancialResponsible") === "no"
+                    ) {
+                      return (value && value.trim() !== "") ||
+                        data.financialResponsibleEmail.requiredError;
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleEmail && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleEmail.message}
+                </span>
+              )}
+
+              <RadioInput
+                label={data.financialResponsibleAddressEqualsStudent.label}
+                name="financialResponsibleAddressEqualsStudent"
+                value={watch("financialResponsibleAddressEqualsStudent")}
+                options={[
+                  {
+                    id: "yes",
+                    value: "yes",
+                    label:
+                      data.financialResponsibleAddressEqualsStudent.options[0],
+                  },
+                  {
+                    id: "no",
+                    value: "no",
+                    label:
+                      data.financialResponsibleAddressEqualsStudent.options[1],
+                  },
+                ]}
+                register={register("financialResponsibleAddressEqualsStudent", {
+                  required:
+                    data.financialResponsibleAddressEqualsStudent.requiredError,
+                })}
+              />
+              {errors.financialResponsibleAddressEqualsStudent && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleAddressEqualsStudent.message}
+                </span>
+              )}
+            </>
           )}
 
-          <TextInput
-            htmlFor="financialResponsibleEmail"
-            label={data.financialResponsibleEmail.label}
-            error={!!errors.financialResponsibleEmail}
-            placeholder={data.financialResponsibleEmail.placeholder}
-            {...register("financialResponsibleEmail", {
-              validate: (value) => {
-                if (
-                  watch("isStudentFinancialResponsible") === "no"
-                ) {
-                  return (value && value.trim() !== "") ||
-                    data.financialResponsibleEmail.requiredError;
-                }
-                return true;
-              },
-            })}
-          />
-          {errors.financialResponsibleEmail && (
-            <span className="text-red-300 text-xs">
-              {errors.financialResponsibleEmail.message}
-            </span>
-          )}
-
-          <RadioInput
-            label={data.financialResponsibleAddressEqualsStudent.label}
-            name="financialResponsibleAddressEqualsStudent"
-            value={watch("financialResponsibleAddressEqualsStudent")}
-            options={[
-              {
-                id: "yes",
-                value: "yes",
-                label: data.financialResponsibleAddressEqualsStudent.options[0],
-              },
-              {
-                id: "no",
-                value: "no",
-                label: data.financialResponsibleAddressEqualsStudent.options[1],
-              },
-            ]}
-            register={register("financialResponsibleAddressEqualsStudent", {
-              required:
-                data.financialResponsibleAddressEqualsStudent.requiredError,
-            })}
-          />
-          {errors.financialResponsibleAddressEqualsStudent && (
-            <span className="text-red-300 text-xs">
-              {errors.financialResponsibleAddressEqualsStudent.message}
-            </span>
+          {financialResponsiblePersonType === "pj" && (
+            <>
+              <TextInput
+                htmlFor="financialResponsibleFantasyName"
+                label={data.financialResponsibleFantasyName.label}
+                placeholder={data.financialResponsibleFantasyName.placeholder}
+                error={!!errors.financialResponsibleFantasyName}
+                {...register("financialResponsibleFantasyName", {
+                  validate: (value) => {
+                    if (watch("isStudentFinancialResponsible") === "no") {
+                      return (value && value.trim() !== "") ||
+                        data.financialResponsibleFantasyName.requiredError;
+                    }
+                    return true;
+                  },
+                })}
+              />
+              {errors.financialResponsibleFantasyName && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleFantasyName.message}
+                </span>
+              )}
+            </>
           )}
         </>
       )}
