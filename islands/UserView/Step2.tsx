@@ -18,7 +18,9 @@ export default function Step2(
 
   useEffect(() => {
     setBranches(
-      units?.map((unit) => ({
+      units?.filter((unit) => unit.internal_name !== "BRASAS Online")?.map((
+        unit,
+      ) => ({
         id: unit.id,
         value: unit.internal_name,
       })),

@@ -6,8 +6,5 @@ export const textMask = (text: string): string => {
   text = text.replace(/\s{2,}/g, " ");
 
   // Limita a 50 caracteres
-  text = text.slice(0, 50);
-
-  // Remove espaços no início e no fim
-  return text.trim();
+  return text.slice(0, 50);
 };
