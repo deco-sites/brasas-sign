@@ -29,6 +29,8 @@ export default function FormController({ units }) {
       "phone",
       "birthDate",
       "country",
+      "isStudentUnderage",
+      "underageStudentHaveCPF",
       "cpf",
     ],
     2: ["cep", "neighborhood", "city", "uf", "branches", "module"],

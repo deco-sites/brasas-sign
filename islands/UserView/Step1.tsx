@@ -22,6 +22,9 @@ export default function Step1(
     formState: { errors },
   } = form;
 
+  const isStudentUnderage = watch("isStudentUnderage");
+  const underageStudentHaveCPF = watch("underageStudentHaveCPF");
+
   const data = useTranslations(Step1Data);
 
   const genderOptions = [
@@ -170,16 +173,86 @@ export default function Step1(
         </span>
       )}
 
+      {getValues().courseType === "regular" && (
+        <>
+          <RadioInput
+            label={data.isStudentUnderage.label}
+            name="isStudentUnderage"
+            value={watch("isStudentUnderage")}
+            options={[
+              {
+                id: "yes",
+                value: "yes",
+                label: data.isStudentUnderage.options[0],
+              },
+              {
+                id: "no",
+                value: "no",
+                label: data.isStudentUnderage.options[1],
+              },
+            ]}
+            register={register("isStudentUnderage", {
+              required: data.isStudentUnderage.requiredError,
+            })}
+          />
+          {errors.isStudentUnderage && (
+            <span className="text-red-300 text-xs">
+              {errors.isStudentUnderage.message}
+            </span>
+          )}
+
+          {isStudentUnderage === "yes" && (
+            <>
+              <RadioInput
+                label={data.underageStudentHaveCPF.label}
+                name="underageStudentHaveCPF"
+                value={watch("underageStudentHaveCPF")}
+                options={[
+                  {
+                    id: "yes",
+                    value: "yes",
+                    label: data.underageStudentHaveCPF.options[0],
+                  },
+                  {
+                    id: "no",
+                    value: "no",
+                    label: data.underageStudentHaveCPF.options[1],
+                  },
+                ]}
+                register={register("underageStudentHaveCPF", {
+                  required: data.underageStudentHaveCPF.requiredError,
+                })}
+              />
+              {errors.underageStudentHaveCPF && (
+                <span className="text-red-300 text-xs">
+                  {errors.underageStudentHaveCPF.message}
+                </span>
+              )}
+            </>
+          )}
+        </>
+      )}
+
       <TextInput
         htmlFor="cpf"
-        label={!residence ? "*CPF" : residence === "brasil" ? "*CPF" : "CPF"}
-        note={residence === "brasil" ? false : data.cpf.warning}
+        label={(residence === "brasil" &&
+            (isStudentUnderage === "no" || underageStudentHaveCPF === "yes"))
+          ? "*CPF"
+          : "CPF"}
+        note={(residence === "brasil" &&
+            (isStudentUnderage === "no" || underageStudentHaveCPF === "yes"))
+          ? false
+          : data.cpf.warning}
         mask={cpfMask}
         minLength={14}
         error={errors.cpf}
         placeholder={data.cpf.placeholder}
         {...register("cpf", {
-          required: residence === "brasil" ? "Informe o CPF" : false,
+          required: (residence === "brasil" &&
+              (isStudentUnderage === "no" ||
+                underageStudentHaveCPF === "yes"))
+            ? "Informe o CPF"
+            : false,
           minLength: {
             value: 14,
             message: data.cpf.error,
