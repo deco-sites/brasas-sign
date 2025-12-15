@@ -33,6 +33,16 @@ export const step1DataPT = {
     "placeholder": "DD/MM/AAAA",
     "error": "Informe a data de nascimento",
   },
+  "isStudentUnderage": {
+    "label": "*O aluno é menor de idade?",
+    "options": ["Sim", "Não"],
+    "requiredError": "Selecione uma opção",
+  },
+  "underageStudentHaveCPF": {
+    "label": "*O aluno menor de idade possui cpf?",
+    "options": ["Sim", "Não"],
+    "requiredError": "Selecione uma opção",
+  },
   "cpf": {
     "label": "*CPF",
     "warning":
