@@ -57,7 +57,7 @@
     "__resolveType": "site/loaders/apiBaseUrl.ts",
     "apiBaseUrl": {
       "__resolveType": "website/loaders/secret.ts",
-      "encrypted": "267b76b154fcf3941cd706c3bf0c0deaff20f2d7cf537b7a37aee3635d0e2544",
+      "encrypted": "2329e35dcf0bd1ed24bb87b4ca1bc1bf0527d1efe87d5084beaa2625fb9dfcdc",
       "name": "API_BASE_URL"
     }
   }
