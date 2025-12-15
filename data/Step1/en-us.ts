@@ -33,6 +33,16 @@ export const step1DataEN = {
     "placeholder": "DD/MM/YYYY",
     "error": "Enter your date of birth",
   },
+  "isStudentUnderage": {
+    "label": "*The student is underage?",
+    "options": ["Yes", "No"],
+    "requiredError": "Select an option",
+  },
+  "underageStudentHaveCPF": {
+    "label": "*Does the underage student have a CPF?",
+    "options": ["Sim", "Não"],
+    "requiredError": "Selecione uma opção",
+  },
   "cpf": {
     "label": "CPF",
     "warning":
