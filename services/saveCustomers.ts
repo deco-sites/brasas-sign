@@ -263,7 +263,7 @@ export const saveCustomer = async (body: FormValues) => {
       },
     );
 
-    if (response) console.log("Cliente salvo", response);
+    //if (response) console.log("Cliente salvo", response);
 
     if (!response.ok) {
       throw new Error(`Erro na requisição: ${response.statusText}`);

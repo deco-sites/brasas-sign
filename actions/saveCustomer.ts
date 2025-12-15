@@ -110,7 +110,7 @@ const saveCustomer = async (
       unit_name: body.branches.value,
       is_online_module: body.module === "online",
       data_authorization: body.agree,
-      name: body.fullName,
+      name: body.fullName.trim(),
       gender: body.gender.value,
       tax_number: body.cpf,
       national_id: "",
@@ -193,6 +193,7 @@ const saveCustomer = async (
       },
     };
 
+    console.log("Payload enviado:", JSON.stringify(payload));
     // Enviar o payload para a API
     const response = await fetch(`${API_URL}/sophia/customers`, {
       method: "POST",
