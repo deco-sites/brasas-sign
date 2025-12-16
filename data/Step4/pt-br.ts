@@ -33,6 +33,8 @@ export const step4DataPT = {
       "O CPF é um documento brasileiro e não é obrigatório para o preenchimento do formulário",
     "placeholderPf": "Informe o CPF do responsável financeiro",
     "placeholderPj": "Informe o CNPJ do responsável financeiro",
+    "lengthErrorPf": "O CPF deve ter 11 dígitos",
+    "lengthErrorPj": "O CNPJ deve ter 14 dígitos",
     "requiredError": "Campo obrigatório",
   },
   "pedagogicalResponsiblePhone": {
@@ -59,6 +61,7 @@ export const step4DataPT = {
     "label": "*Cep",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Campo obrigatório",
+    "error": "CEP deve ter pelo menos 8 digitos",
   },
   "pedagogicalResponsibleAddress": {
     "label": "Endereço completo do responsável pedagógico",

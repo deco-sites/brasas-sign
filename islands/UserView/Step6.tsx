@@ -66,6 +66,7 @@ export default function Step6(
   const getRegulation = () => {
     if (!moduleType) return "";
 
+    //AULAS PRIVADAS
     if (courseType === "private") {
       if (language.value === "pt-br") {
         return regulationsPT["private"];
@@ -75,21 +76,36 @@ export default function Step6(
       }
     }
 
-    if (courseType === "pff") {
+    //CURSO REGULAR
+    if (courseType === "regular") {
       if (language.value === "pt-br") {
-        return regulationsPT["pff"];
+        return regulationsPT[moduleType];
       }
+
       if (language.value === "en-us") {
-        return regulationsEN["pff"];
+        return regulationsEN[moduleType];
       }
     }
 
-    if (language.value === "pt-br") {
-      return regulationsPT[moduleType];
-    }
+    //CURSO PFF
+    if (courseType === "pff") {
+      if (moduleType === "presencial") {
+        if (language.value === "pt-br") {
+          return regulationsPT["pff_presencial"];
+        }
+        if (language.value === "en-us") {
+          return regulationsEN["pff_presencial"];
+        }
+      }
 
-    if (language.value === "en-us") {
-      return regulationsEN[moduleType];
+      if (moduleType === "online") {
+        if (language.value === "pt-br") {
+          return regulationsPT["pff_online"];
+        }
+        if (language.value === "en-us") {
+          return regulationsEN["pff_online"];
+        }
+      }
     }
 
     return "";
