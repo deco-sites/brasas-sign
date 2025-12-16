@@ -3,6 +3,7 @@ export const step2DataPT = {
     "label": "*Cep",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Informe o cep",
+    "error": "CEP deve ter pelo menos 8 digitos",
   },
   "address": {
     "label": "Endereço",

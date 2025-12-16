@@ -8,6 +8,8 @@ import { useWatch } from "react-hook-form";
 import { getCep } from "../../services/cep.ts";
 import { Step4Data } from "../../data/Step4/Step4Data.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
+import { cnpjMask } from "../../helpers/cnpjMask.ts";
+import { cpfMask } from "../../helpers/cpfMask.ts";
 
 export default function Step4(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -268,6 +270,10 @@ export default function Step4(
 
           <TextInput
             htmlFor="pedagogicalResponsibleCpf"
+            mask={pedagogicalResponsiblePersonType === "pj"
+              ? cnpjMask
+              : cpfMask}
+            minLength={pedagogicalResponsiblePersonType === "pj" ? 18 : 14}
             label={pedagogicalResponsiblePersonType === "pj"
               ? data.pedagogicalResponsibleCpf.labelPj
               : data.pedagogicalResponsibleCpf.labelPf}
@@ -279,6 +285,12 @@ export default function Step4(
               : data.pedagogicalResponsibleCpf.placeholderPf}
             error={!!errors.pedagogicalResponsibleCpf}
             {...register("pedagogicalResponsibleCpf", {
+              minLength: {
+                value: pedagogicalResponsiblePersonType === "pf" ? 14 : 18,
+                message: pedagogicalResponsiblePersonType === "pj"
+                  ? data.pedagogicalResponsibleCpf.lengthErrorPj
+                  : data.pedagogicalResponsibleCpf.lengthErrorPf,
+              },
               validate: (value) => {
                 if (
                   watch("isStudentPedagogicalResponsible") === "no"
@@ -419,6 +431,7 @@ export default function Step4(
                 label={data.pedagogicalResponsibleCep.label}
                 placeholder={data.pedagogicalResponsibleCep.placeholder}
                 maxLength={10}
+                minLength={10}
                 mask={cepMask}
                 error={!!errors.pedagogicalResponsibleCep}
                 {...register("pedagogicalResponsibleCep", {
@@ -433,6 +446,10 @@ export default function Step4(
                         data.pedagogicalResponsibleCep.requiredError;
                     }
                     return true;
+                  },
+                  minLength: {
+                    value: 10,
+                    message: data.pedagogicalResponsibleCep.error,
                   },
                 })}
               />

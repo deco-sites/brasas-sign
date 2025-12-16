@@ -66,6 +66,7 @@ export const step3DataEN = {
     "label": "*Zip Code",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Required field",
+    "error": "CEP must have at least 8 digits",
   },
   "financialResponsibleAddress": {
     "label": "Full address of the financial responsible",
