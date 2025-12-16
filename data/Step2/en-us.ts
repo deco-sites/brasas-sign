@@ -3,6 +3,7 @@ export const step2DataEN = {
     "label": "*Zip Code",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Enter the zip code",
+    "error": "CEP must have at least 8 digits",
   },
   "address": {
     "label": "Address",

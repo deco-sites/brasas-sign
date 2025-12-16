@@ -9,33 +9,42 @@ import { useWatch } from "react-hook-form";
 import { useUnits } from "../../contexts/UnitsContext.tsx";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { Step2Data } from "../../data/Step2/Step2Data.ts";
+import { useLanguage } from "../../sdk/useLanguage.ts";
 
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
 ) {
   const { units } = useUnits();
   const [branches, setBranches] = useState([]);
+  const { language } = useLanguage();
 
   useEffect(() => {
-    setBranches(
-      units?.filter((unit) => unit.internal_name !== "BRASAS Online")?.map((
-        unit,
-      ) => ({
-        id: unit.id,
-        value: unit.internal_name,
-      })),
-    );
-  }, [units]);
+    setBranches([
+      ...(units
+        ?.filter((unit) => unit.internal_name !== "BRASAS Online")
+        ?.map((unit) => ({
+          id: unit.id,
+          value: unit.internal_name,
+        })) ?? []),
+      {
+        id: 0,
+        value: language.value === "en-us" ? "No campus" : "Sem polo",
+      },
+    ]);
+  }, [units, language.value]);
 
   const { register, watch, setValue, formState: { errors } } = form;
   const residence = watch("residence");
   const courseType = watch("courseType");
 
+  {
+    /*
   useEffect(() => {
     if (courseType === "pff") {
       setValue("module", "online");
     }
-  }, [courseType, setValue]);
+  }, [courseType, setValue]);*/
+  }
 
   const cep = useWatch({ control: form.control, name: "cep" });
   const [viaCepReturn, setViaCepReturn] = useState({});
@@ -143,9 +152,16 @@ export default function Step2(
             label={data.cep.label}
             placeholder={data.cep.placeholder}
             maxLength={10}
+            minLength={10}
             error={errors.cep}
             mask={cepMask}
-            {...register("cep", { required: data.cep.requiredError })}
+            {...register("cep", {
+              required: data.cep.requiredError,
+              minLength: {
+                value: 10,
+                message: data.cep.error,
+              },
+            })}
           />
           {errors.cep && (
             <span className="text-red-300 text-xs">

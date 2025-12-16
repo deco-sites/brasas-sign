@@ -54,7 +54,7 @@ interface CustomerPayload {
   is_online_module: boolean;
   data_authorization: boolean;
   name: string;
-  gender: string;
+  gender: "Masculino" | "Feminino" | null;
   tax_number: string;
   national_id: string;
   birth_date: string;
@@ -111,7 +111,11 @@ const saveCustomer = async (
       is_online_module: body.module === "online",
       data_authorization: body.agree,
       name: body.fullName.trim(),
-      gender: body.gender.value,
+      gender: body.gender.value === "Masculino"
+        ? "M"
+        : body.gender.value === "Feminino"
+        ? "F"
+        : null,
       tax_number: body.cpf,
       national_id: "",
       birth_date: body.birthDate || "0001-01-01",
@@ -124,7 +128,8 @@ const saveCustomer = async (
       address_state: body.uf,
       address_zip_code: body.residence === "fora-do-brasil"
         ? "22775090"
-        : body?.cep?.replace(/\D/g, ""),
+        : body?.cep?.replace(/\D/g, "")?.replace(/^(\d{5})(\d{3})$/, "$1-$2") ||
+          "",
       phone_number: body.phone,
       email: body.email,
       signature: body.signature,
@@ -147,7 +152,10 @@ const saveCustomer = async (
           address_zip_code:
             body.financialResponsibleResidence === "fora-do-brasil"
               ? "22775090"
-              : body?.financialResponsibleCep?.replace(/\D/g, "") || "",
+              : body?.financialResponsibleCep?.replace(/\D/g, "")?.replace(
+                /^(\d{5})(\d{3})$/,
+                "$1-$2",
+              ) || "",
           phone_number: body.financialResponsiblePhone || "",
           email: body.financialResponsibleEmail,
         },
@@ -175,7 +183,10 @@ const saveCustomer = async (
           address_zip_code:
             body.pedagogicalResponsibleResidence === "fora-do-brasil"
               ? "22775090"
-              : body?.pedagogicalResponsibleCep?.replace(/\D/g, "") || "",
+              : body?.pedagogicalResponsibleCep?.replace(/\D/g, "")?.replace(
+                /^(\d{5})(\d{3})$/,
+                "$1-$2",
+              ) || "",
           phone_number: body.pedagogicalResponsiblePhone || "",
           email: body.pedagogicalResponsibleEmail,
         },

@@ -445,6 +445,7 @@ export default function Step3(
                 label={data.financialResponsibleCep.label}
                 placeholder={data.financialResponsibleCep.placeholder}
                 maxLength={10}
+                minLength={10}
                 error={!!errors.financialResponsibleCep}
                 mask={cepMask}
                 {...register("financialResponsibleCep", {
@@ -456,6 +457,10 @@ export default function Step3(
                         data.financialResponsibleCep.requiredError;
                     }
                     return true;
+                  },
+                  minLength: {
+                    value: 10,
+                    message: data.financialResponsibleCep.error,
                   },
                 })}
               />

@@ -33,6 +33,8 @@ export const step4DataEN = {
       "CPF is a Brazilian document and it is not mandatory to fill out here",
     "placeholderPf": "Enter the CPF of the pedagogical responsible",
     "placeholderPj": "Enter the CNPJ of the pedagogical responsible",
+    "lengthErrorPf": "The CPF number must have 11 digits.",
+    "lengthErrorPj": "The CNPJ number must have 14 digits.",
     "requiredError": "Required field",
   },
   "pedagogicalResponsiblePhone": {
@@ -59,6 +61,7 @@ export const step4DataEN = {
     "label": "*Zip Code",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Required field",
+    "error": "CEP must have at least 8 digits",
   },
   "pedagogicalResponsibleAddress": {
     "label": "Full address of the pedagogical responsible",
