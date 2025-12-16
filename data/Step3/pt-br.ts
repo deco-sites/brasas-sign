@@ -66,6 +66,7 @@ export const step3DataPT = {
     "label": "*Cep",
     "placeholder": "XX.XXX-XX",
     "requiredError": "Campo obrigatório",
+    "error": "CEP deve ter pelo menos 8 digitos",
   },
   "financialResponsibleAddress": {
     "label": "Endereço completo do responsável financeiro",
