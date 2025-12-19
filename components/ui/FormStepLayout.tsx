@@ -11,7 +11,7 @@ import { useFinishForm } from "../../sdk/useFinishForm.ts";
 import { LayoutData } from "../../data/Layout/Layout.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { FnContext } from "@deco/deco";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 interface StepItem {
   step: number;
@@ -39,6 +39,8 @@ export default function FormStepLayout({
   isSubmitDisabled = false,
   apiBaseUrl,
 }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { handleSubmit, getValues } = useFormContext();
   const { isFormFinished } = useFinishForm();
 
@@ -100,6 +102,7 @@ export default function FormStepLayout({
 
   const handleSendEmailtoUnity = async () => {
     const selectedBranch = getValues().branches;
+    const module = getValues().module;
 
     //const API_URL = Deno.env.get("DECO_API_BASE_URL");
 
@@ -111,8 +114,18 @@ export default function FormStepLayout({
     });
     //const branch = await getBranch(null, selectedBranch.id, token.access_token);
 
+    let bol = {};
+    if (module === "online") {
+      bol = await invoke.site.actions.getBranch({
+        branchId: 45,
+        token: token.access_token,
+      });
+    }
+
     await invoke.site.actions.sendEmail({
-      RecipientsEmailArr: [{ email: branch.email }],
+      RecipientsEmailArr: [{
+        email: module === "online" ? bol.email : branch.email,
+      }],
       //RecipientsEmailArr: [{ email: getValues().email }],
       subject: "Cadastro Realizado",
       data: `
@@ -141,28 +154,40 @@ export default function FormStepLayout({
   }
 
   const onSubmit = async () => {
-    const body = getValues();
-    handleSendEmailtoUser();
-    handleSendEmailtoUnity();
-    isFormFinished.value = true;
+    if (isSubmitting) return; // proteção extra
+    setIsSubmitting(true);
 
-    //Aqui vou precisar fazer uma nova requisição para pegar o id correto da unidade
-    const token = await invoke.site.actions.getToken();
-    const branch = await invoke.site.actions.getBranch({
-      branchId: getValues().branches.id,
-      token: token.access_token,
-    });
+    try {
+      const body = getValues();
 
-    const newBody = {
-      ...body,
-      branches: {
-        ...body.branches,
-        id: branch.id,
-      },
-    };
+      const token = await invoke.site.actions.getToken();
+      const branch = await invoke.site.actions.getBranch({
+        branchId: body.branches.id,
+        token: token.access_token,
+      });
 
-    //await saveCustomer(body);
-    await invoke.site.actions.saveCustomer(newBody);
+      const newBody = {
+        ...body,
+        branches: {
+          ...body.branches,
+          id: branch.id,
+        },
+      };
+
+      const result = await invoke.site.actions.saveCustomer(newBody);
+
+      if (result.status < 400) {
+        await handleSendEmailtoUser();
+        await handleSendEmailtoUnity();
+        isFormFinished.value = true;
+      } else {
+        console.log("Erro ao salvar usuário");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const data = useTranslations(LayoutData);
@@ -213,10 +238,16 @@ export default function FormStepLayout({
                 <Button.Root
                   color="green"
                   type="submit"
-                  disabled={isSubmitDisabled}
+                  disabled={isSubmitting}
                 >
-                  <span>{data.submitButtonText}</span>
-                  <Button.Icon icon={IconArrowRight} />
+                  {isSubmitting
+                    ? <span>{data.submitButtonLoadingText}</span>
+                    : (
+                      <>
+                        <span>{data.submitButtonText}</span>
+                        <Button.Icon icon={IconArrowRight} />
+                      </>
+                    )}
                 </Button.Root>
               )
               : (
