@@ -204,7 +204,7 @@ const saveCustomer = async (
       },
     };
 
-    console.log("Payload enviado:", JSON.stringify(payload));
+    
     // Enviar o payload para a API
     const response = await fetch(`${API_URL}/sophia/customers`, {
       method: "POST",
@@ -214,6 +214,7 @@ const saveCustomer = async (
       },
       body: JSON.stringify(payload),
     });
+    
 
     if (!response.ok) {
       const text = await response.text();
@@ -222,7 +223,11 @@ const saveCustomer = async (
     }
 
     const data = await response.json();
-    return data;
+    return {
+      data,
+      status: response.status,
+      ok: response.ok,
+    };
   } catch (error) {
     console.error("Erro ao salvar cliente:", error);
     throw error;
