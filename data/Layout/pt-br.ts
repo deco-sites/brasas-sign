@@ -3,6 +3,7 @@ export const layoutDataPT = {
   "previousButtonText": "Passo anterior",
   "nextButtonText": "Próximo passo",
   "submitButtonText": "Enviar",
+  "submitButtonLoadingText": "Enviando...",
   "step1": {
     "title": "Passo 1",
     "subtitle": "Informações pessoais",
