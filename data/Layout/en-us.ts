@@ -3,6 +3,7 @@ export const layoutDataEN = {
   "previousButtonText": "Previous step",
   "nextButtonText": "Next step",
   "submitButtonText": "Submit",
+  "submitButtonLoadingText": "Sending...",
   "step1": {
     "title": "Step 1",
     "subtitle": "Personal Information",
