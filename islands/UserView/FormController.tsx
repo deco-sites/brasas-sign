@@ -13,6 +13,7 @@ import FormFinished from "../../components/ui/FormFinished.tsx";
 import Internationalization from "../../components/ui/Internationalization.tsx";
 import { LayoutData } from "../../data/Layout/Layout.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
+import { ToastProvider } from "../../sdk/useToast.tsx";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -152,33 +153,35 @@ export default function FormController({ units }) {
   const CurrentStepComponent = steps[step];
 
   return (
-    <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
-      <Internationalization />
-      <UnitsProvider units={units}>
-        <FormProvider {...form}>
-          {isFormFinished.value
-            ? <FormFinished form={form} setStep={setStep} />
-            : (
-              <CurrentStepComponent
-                step={step}
-                goToNextStep={goToNextStepWithValidation}
-                goToPreviousStep={() => {
-                  if (step === 0) {
+    <ToastProvider>
+      <div className="relative min-h-screen overflow-y-auto max-w-screen bg-blue-900 flex justify-center lg:items-center">
+        <Internationalization />
+        <UnitsProvider units={units}>
+          <FormProvider {...form}>
+            {isFormFinished.value
+              ? <FormFinished form={form} setStep={setStep} />
+              : (
+                <CurrentStepComponent
+                  step={step}
+                  goToNextStep={goToNextStepWithValidation}
+                  goToPreviousStep={() => {
+                    if (step === 0) {
+                      setStep(0);
+                    } else {
+                      setStep((prev) => (prev - 1) as Step);
+                    }
+                  }}
+                  resetForm={() => {
                     setStep(0);
-                  } else {
-                    setStep((prev) => (prev - 1) as Step);
-                  }
-                }}
-                resetForm={() => {
-                  setStep(0);
-                }}
-                stepList={stepList}
-                goToStep={goToStepWithValidation}
-                form={form}
-              />
-            )}
-        </FormProvider>
-      </UnitsProvider>
-    </div>
+                  }}
+                  stepList={stepList}
+                  goToStep={goToStepWithValidation}
+                  form={form}
+                />
+              )}
+          </FormProvider>
+        </UnitsProvider>
+      </div>
+    </ToastProvider>
   );
 }

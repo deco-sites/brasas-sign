@@ -12,6 +12,7 @@ import { LayoutData } from "../../data/Layout/Layout.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { FnContext } from "@deco/deco";
 import { useEffect, useState } from "preact/hooks";
+import { useToast } from "../../sdk/useToast.tsx";
 
 interface StepItem {
   step: number;
@@ -40,6 +41,7 @@ export default function FormStepLayout({
   apiBaseUrl,
 }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addToast } = useToast();
 
   const { handleSubmit, getValues } = useFormContext();
   const { isFormFinished } = useFinishForm();
@@ -180,11 +182,26 @@ export default function FormStepLayout({
         await handleSendEmailtoUser();
         await handleSendEmailtoUnity();
         isFormFinished.value = true;
+        addToast({
+          title: "Success",
+          message: `Form saved successfully.`,
+          color: "green",
+        });
       } else {
         console.log("Erro ao salvar usuário");
+        addToast({
+          title: "Error",
+          message: `Error to save form.`,
+          color: "red",
+        });
       }
     } catch (err) {
       console.error(err);
+      addToast({
+        title: "Error",
+        message: err,
+        color: "red",
+      });
     } finally {
       setIsSubmitting(false);
     }
