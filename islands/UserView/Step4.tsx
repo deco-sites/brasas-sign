@@ -20,6 +20,12 @@ export default function Step4(
   const isStudentPedagogicalResponsible = watch(
     "isStudentPedagogicalResponsible",
   );
+  const sameEducationalFinancialResponsible = watch(
+    "sameEducationalFinancialResponsible",
+  );
+  const isStudentFinancialResponsible = watch(
+    "isStudentFinancialResponsible",
+  );
   const pedagogicalResponsibleAddressEqualsStudent = watch(
     "pedagogicalResponsibleAddressEqualsStudent",
   );
@@ -134,7 +140,37 @@ export default function Step4(
       goToPreviousStep={goToPreviousStep}
       goToStep={goToStep}
     >
+
+    
       <RadioInput
+        label={data.sameEducationalFinancialResponsible.label}
+        name="sameEducationalFinancialResponsible"
+        value={watch("sameEducationalFinancialResponsible")}
+        options={[
+          {
+            id: "yes",
+            value: "yes",
+            label: data.sameEducationalFinancialResponsible.options[0],
+          },
+          {
+            id: "no",
+            value: "no",
+            label: data.sameEducationalFinancialResponsible.options[1],
+          },
+        ]}
+        register={register("sameEducationalFinancialResponsible", {
+          required: data.sameEducationalFinancialResponsible.requiredError,
+        })}
+      />
+      {errors.sameEducationalFinancialResponsible && (
+        <span className="text-red-300 text-xs">
+          {errors.sameEducationalFinancialResponsible.message}
+        </span>
+      )}
+
+      {(sameEducationalFinancialResponsible === "no" && isStudentFinancialResponsible === "no") && (
+        <>
+        <RadioInput
         label={data.isStudentPedagogicalResponsible.label}
         name="isStudentPedagogicalResponsible"
         value={watch("isStudentPedagogicalResponsible")}
@@ -159,8 +195,11 @@ export default function Step4(
           {errors.isStudentPedagogicalResponsible.message}
         </span>
       )}
+        </>
+      )}
+      
 
-      {isStudentPedagogicalResponsible === "no" && (
+      {sameEducationalFinancialResponsible === "no" && isStudentPedagogicalResponsible !== "yes" && (
         <>
           <RadioInput
             label={data.pedagogicalResponsiblePersonType.label}
