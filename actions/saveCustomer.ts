@@ -161,12 +161,12 @@ const saveCustomer = async (
         },
       }),
 
-      ...(body.isStudentPedagogicalResponsible === "no" && {
+      ...(body.sameEducationalFinancialResponsible === "no" && body.isStudentPedagogicalResponsible !== "yes" && {
         educational_administrator: {
           same_student_address:
             body.pedagogicalResponsibleAddressEqualsStudent === "yes",
           same_educational_financial_administrator:
-            body.isStudentPedagogicalResponsible === "yes",
+            body.sameEducationalFinancialResponsible === "yes",
           relationship: body.pedagogicalResponsibleKinship.trim(),
           name: body.pedagogicalResponsibleName,
           tax_number: body.pedagogicalResponsibleCpf,
