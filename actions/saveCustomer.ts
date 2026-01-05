@@ -138,7 +138,7 @@ const saveCustomer = async (
         finance_administrator: {
           same_student_address:
             body.financialResponsibleAddressEqualsStudent === "yes",
-          relationship: body.financialResponsibleKinship,
+          relationship: body.financialResponsibleKinship.trim(),
           name: body.financialResponsibleName,
           tax_number: body.financialResponsibleCpf,
           national_id: "",
@@ -167,7 +167,7 @@ const saveCustomer = async (
             body.pedagogicalResponsibleAddressEqualsStudent === "yes",
           same_educational_financial_administrator:
             body.isStudentPedagogicalResponsible === "yes",
-          relationship: body.pedagogicalResponsibleKinship,
+          relationship: body.pedagogicalResponsibleKinship.trim(),
           name: body.pedagogicalResponsibleName,
           tax_number: body.pedagogicalResponsibleCpf,
           national_id: "",
@@ -204,7 +204,6 @@ const saveCustomer = async (
       },
     };
 
-    
     // Enviar o payload para a API
     const response = await fetch(`${API_URL}/sophia/customers`, {
       method: "POST",
@@ -214,7 +213,6 @@ const saveCustomer = async (
       },
       body: JSON.stringify(payload),
     });
-    
 
     if (!response.ok) {
       const text = await response.text();
