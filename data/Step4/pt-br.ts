@@ -70,6 +70,7 @@ export const step4DataPT = {
   "pedagogicalResponsibleResidenceNumber": {
     "label": "Número",
     "placeholder": "Informe o número da residência",
+    "requiredError": "Informe o número da residência",
   },
   "pedagogicalResponsibleResidenceComplement": {
     "label": "Complemento",

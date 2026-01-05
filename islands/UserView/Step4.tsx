@@ -10,6 +10,8 @@ import { Step4Data } from "../../data/Step4/Step4Data.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { cnpjMask } from "../../helpers/cnpjMask.ts";
 import { cpfMask } from "../../helpers/cpfMask.ts";
+import { textMask } from "../../helpers/textMask.ts";
+import { numberMask } from "../../helpers/numberMask.ts";
 
 export default function Step4(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -225,6 +227,7 @@ export default function Step4(
             htmlFor="pedagogicalResponsibleKinship"
             label={data.pedagogicalResponsibleKinship.label}
             placeholder={data.pedagogicalResponsibleKinship.placeholder}
+            mask={textMask}
             error={!!errors.pedagogicalResponsibleKinship}
             {...register("pedagogicalResponsibleKinship", {
               validate: (value) => {
@@ -474,10 +477,19 @@ export default function Step4(
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceNumber"
                 label={data.pedagogicalResponsibleResidenceNumber.label}
+                mask={numberMask}
                 placeholder={data.pedagogicalResponsibleResidenceNumber
                   .placeholder}
-                {...register("pedagogicalResponsibleResidenceNumber")}
+                {...register("pedagogicalResponsibleResidenceNumber", {
+                  required: data.pedagogicalResponsibleResidenceNumber.requiredError,
+                })}
               />
+              {errors.pedagogicalResponsibleResidenceNumber && (
+                <span className="text-red-300 text-xs">
+                  {errors.pedagogicalResponsibleResidenceNumber
+                    .message}
+                </span>
+              )}
 
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceComplement"
