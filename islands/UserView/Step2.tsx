@@ -10,6 +10,7 @@ import { useUnits } from "../../contexts/UnitsContext.tsx";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { Step2Data } from "../../data/Step2/Step2Data.ts";
 import { useLanguage } from "../../sdk/useLanguage.ts";
+import { numberMask } from "../../helpers/numberMask.ts";
 
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -181,13 +182,21 @@ export default function Step2(
 
       {residence === "brasil" && (
         <>
-          <TextInput
+        <TextInput
             htmlFor="number"
             label={data.number.label}
             placeholder={data.number.placeholder}
-            {...register("number")}
+            mask={numberMask}
+            {...register("number", {
+              required: data.number.requiredError,
+            })}
           />
-
+          {errors.number && (
+            <span className="text-red-300 text-xs">
+              {errors.number.message}
+            </span>
+          )}
+          
           <TextInput
             htmlFor="complement"
             label={data.complement.label}

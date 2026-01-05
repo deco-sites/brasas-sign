@@ -34,7 +34,7 @@ export default function FormController({ units }) {
       "underageStudentHaveCPF",
       "cpf",
     ],
-    2: ["cep", "neighborhood", "city", "uf", "branches", "module"],
+    2: ["cep", "neighborhood", "city", "uf", "branches", "module", "number"],
     3: [
       "isStudentFinancialResponsible",
       "financialResponsibleAddressEqualsStudent",
@@ -52,6 +52,7 @@ export default function FormController({ units }) {
       //Campos dependentes do financialResponsibleAddressEqualsStudent
       "financialResponsibleResidence",
       "financialResponsibleCep",
+      "financialResponsibleResidenceNumber",
       "financialResponsibleResidenceNeighborhood",
       "financialResponsibleCity",
       "financialResponsibleUf",
@@ -72,6 +73,7 @@ export default function FormController({ units }) {
       //Campos dependentes do pedagogicalResponsibleAddressEqualsStudent
       "pedagogicalResponsibleResidence",
       "pedagogicalResponsibleCep",
+      "pedagogicalResponsibleResidenceNumber",
       "pedagogicalResponsibleResidenceNeighborhood",
       "pedagogicalResponsibleCity",
       "pedagogicalResponsibleUf",
