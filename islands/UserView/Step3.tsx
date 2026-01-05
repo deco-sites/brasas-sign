@@ -10,6 +10,8 @@ import { Step3Data } from "../../data/Step3/Step3Data.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { cpfMask } from "../../helpers/cpfMask.ts";
 import { cnpjMask } from "../../helpers/cnpjMask.ts";
+import { numberMask } from "../../helpers/numberMask.ts";
+import { textMask } from "../../helpers/textMask.ts";
 
 export default function Step3(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -219,6 +221,7 @@ export default function Step3(
                 htmlFor="financialResponsibleKinship"
                 label={data.financialResponsibleKinship.label}
                 error={!!errors.financialResponsibleKinship}
+                mask={textMask}
                 placeholder={data.financialResponsibleKinship.placeholder}
                 {...register("financialResponsibleKinship", {
                   validate: (value) => {
@@ -485,10 +488,18 @@ export default function Step3(
               <TextInput
                 htmlFor="financialResponsibleResidenceNumber"
                 label={data.financialResponsibleResidenceNumber.label}
+                mask={numberMask}
                 placeholder={data.financialResponsibleResidenceNumber
                   .placeholder}
-                {...register("financialResponsibleResidenceNumber")}
+                {...register("financialResponsibleResidenceNumber", {
+                  required: data.financialResponsibleResidenceNumber.requiredError,
+                })}
               />
+              {errors.financialResponsibleResidenceNumber && (
+                <span className="text-red-300 text-xs">
+                  {errors.financialResponsibleResidenceNumber.message}
+                </span>
+              )}
 
               <TextInput
                 htmlFor="financialResponsibleResidenceComplement"

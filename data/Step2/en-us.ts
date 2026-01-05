@@ -10,8 +10,9 @@ export const step2DataEN = {
     "placeholder": "Enter the street name",
   },
   "number": {
-    "label": "Number",
-    "placeholder": "Enter the house number",
+    "label": "*Number",
+    "placeholder": "Enter the address number",
+    "requiredError": "Enter the address number",
   },
   "complement": {
     "label": "Complement",
