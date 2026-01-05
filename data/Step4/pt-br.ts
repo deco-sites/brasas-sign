@@ -1,4 +1,9 @@
 export const step4DataPT = {
+  "sameEducationalFinancialResponsible": {
+    "label": "*O responsável pedagógico é o mesmo responsável financeiro?",
+    "options": ["Sim", "Não"],
+    "requiredError": "Selecione uma opção",
+  },
   "isStudentPedagogicalResponsible": {
     "label": "*O próprio aluno é responsável pedagógico?",
     "options": ["Sim", "Não"],

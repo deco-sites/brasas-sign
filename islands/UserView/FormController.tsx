@@ -58,6 +58,7 @@ export default function FormController({ units }) {
       "financialResponsibleUf",
     ],
     4: [
+      "sameEducationalFinancialResponsible",
       "isStudentPedagogicalResponsible",
       "pedagogicalResponsibleAddressEqualsStudent",
 
