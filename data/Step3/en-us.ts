@@ -75,7 +75,6 @@ export const step3DataEN = {
   "financialResponsibleResidenceNumber": {
     "label": "Number",
     "placeholder": "Enter the address number",
-    "requiredError": "Enter the address number",
   },
   "financialResponsibleResidenceComplement": {
     "label": "Complement",

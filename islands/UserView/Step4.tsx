@@ -519,17 +519,9 @@ export default function Step4(
                 mask={numberMask}
                 placeholder={data.pedagogicalResponsibleResidenceNumber
                   .placeholder}
-                {...register("pedagogicalResponsibleResidenceNumber", {
-                  required: data.pedagogicalResponsibleResidenceNumber.requiredError,
-                })}
+                {...register("pedagogicalResponsibleResidenceNumber")}
               />
-              {errors.pedagogicalResponsibleResidenceNumber && (
-                <span className="text-red-300 text-xs">
-                  {errors.pedagogicalResponsibleResidenceNumber
-                    .message}
-                </span>
-              )}
-
+              
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceComplement"
                 label={data.pedagogicalResponsibleResidenceComplement.label}
