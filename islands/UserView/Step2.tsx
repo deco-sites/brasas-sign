@@ -11,6 +11,7 @@ import { useTranslations } from "../../sdk/useTranslations.ts";
 import { Step2Data } from "../../data/Step2/Step2Data.ts";
 import { useLanguage } from "../../sdk/useLanguage.ts";
 import { numberMask } from "../../helpers/numberMask.ts";
+import TypeableInput from "../../components/ui/TypeableInput.tsx";
 
 export default function Step2(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -202,6 +203,7 @@ export default function Step2(
             label={data.neighborhood.label}
             placeholder={data.neighborhood.placeholder}
             error={errors.neighborhood}
+            maxLength={31}
             disabled={disabledFields.neighborhood}
             {...register("neighborhood", {
               required: data.neighborhood.requiredError,
@@ -245,9 +247,10 @@ export default function Step2(
 
       {courseType !== "pff" && (
         <>
-          <SelectInput
+          <TypeableInput
             name="branches"
             label={data.branches.label}
+            notFoundText={data.branches.notFoundText}
             options={branches}
             value={watch("branches")}
             error={errors.branches}

@@ -30,6 +30,8 @@ export const step3DataEN = {
     "label": "Date of birth",
     "placeholder": "DD/MM/YYYY",
     "requiredError": "Required field",
+    "deadlineExceeded": "The date cannot be later than the current date.",
+    "tooOld": "The date cannot be earlier than 1900."
   },
   "financialResponsibleCpf": {
     "labelPf": "CPF",

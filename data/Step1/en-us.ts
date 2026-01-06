@@ -32,6 +32,8 @@ export const step1DataEN = {
     "label": "*Date of birth",
     "placeholder": "DD/MM/YYYY",
     "error": "Enter your date of birth",
+    "deadlineExceeded": "The date cannot be later than the current date.",
+    "tooOld": "The date cannot be earlier than 1900."
   },
   "isStudentUnderage": {
     "label": "*The student is underage?",
@@ -52,7 +54,8 @@ export const step1DataEN = {
   },
   "originCountry": {
     "label": "*Country of origin",
-    "placeholder": "Select an option",
+    "placeholder": "Select an option or type to search.",
+    "notFoundText": "No options were found with the typed text."
   },
   "languages": {
     "label": "Which languages do you speak?",

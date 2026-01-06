@@ -123,7 +123,7 @@ const saveCustomer = async (
       address: body.address,
       address_number: Number(body.number) || 0,
       address_complement: body.complement || "",
-      address_neighborhood: body.neighborhood,
+      address_neighborhood: body.neighborhood?.slice(0, 31),
       address_city: body.city,
       address_state: body.uf,
       address_zip_code: body.residence === "fora-do-brasil"
@@ -131,7 +131,7 @@ const saveCustomer = async (
         : body?.cep?.replace(/\D/g, "")?.replace(/^(\d{5})(\d{3})$/, "$1-$2") ||
           "",
       phone_number: body.phone,
-      email: body.email,
+      email: body.email.toLowerCase(),
       signature: body.signature,
 
       ...(body.isStudentFinancialResponsible === "no" && {
@@ -139,7 +139,7 @@ const saveCustomer = async (
           same_student_address:
             body.financialResponsibleAddressEqualsStudent === "yes",
           relationship: body.financialResponsibleKinship.trim(),
-          name: body.financialResponsibleName,
+          name: body.financialResponsibleName?.slice(0, 36),
           tax_number: body.financialResponsibleCpf,
           national_id: "",
           trade_name: body.financialResponsibleName || null,
@@ -147,7 +147,7 @@ const saveCustomer = async (
           address: body.financialResponsibleAddress,
           address_number: Number(body.financialResponsibleResidenceNumber) || 0,
           address_complement: body.financialResponsibleResidenceComplement || "",
-          address_neighborhood: body.financialResponsibleResidenceNeighborhood,
+          address_neighborhood: body.financialResponsibleResidenceNeighborhood?.slice(0, 31),
           address_city: body.financialResponsibleCity,
           address_state: body.financialResponsibleUf,
           address_zip_code:
@@ -158,7 +158,7 @@ const saveCustomer = async (
                 "$1-$2",
               ) || "",
           phone_number: body.financialResponsiblePhone || "",
-          email: body.financialResponsibleEmail,
+          email: body.financialResponsibleEmail.toLowerCase(),
         },
       }),
 
@@ -176,7 +176,7 @@ const saveCustomer = async (
             body.sameEducationalFinancialResponsible === "yes",
           relationship: body.pedagogicalResponsibleKinship.trim(),
           trade_name: body.pedagogicalResponsibleName || null,
-          name: body.pedagogicalResponsibleName,
+          name: body.pedagogicalResponsibleName?.slice(0, 36),
           tax_number: body.pedagogicalResponsibleCpf,
           national_id: "",
           birth_date: body.pedagogicalResponsibleBirthDate || "0001-01-01",
@@ -185,7 +185,7 @@ const saveCustomer = async (
             0,
           address_complement: body.pedagogicalResponsibleResidenceComplement || "",
           address_neighborhood:
-            body.pedagogicalResponsibleResidenceNeighborhood,
+            body.pedagogicalResponsibleResidenceNeighborhood?.slice(0, 31),
           address_city: body.pedagogicalResponsibleCity,
           address_state: body.pedagogicalResponsibleUf,
           address_zip_code:
@@ -196,7 +196,7 @@ const saveCustomer = async (
                 "$1-$2",
               ) || "",
           phone_number: body.pedagogicalResponsiblePhone || "",
-          email: body.pedagogicalResponsibleEmail,
+          email: body.pedagogicalResponsibleEmail.toLowerCase(),
         },
       }),
 

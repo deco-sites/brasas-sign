@@ -9,6 +9,7 @@ import { cpfMask } from "../../helpers/cpfMask.ts";
 import { textMask } from "../../helpers/textMask.ts";
 import { useTranslations } from "../../sdk/useTranslations.ts";
 import { Step1Data } from "../../data/Step1/Step1Data.ts";
+import TypeableInput from "../../components/ui/TypeableInput.tsx";
 
 export default function Step1(
   { step, stepList, goToNextStep, goToPreviousStep, goToStep, form },
@@ -27,6 +28,10 @@ export default function Step1(
 
   const data = useTranslations(Step1Data);
 
+  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const minDate = "1900-01-01";
+  
+
   const genderOptions = [
     { id: "masculino", value: data.gender.options[0] },
     { id: "feminino", value: data.gender.options[1] },
@@ -35,7 +40,7 @@ export default function Step1(
 
   const [countries, setCountries] = useState([]);
   const residence = watch("residence");
-
+  
   useEffect(() => {
     // Revalida o cpf toda vez que residence mudar
     trigger("cpf");
@@ -163,9 +168,25 @@ export default function Step1(
         type="date"
         htmlFor="birthDate"
         label={data.birthDate.label}
+        min={minDate}
+        max={today}
         error={errors.birthDate}
         placeholder={data.birthDate.placeholder}
-        {...register("birthDate", { required: data.birthDate.error })}
+        {...register("birthDate", { validate: (value) => {
+          const selectedDate = new Date(value);
+          const min = new Date("1900-01-01");
+          const max = new Date();
+    
+          if (selectedDate > max) {
+            return data.birthDate.deadlineExceeded; // data maior que hoje
+          }
+    
+          if (selectedDate < min) {
+            return data.birthDate.tooOld; // data menor que 1900
+          }
+    
+          return true;
+        }, required: data.birthDate.error })}
       />
       {errors.birthDate && (
         <span className="text-red-300 text-xs">
@@ -265,9 +286,10 @@ export default function Step1(
         </span>
       )}
 
-      <SelectInput
+      <TypeableInput
         name="country"
         label={data.originCountry.label}
+        notFoundText={data.originCountry.notFoundText}
         options={countries}
         value={watch("country")}
         error={errors.country}
@@ -282,6 +304,8 @@ export default function Step1(
           {errors.country.message}
         </span>
       )}
+
+      
 
       <MultiInput
         htmlFor="languages"

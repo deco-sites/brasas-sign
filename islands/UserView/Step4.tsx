@@ -51,6 +51,9 @@ export default function Step4(
     },
   );
 
+  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const minDate = "1900-01-01";
+  
   useEffect(() => {
     if (cep?.length < 10) {
       // CEP incompleto: limpa tudo e habilita os campos
@@ -240,6 +243,7 @@ export default function Step4(
             label={pedagogicalResponsiblePersonType === "pj"
               ? data.pedagogicalResponsibleName.labelPj
               : data.pedagogicalResponsibleName.labelPf}
+            maxLength={36}
             placeholder={pedagogicalResponsiblePersonType === "pj"
               ? data.pedagogicalResponsibleName.placeholderPj
               : data.pedagogicalResponsibleName.placeholderPf}
@@ -290,16 +294,38 @@ export default function Step4(
             type="date"
             htmlFor="pedagogicalResponsibleBirthDate"
             label={data.pedagogicalResponsibleBirthDate.label}
+            min={minDate}
+        max={today}
             placeholder={data.pedagogicalResponsibleBirthDate.placeholder}
             error={!!errors.pedagogicalResponsibleBirthDate}
             {...register("pedagogicalResponsibleBirthDate", {
               validate: (value) => {
-                if (
-                  watch("isStudentPedagogicalResponsible") === "no"
-                ) {
-                  return (value && value.trim() !== "") ||
-                    data.pedagogicalResponsibleBirthDate.requiredError;
+                const isRequired =
+                  watch("isStudentPedagogicalResponsible") === "no";
+          
+                // Não obrigatório e vazio → ok
+                if (!isRequired && !value) {
+                  return true;
                 }
+          
+                // Obrigatório e vazio → erro
+                if (isRequired && (!value || value.trim() === "")) {
+                  return data.pedagogicalResponsibleBirthDate.requiredError;
+                }
+          
+                // Validação de intervalo de datas
+                const selectedDate = new Date(value);
+                const min = new Date("1900-01-01");
+                const max = new Date();
+          
+                if (selectedDate > max) {
+                  return data.pedagogicalResponsibleBirthDate.deadlineExceeded;
+                }
+          
+                if (selectedDate < min) {
+                  return data.pedagogicalResponsibleBirthDate.tooOld;
+                }
+          
                 return true;
               },
             })}
@@ -537,6 +563,7 @@ export default function Step4(
                   .placeholder}
                 disabled={disabledFields.neighborhood}
                 error={!!errors.pedagogicalResponsibleResidenceNeighborhood}
+                maxLength={31}
                 {...register(
                   "pedagogicalResponsibleResidenceNeighborhood",
                   {
