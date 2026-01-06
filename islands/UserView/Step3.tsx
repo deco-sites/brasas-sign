@@ -491,16 +491,9 @@ export default function Step3(
                 mask={numberMask}
                 placeholder={data.financialResponsibleResidenceNumber
                   .placeholder}
-                {...register("financialResponsibleResidenceNumber", {
-                  required: data.financialResponsibleResidenceNumber.requiredError,
-                })}
+                {...register("financialResponsibleResidenceNumber")}
               />
-              {errors.financialResponsibleResidenceNumber && (
-                <span className="text-red-300 text-xs">
-                  {errors.financialResponsibleResidenceNumber.message}
-                </span>
-              )}
-
+              
               <TextInput
                 htmlFor="financialResponsibleResidenceComplement"
                 label={data.financialResponsibleResidenceComplement.label}
