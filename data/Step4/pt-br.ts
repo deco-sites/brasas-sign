@@ -30,6 +30,8 @@ export const step4DataPT = {
     "label": "*Data de nascimento",
     "placeholder": "DD/MM/YYYY",
     "requiredError": "Campo obrigatório",
+    "deadlineExceeded": "A data não pode ser maior que a atual.",
+    "tooOld": "A data não pode ser menor que 1900"
   },
   "pedagogicalResponsibleCpf": {
     "labelPf": "CPF",
