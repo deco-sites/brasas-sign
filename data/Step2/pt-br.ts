@@ -10,9 +10,8 @@ export const step2DataPT = {
     "placeholder": "Informe o nome da rua",
   },
   "number": {
-    "label": "*Número",
+    "label": "Número",
     "placeholder": "Informe o número da residência",
-    "requiredError": "Informe o número da residência",
   },
   "complement": {
     "label": "Complemento",

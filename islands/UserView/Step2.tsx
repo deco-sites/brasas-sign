@@ -187,15 +187,8 @@ export default function Step2(
             label={data.number.label}
             placeholder={data.number.placeholder}
             mask={numberMask}
-            {...register("number", {
-              required: data.number.requiredError,
-            })}
+            {...register("number")}
           />
-          {errors.number && (
-            <span className="text-red-300 text-xs">
-              {errors.number.message}
-            </span>
-          )}
           
           <TextInput
             htmlFor="complement"
