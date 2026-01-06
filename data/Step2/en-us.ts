@@ -36,6 +36,7 @@ export const step2DataEN = {
     "label": "*Branch",
     "placeholder": "Select an option",
     "requiredError": "Select an option",
+    "notFoundText": "No options were found with the typed text."
   },
   "module": {
     "label": "*Which module do you want?",

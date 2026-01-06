@@ -32,6 +32,8 @@ export const step1DataPT = {
     "label": "*Data de nascimento",
     "placeholder": "DD/MM/AAAA",
     "error": "Informe a data de nascimento",
+    "deadlineExceeded": "A data não pode ser maior que a atual.",
+    "tooOld": "A data não pode ser menor que 1900"
   },
   "isStudentUnderage": {
     "label": "*O aluno é menor de idade?",
@@ -52,7 +54,8 @@ export const step1DataPT = {
   },
   "originCountry": {
     "label": "*País de origem",
-    "placeholder": "Selecione uma opção",
+    "placeholder": "Selecione uma opção ou digite para buscar",
+    "notFoundText": "Nenhuma opção encontrada com o texto digitado"
   },
   "languages": {
     "label": "Quais idiomas você fala?",

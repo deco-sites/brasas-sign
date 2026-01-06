@@ -41,6 +41,9 @@ export default function Step3(
     },
   );
 
+  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const minDate = "1900-01-01";
+
   useEffect(() => {
     if (cep?.length < 10) {
       // CEP incompleto: limpa tudo e habilita os campos
@@ -195,6 +198,7 @@ export default function Step3(
             label={financialResponsiblePersonType === "pj"
               ? data.financialResponsibleName.labelPj
               : data.financialResponsibleName.labelPf}
+            maxLength={36}
             placeholder={financialResponsiblePersonType === "pj"
               ? data.financialResponsibleName.placeholderPj
               : data.financialResponsibleName.placeholderPf}
@@ -243,14 +247,38 @@ export default function Step3(
                 type="date"
                 htmlFor="financialResponsibleBirthDate"
                 label={data.financialResponsibleBirthDate.label}
+                min={minDate}
+                max={today}
                 placeholder={data.financialResponsibleBirthDate.placeholder}
                 error={!!errors.financialResponsibleBirthDate}
                 {...register("financialResponsibleBirthDate", {
                   validate: (value) => {
-                    if (watch("isStudentFinancialResponsible") === "no") {
-                      return (value && value.trim() !== "") ||
-                        data.financialResponsibleBirthDate.requiredError;
+                    const isRequired =
+                      watch("isStudentFinancialResponsible") === "no";
+              
+                    // 1️⃣ Campo não obrigatório e vazio → ok
+                    if (!isRequired && !value) {
+                      return true;
                     }
+              
+                    // 2️⃣ Campo obrigatório e vazio → erro
+                    if (isRequired && (!value || value.trim() === "")) {
+                      return data.financialResponsibleBirthDate.requiredError;
+                    }
+              
+                    // 3️⃣ Validação de range de data
+                    const selectedDate = new Date(value);
+                    const min = new Date("1900-01-01");
+                    const max = new Date();
+              
+                    if (selectedDate > max) {
+                      return data.financialResponsibleBirthDate.deadlineExceeded;
+                    }
+              
+                    if (selectedDate < min) {
+                      return data.financialResponsibleBirthDate.tooOld;
+                    }
+              
                     return true;
                   },
                 })}
@@ -507,6 +535,7 @@ export default function Step3(
                 label={data.financialResponsibleResidenceNeighborhood.label}
                 disabled={disabledFields.neighborhood}
                 error={!!errors.financialResponsibleResidenceNeighborhood}
+                maxLength={31}
                 placeholder={data.financialResponsibleResidenceNeighborhood
                   .placeholder}
                 {...register("financialResponsibleResidenceNeighborhood", {

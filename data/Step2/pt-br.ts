@@ -36,6 +36,7 @@ export const step2DataPT = {
     "label": "*Unidade",
     "placeholder": "Selecione uma opção",
     "requiredError": "Selecione uma opção",
+    "notFoundText": "Nenhuma opção encontrada com o texto digitado"
   },
   "module": {
     "label": "*Qual o módulo desejado?",
