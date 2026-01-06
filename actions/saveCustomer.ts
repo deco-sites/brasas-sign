@@ -122,7 +122,7 @@ const saveCustomer = async (
       origin_country: body.country.value,
       address: body.address,
       address_number: Number(body.number) || 0,
-      address_complement: body.complement,
+      address_complement: body.complement || "",
       address_neighborhood: body.neighborhood,
       address_city: body.city,
       address_state: body.uf,
@@ -142,10 +142,11 @@ const saveCustomer = async (
           name: body.financialResponsibleName,
           tax_number: body.financialResponsibleCpf,
           national_id: "",
+          trade_name: body.financialResponsibleName || null,
           birth_date: body.financialResponsibleBirthDate || "0001-01-01",
           address: body.financialResponsibleAddress,
           address_number: Number(body.financialResponsibleResidenceNumber) || 0,
-          address_complement: body.financialResponsibleResidenceComplement,
+          address_complement: body.financialResponsibleResidenceComplement || "",
           address_neighborhood: body.financialResponsibleResidenceNeighborhood,
           address_city: body.financialResponsibleCity,
           address_state: body.financialResponsibleUf,
@@ -161,6 +162,12 @@ const saveCustomer = async (
         },
       }),
 
+      ...(body.sameEducationalFinancialResponsible === "yes" && {
+        educational_administrator: {
+          same_educational_financial_administrator: true,
+        }
+      }),
+
       ...(body.sameEducationalFinancialResponsible === "no" && body.isStudentPedagogicalResponsible !== "yes" && {
         educational_administrator: {
           same_student_address:
@@ -168,6 +175,7 @@ const saveCustomer = async (
           same_educational_financial_administrator:
             body.sameEducationalFinancialResponsible === "yes",
           relationship: body.pedagogicalResponsibleKinship.trim(),
+          trade_name: body.pedagogicalResponsibleName || null,
           name: body.pedagogicalResponsibleName,
           tax_number: body.pedagogicalResponsibleCpf,
           national_id: "",
@@ -175,7 +183,7 @@ const saveCustomer = async (
           address: body.pedagogicalResponsibleAddress,
           address_number: Number(body.pedagogicalResponsibleResidenceNumber) ||
             0,
-          address_complement: body.pedagogicalResponsibleResidenceComplement,
+          address_complement: body.pedagogicalResponsibleResidenceComplement || "",
           address_neighborhood:
             body.pedagogicalResponsibleResidenceNeighborhood,
           address_city: body.pedagogicalResponsibleCity,
@@ -199,7 +207,7 @@ const saveCustomer = async (
         brasas_find_others_details: body.whichOthersHowFind,
         brasas_language_interest: body.interest,
         brasas_language_interest_details: body.whichOthersInterest,
-        spoken_languages: body.languages,
+        spoken_languages: body.languages ? body.languages : null,
         school_company_origin: body.schoolOrCompany,
       },
     };

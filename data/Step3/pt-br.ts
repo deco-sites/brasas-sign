@@ -75,7 +75,6 @@ export const step3DataPT = {
   "financialResponsibleResidenceNumber": {
     "label": "Número",
     "placeholder": "Informe o número da residência",
-    "requiredError": "Informe o número da residência",
   },
   "financialResponsibleResidenceComplement": {
     "label": "Complemento",

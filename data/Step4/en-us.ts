@@ -75,7 +75,6 @@ export const step4DataEN = {
   "pedagogicalResponsibleResidenceNumber": {
     "label": "Number",
     "placeholder": "Enter the address number",
-    "requiredError": "Enter the address number",
   },
   "pedagogicalResponsibleResidenceComplement": {
     "label": "Complement",
