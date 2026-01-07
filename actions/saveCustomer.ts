@@ -146,8 +146,10 @@ const saveCustomer = async (
           birth_date: body.financialResponsibleBirthDate || "0001-01-01",
           address: body.financialResponsibleAddress,
           address_number: Number(body.financialResponsibleResidenceNumber) || 0,
-          address_complement: body.financialResponsibleResidenceComplement || "",
-          address_neighborhood: body.financialResponsibleResidenceNeighborhood?.slice(0, 31),
+          address_complement: body.financialResponsibleResidenceComplement ||
+            "",
+          address_neighborhood: body.financialResponsibleResidenceNeighborhood
+            ?.slice(0, 31),
           address_city: body.financialResponsibleCity,
           address_state: body.financialResponsibleUf,
           address_zip_code:
@@ -162,43 +164,51 @@ const saveCustomer = async (
         },
       }),
 
-      ...(body.sameEducationalFinancialResponsible === "yes" && {
-        educational_administrator: {
-          same_educational_financial_administrator: true,
+      ...(body.isStudentPedagogicalResponsible !== "yes" && (
+        body.sameEducationalFinancialResponsible === "yes" && {
+          educational_administrator: {
+            same_educational_financial_administrator: true,
+          },
         }
-      }),
+      )),
 
-      ...(body.sameEducationalFinancialResponsible === "no" && body.isStudentPedagogicalResponsible !== "yes" && {
-        educational_administrator: {
-          same_student_address:
-            body.pedagogicalResponsibleAddressEqualsStudent === "yes",
-          same_educational_financial_administrator:
-            body.sameEducationalFinancialResponsible === "yes",
-          relationship: body.pedagogicalResponsibleKinship.trim(),
-          trade_name: body.pedagogicalResponsibleName || null,
-          name: body.pedagogicalResponsibleName?.slice(0, 36),
-          tax_number: body.pedagogicalResponsibleCpf,
-          national_id: "",
-          birth_date: body.pedagogicalResponsibleBirthDate || "0001-01-01",
-          address: body.pedagogicalResponsibleAddress,
-          address_number: Number(body.pedagogicalResponsibleResidenceNumber) ||
-            0,
-          address_complement: body.pedagogicalResponsibleResidenceComplement || "",
-          address_neighborhood:
-            body.pedagogicalResponsibleResidenceNeighborhood?.slice(0, 31),
-          address_city: body.pedagogicalResponsibleCity,
-          address_state: body.pedagogicalResponsibleUf,
-          address_zip_code:
-            body.pedagogicalResponsibleResidence === "fora-do-brasil"
-              ? "22775090"
-              : body?.pedagogicalResponsibleCep?.replace(/\D/g, "")?.replace(
-                /^(\d{5})(\d{3})$/,
-                "$1-$2",
-              ) || "",
-          phone_number: body.pedagogicalResponsiblePhone || "",
-          email: body.pedagogicalResponsibleEmail.toLowerCase(),
-        },
-      }),
+      ...(body.isStudentPedagogicalResponsible !== "yes" && (
+        body.sameEducationalFinancialResponsible === "no" && {
+          educational_administrator: {
+            same_student_address:
+              body.pedagogicalResponsibleAddressEqualsStudent === "yes" ||
+              body.sameEducationalFinancialResponsible === "yes",
+            same_educational_financial_administrator: false,
+            relationship: body.pedagogicalResponsibleKinship.trim(),
+            trade_name: body.pedagogicalResponsibleName || null,
+            name: body.pedagogicalResponsibleName?.slice(0, 36),
+            tax_number: body.pedagogicalResponsibleCpf,
+            national_id: "",
+            birth_date: body.pedagogicalResponsibleBirthDate || "0001-01-01",
+            address: body.pedagogicalResponsibleAddress,
+            address_number:
+              Number(body.pedagogicalResponsibleResidenceNumber) ||
+              0,
+            address_complement:
+              body.pedagogicalResponsibleResidenceComplement ||
+              "",
+            address_neighborhood: body
+              .pedagogicalResponsibleResidenceNeighborhood
+              ?.slice(0, 31),
+            address_city: body.pedagogicalResponsibleCity,
+            address_state: body.pedagogicalResponsibleUf,
+            address_zip_code:
+              body.pedagogicalResponsibleResidence === "fora-do-brasil"
+                ? "22775090"
+                : body?.pedagogicalResponsibleCep?.replace(/\D/g, "")?.replace(
+                  /^(\d{5})(\d{3})$/,
+                  "$1-$2",
+                ) || "",
+            phone_number: body.pedagogicalResponsiblePhone || "",
+            email: body.pedagogicalResponsibleEmail.toLowerCase(),
+          },
+        }
+      )),
 
       marketing: {
         brasas_preference: body.preference,
