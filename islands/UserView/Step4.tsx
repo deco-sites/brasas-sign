@@ -53,7 +53,7 @@ export default function Step4(
 
   const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
   const minDate = "1900-01-01";
-  
+
   useEffect(() => {
     if (cep?.length < 10) {
       // CEP incompleto: limpa tudo e habilita os campos
@@ -143,8 +143,6 @@ export default function Step4(
       goToPreviousStep={goToPreviousStep}
       goToStep={goToStep}
     >
-
-    
       <RadioInput
         label={data.sameEducationalFinancialResponsible.label}
         name="sameEducationalFinancialResponsible"
@@ -171,38 +169,39 @@ export default function Step4(
         </span>
       )}
 
-      {(sameEducationalFinancialResponsible === "no" && isStudentFinancialResponsible === "no") && (
+      {(sameEducationalFinancialResponsible === "no" &&
+        isStudentFinancialResponsible === "no") && (
         <>
-        <RadioInput
-        label={data.isStudentPedagogicalResponsible.label}
-        name="isStudentPedagogicalResponsible"
-        value={watch("isStudentPedagogicalResponsible")}
-        options={[
-          {
-            id: "yes",
-            value: "yes",
-            label: data.isStudentPedagogicalResponsible.options[0],
-          },
-          {
-            id: "no",
-            value: "no",
-            label: data.isStudentPedagogicalResponsible.options[1],
-          },
-        ]}
-        register={register("isStudentPedagogicalResponsible", {
-          required: data.isStudentPedagogicalResponsible.requiredError,
-        })}
-      />
-      {errors.isStudentPedagogicalResponsible && (
-        <span className="text-red-300 text-xs">
-          {errors.isStudentPedagogicalResponsible.message}
-        </span>
-      )}
+          <RadioInput
+            label={data.isStudentPedagogicalResponsible.label}
+            name="isStudentPedagogicalResponsible"
+            value={watch("isStudentPedagogicalResponsible")}
+            options={[
+              {
+                id: "yes",
+                value: "yes",
+                label: data.isStudentPedagogicalResponsible.options[0],
+              },
+              {
+                id: "no",
+                value: "no",
+                label: data.isStudentPedagogicalResponsible.options[1],
+              },
+            ]}
+            register={register("isStudentPedagogicalResponsible", {
+              required: data.isStudentPedagogicalResponsible.requiredError,
+            })}
+          />
+          {errors.isStudentPedagogicalResponsible && (
+            <span className="text-red-300 text-xs">
+              {errors.isStudentPedagogicalResponsible.message}
+            </span>
+          )}
         </>
       )}
-      
 
-      {sameEducationalFinancialResponsible === "no" && isStudentPedagogicalResponsible !== "yes" && (
+      {sameEducationalFinancialResponsible === "no" &&
+        isStudentPedagogicalResponsible !== "yes" && (
         <>
           <RadioInput
             label={data.pedagogicalResponsiblePersonType.label}
@@ -223,7 +222,7 @@ export default function Step4(
             register={register("pedagogicalResponsiblePersonType", {
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsiblePersonType.requiredError;
@@ -251,7 +250,7 @@ export default function Step4(
             {...register("pedagogicalResponsibleName", {
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsibleName.requiredError;
@@ -275,7 +274,7 @@ export default function Step4(
             {...register("pedagogicalResponsibleKinship", {
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsibleKinship.requiredError;
@@ -295,37 +294,37 @@ export default function Step4(
             htmlFor="pedagogicalResponsibleBirthDate"
             label={data.pedagogicalResponsibleBirthDate.label}
             min={minDate}
-        max={today}
+            max={today}
             placeholder={data.pedagogicalResponsibleBirthDate.placeholder}
             error={!!errors.pedagogicalResponsibleBirthDate}
             {...register("pedagogicalResponsibleBirthDate", {
               validate: (value) => {
                 const isRequired =
-                  watch("isStudentPedagogicalResponsible") === "no";
-          
+                  watch("sameEducationalFinancialResponsible") === "no";
+
                 // Não obrigatório e vazio → ok
                 if (!isRequired && !value) {
                   return true;
                 }
-          
+
                 // Obrigatório e vazio → erro
                 if (isRequired && (!value || value.trim() === "")) {
                   return data.pedagogicalResponsibleBirthDate.requiredError;
                 }
-          
+
                 // Validação de intervalo de datas
                 const selectedDate = new Date(value);
                 const min = new Date("1900-01-01");
                 const max = new Date();
-          
+
                 if (selectedDate > max) {
                   return data.pedagogicalResponsibleBirthDate.deadlineExceeded;
                 }
-          
+
                 if (selectedDate < min) {
                   return data.pedagogicalResponsibleBirthDate.tooOld;
                 }
-          
+
                 return true;
               },
             })}
@@ -361,7 +360,7 @@ export default function Step4(
               },
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsibleCpf.requiredError;
@@ -385,7 +384,7 @@ export default function Step4(
             {...register("pedagogicalResponsiblePhone", {
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsiblePhone.requiredError;
@@ -408,7 +407,7 @@ export default function Step4(
             {...register("pedagogicalResponsibleEmail", {
               validate: (value) => {
                 if (
-                  watch("isStudentPedagogicalResponsible") === "no"
+                  watch("sameEducationalFinancialResponsible") === "no"
                 ) {
                   return (value && value.trim() !== "") ||
                     data.pedagogicalResponsibleEmail.requiredError;
@@ -455,7 +454,7 @@ export default function Step4(
       )}
 
       {pedagogicalResponsibleAddressEqualsStudent === "no" &&
-        isStudentPedagogicalResponsible === "no" && (
+        sameEducationalFinancialResponsible === "no" && (
         <>
           <RadioInput
             label={data.pedagogicalResponsibleResidence.label}
@@ -547,7 +546,7 @@ export default function Step4(
                   .placeholder}
                 {...register("pedagogicalResponsibleResidenceNumber")}
               />
-              
+
               <TextInput
                 htmlFor="pedagogicalResponsibleResidenceComplement"
                 label={data.pedagogicalResponsibleResidenceComplement.label}
